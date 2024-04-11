@@ -7,37 +7,42 @@ interface I_TitleProps {
   level: 1 | 2 | 3 | 4 | 5;
   text: string;
 }
-// h1 {
-//     font-size: text-5xl 3rem;;
-//     line-height: leading-[3rem];
-//     text-transform: uppercase;
-//      font-weight : font-black;
-//   }
 
-//   h2 {
-//     font-size: text-4xl 2.25rem
-//     line-height: leading-[2.25rem];
-//     text-transform: uppercase;
-//      font-weight : font-black;
-//   }
+/**
+ * 
+ * @param  level 1~5까지 들어가면 기본 styling이 적용 됩니다 
+ h1 {
+    font-size: text-5xl 3rem;;
+    line-height: leading-[3rem];
+    text-transform: uppercase;
+     font-weight : font-black;
+  }
 
-//   h3 {
-//     font-size: 1.4rem text-3xl 1.875rem;
-//     line-height: leading-[1.87rem];
-//     margin-bottom: mb-7;
-//   }
-//   h4 {
-//     font-size: 1.1rem text-2xl 1.5rem;
-//     line-height: leading-[1.5rem];
-//     margin-bottom: mb-7;
-//   }
+  h2 {
+    font-size: text-4xl 2.25rem
+    line-height: leading-[2.25rem];
+    text-transform: uppercase;
+     font-weight : font-black;
+  }
 
-//   h5 {
-//     font-size: 0.7rem text-xl 1.25rem;
-//     line-height: leading-[1.25rem];
-//     margin-bottom: mb-7;
-//   }
+  h3 {
+    font-size: 1.4rem text-3xl 1.875rem;
+    line-height: leading-[1.87rem];
+    margin-bottom: mb-7;
+  }
+  h4 {
+    font-size: 1.1rem text-2xl 1.5rem;
+    line-height: leading-[1.5rem];
+    margin-bottom: mb-7;
+  }
 
+  h5 {
+    font-size: 0.7rem text-xl 1.25rem;
+    line-height: leading-[1.25rem];
+    margin-bottom: mb-7;
+  }
+ * @returns 
+ */
 const Title: FunctionComponent<I_TitleProps> = ({ className, level, text }) => {
   const Tag = `h${level}` as const;
   const STYLE_LEVEL = cva('', {
