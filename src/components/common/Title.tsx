@@ -37,40 +37,59 @@ interface I_TitleProps {
 //     line-height: leading-[1.25rem];
 //     margin-bottom: mb-7;
 //   }
+
 const Title: FunctionComponent<I_TitleProps> = ({ className, level, text }) => {
   const Tag = `h${level}` as const;
   const STYLE_LEVEL = cva('', {
     variants: {
       FONT_SIZE: {
-        LEVEL_1: 'text-5xl',
-        LEVEL_2: 'text-4xl',
-        LEVEL_3: 'text-3xl',
-        LEVEL_4: 'text-2xl',
-        LEVEL_5: 'text-xl',
+        1: 'text-5xl',
+        2: 'text-4xl',
+        3: 'text-3xl',
+        4: 'text-2xl',
+        5: 'text-xl',
       },
       LINE_HEIGHT: {
-        LEVEL_1: 'leading-[3rem]',
-        LEVEL_2: 'leading-[2.25rem]',
-        LEVEL_3: 'leading-[1.87rem]',
-        LEVEL_4: 'leading-[1.5rem',
-        LEVEL_5: 'leading-[1.25rem]',
+        1: 'leading-[3rem]',
+        2: 'leading-[2.25rem]',
+        3: 'leading-[1.87rem]',
+        4: 'leading-[1.5rem',
+        5: 'leading-[1.25rem]',
       },
       FONT_WEIGHT: {
-        LEVEL_1: 'font-black',
-        LEVEL_2: 'font-black',
-        LEVEL_3: 'font-bold',
-        LEVEL_4: 'font-semibold',
-        LEVEL_5: 'font-medium',
+        1: 'font-black',
+        2: 'font-black',
+        3: 'font-bold',
+        4: 'font-semibold',
+        5: 'font-medium',
       },
-      MARGIN_BOTTOM: { LEVEL_1: 'mb-3.5', LEVEL_2: 'mb-3.5', LEVEL_3: 'mb-7', LEVEL_4: 'mb-7', LEVEL_5: 'mb-7' },
+      MARGIN_BOTTOM: { 1: 'mb-3.5', 2: 'mb-3.5', 3: 'mb-7', 4: 'mb-7', 5: 'mb-7' },
       TEXT_TRANSFORM: {
-        LEVEL_1: 'uppercase',
-        LEVEL_2: 'uppercase',
+        1: 'uppercase',
+        2: 'uppercase',
+        3: 'normal-case',
+        4: 'normal-case',
+        5: 'normal-case',
       },
     },
   });
 
-  return <Tag>{text}</Tag>;
+  return (
+    <Tag
+      className={cn(
+        STYLE_LEVEL({
+          FONT_SIZE: level,
+          LINE_HEIGHT: level,
+          FONT_WEIGHT: level,
+          MARGIN_BOTTOM: level,
+          TEXT_TRANSFORM: level,
+        }),
+        className,
+      )}
+    >
+      {text}
+    </Tag>
+  );
 };
 
 export default Title;
