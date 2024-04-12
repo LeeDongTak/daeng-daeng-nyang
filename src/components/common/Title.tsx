@@ -26,18 +26,18 @@ interface I_TitleProps {
   }
 
   h3 {
-    font-size: 1.4rem text-3xl 1.875rem;
+    font-size: text-3xl 1.875rem;
     line-height: leading-[1.87rem];
     margin-bottom: mb-7;
   }
   h4 {
-    font-size: 1.1rem text-2xl 1.5rem;
+    font-size:  text-2xl 1.5rem;
     line-height: leading-[1.5rem];
     margin-bottom: mb-7;
   }
 
   h5 {
-    font-size: 0.7rem text-xl 1.25rem;
+    font-size: text-xl 1.25rem;
     line-height: leading-[1.25rem];
     margin-bottom: mb-7;
   }
