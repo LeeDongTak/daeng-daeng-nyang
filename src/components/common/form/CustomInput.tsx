@@ -13,6 +13,11 @@ interface I_ControlProps<
   rules?: Omit<RegisterOptions<TFieldValues, TName>, 'valueAsNumber' | 'valueAsDate' | 'setValueAs' | 'disabled'>;
   classNmae?: ClassValue[];
 }
+/**
+ *
+ * @param props :  Input의 className으로 CSS 바꾸고 싶으면 className='tailwind'로 내려주면 알아서 css 됩니다.
+ * @returns
+ */
 const CustomInput = <T extends FieldValues>({ control, name, ...props }: I_ControlProps<T>) => {
   return (
     <FormField
