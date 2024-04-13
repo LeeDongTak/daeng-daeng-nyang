@@ -24,7 +24,7 @@ const SignIn = () => {
     <Form {...form}>
       <form onSubmit={form.handleSubmit(submitHandler)}>
         <CustomInput control={form.control} name="email" />
-        <Button>submit</Button>
+        <Button text="버튼" />
       </form>
     </Form>
   );
