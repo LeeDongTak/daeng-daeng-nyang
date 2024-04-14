@@ -4,8 +4,8 @@ import { ComponentPropsWithoutRef } from 'react';
 interface I_FormBodyProps extends ComponentPropsWithoutRef<'div'> {
   children: JSX.Element;
 }
-const FormBody = ({ className, children }: I_FormBodyProps) => {
+const LayoutFormBody = ({ className, children }: I_FormBodyProps) => {
   return <CardContent className={cn(className)}>{children}</CardContent>;
 };
 
-export default FormBody;
+export default LayoutFormBody;

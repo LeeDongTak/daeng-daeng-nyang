@@ -8,7 +8,7 @@ interface I_FormHeader {
   headerCn?: { layoutCn?: string; remainCn?: string };
 }
 
-const FormHeader = ({ title, descript, ...props }: I_FormHeader) => {
+const LayoutFormHeader = ({ title, descript, ...props }: I_FormHeader) => {
   const { titleCn, descriptCn, headerCn } = props;
   return (
     <CardHeader className={cn(headerCn?.layoutCn, headerCn?.remainCn)}>
@@ -20,4 +20,4 @@ const FormHeader = ({ title, descript, ...props }: I_FormHeader) => {
   );
 };
 
-export default FormHeader;
+export default LayoutFormHeader;

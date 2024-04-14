@@ -4,8 +4,8 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import AuthForm from '../form/AuthForm';
-import FormBody from '../form/form-body/FormBody';
-import FormHeader from '../form/form-header/FormHeader';
+import LayoutFormBody from '../form/layout-form-body/LayoutFormBody';
+import LayoutFormHeader from '../form/layout-form-header/LayoutFormHeader';
 const formSchema = z.object({
   email: z.string().min(2),
   password: z.string().min(2),
@@ -26,14 +26,14 @@ const SignIn = () => {
   return (
     <Form {...form}>
       <Card>
-        <FormHeader title="로그인" />
-        <FormBody>
+        <LayoutFormHeader title="로그인" />
+        <LayoutFormBody>
           <AuthForm onSubmit={form.handleSubmit(submitHandler)}>
             <AuthForm.input control={form.control} name="email" />
             <AuthForm.input control={form.control} name="password" />
             <AuthForm.button type="submit" text="button" />
           </AuthForm>
-        </FormBody>
+        </LayoutFormBody>
       </Card>
     </Form>
   );
