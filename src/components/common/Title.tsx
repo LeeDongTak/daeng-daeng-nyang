@@ -26,58 +26,59 @@ interface I_TitleProps {
   }
 
   h3 {
-    font-size: 1.4rem text-3xl 1.875rem;
+    font-size: text-3xl 1.875rem;
     line-height: leading-[1.87rem];
     margin-bottom: mb-7;
   }
   h4 {
-    font-size: 1.1rem text-2xl 1.5rem;
+    font-size:  text-2xl 1.5rem;
     line-height: leading-[1.5rem];
     margin-bottom: mb-7;
   }
 
   h5 {
-    font-size: 0.7rem text-xl 1.25rem;
+    font-size: text-xl 1.25rem;
     line-height: leading-[1.25rem];
     margin-bottom: mb-7;
   }
  * @returns 
  */
+const STYLE_LEVEL = cva('', {
+  variants: {
+    FONT_SIZE: {
+      1: 'text-5xl',
+      2: 'text-4xl',
+      3: 'text-3xl',
+      4: 'text-2xl',
+      5: 'text-xl',
+    },
+    LINE_HEIGHT: {
+      1: 'leading-[3rem]',
+      2: 'leading-[2.25rem]',
+      3: 'leading-[1.87rem]',
+      4: 'leading-[1.5rem',
+      5: 'leading-[1.25rem]',
+    },
+    FONT_WEIGHT: {
+      1: 'font-black',
+      2: 'font-black',
+      3: 'font-bold',
+      4: 'font-semibold',
+      5: 'font-medium',
+    },
+    MARGIN_BOTTOM: { 1: 'mb-3.5', 2: 'mb-3.5', 3: 'mb-7', 4: 'mb-7', 5: 'mb-7' },
+    TEXT_TRANSFORM: {
+      1: 'uppercase',
+      2: 'uppercase',
+      3: 'normal-case',
+      4: 'normal-case',
+      5: 'normal-case',
+    },
+  },
+});
+
 const Title: FunctionComponent<I_TitleProps> = ({ className, level, text }) => {
   const Tag = `h${level}` as const;
-  const STYLE_LEVEL = cva('', {
-    variants: {
-      FONT_SIZE: {
-        1: 'text-5xl',
-        2: 'text-4xl',
-        3: 'text-3xl',
-        4: 'text-2xl',
-        5: 'text-xl',
-      },
-      LINE_HEIGHT: {
-        1: 'leading-[3rem]',
-        2: 'leading-[2.25rem]',
-        3: 'leading-[1.87rem]',
-        4: 'leading-[1.5rem',
-        5: 'leading-[1.25rem]',
-      },
-      FONT_WEIGHT: {
-        1: 'font-black',
-        2: 'font-black',
-        3: 'font-bold',
-        4: 'font-semibold',
-        5: 'font-medium',
-      },
-      MARGIN_BOTTOM: { 1: 'mb-3.5', 2: 'mb-3.5', 3: 'mb-7', 4: 'mb-7', 5: 'mb-7' },
-      TEXT_TRANSFORM: {
-        1: 'uppercase',
-        2: 'uppercase',
-        3: 'normal-case',
-        4: 'normal-case',
-        5: 'normal-case',
-      },
-    },
-  });
 
   return (
     <Tag
