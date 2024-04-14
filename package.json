@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@shadcn/ui": "^0.0.4",
     "@tanstack/react-query": "^5.29.0",
     "@tanstack/react-query-devtools": "^5.29.0",
     "axios": "^1.6.8",
