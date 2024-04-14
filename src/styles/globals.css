@@ -1,7 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
+html {
+  font-size: 62.5%; /* 1rem Chrome 기준 10px*/
+}
 @layer base {
   :root {
     --background: 0 0% 100%;
