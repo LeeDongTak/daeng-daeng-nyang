@@ -15,6 +15,7 @@ const SignIn = () => {
   const form = useForm<T_schema>({
     defaultValues: {
       email: '',
+      password: '',
     },
     resolver: zodResolver(formSchema),
   });
