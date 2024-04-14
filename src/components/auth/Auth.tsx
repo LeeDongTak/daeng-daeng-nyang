@@ -1,7 +1,7 @@
-import React from 'react';
+import SignIn from './sign-in/SignIn';
 
 const Auth = () => {
-  return <div>Auth</div>;
+  return <SignIn />;
 };
 
 export default Auth;
