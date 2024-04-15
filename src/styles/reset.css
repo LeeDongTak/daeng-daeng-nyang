@@ -1,0 +1,3 @@
+@tailwind base; /* reset기능*/
+@tailwind components;
+@tailwind utilities;
