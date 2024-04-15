@@ -1,4 +1,5 @@
 import { cn } from '@/lib/utils';
+import { T_CVARequiredProperty } from '@/types/cva-props/cva';
 import { VariantProps, cva } from 'class-variance-authority';
 import { FunctionComponent } from 'react';
 /**
@@ -37,34 +38,7 @@ import { FunctionComponent } from 'react';
  *
  */
 
-/*
-Solution 1
-
-  // type T_LevelType = Required<VariantProps<typeof STYLE_LEVEL>>; // Required do optional("?") remove
-
-// type RequiredProperty<T> = { [P in keyof T]: NonNullable<T[P]> }; // null | undefined of property removed indexSignature
-
-// type RequiredProps = RequiredProperty<T_LevelType>;
-*/
-/*
-
-Solution 2. admit
-type T_LevelType = Required<VariantProps<typeof STYLE_LEVEL>>; // Required do optional("?") remove
-
-type RequiredProperty<T> = Required<{ [P in keyof T]: NonNullable<T[P]> }>; // null | undefined of property removed indexSignature
-
-type RequiredProps = RequiredProperty<VariantProps<typeof STYLE_LEVEL>>;
-
-interface I_TitleProps extends RequiredProps {
-  className?: string;
-  text: string;
-}
-
-*/
-
-type RequiredProperty<T> = Required<{ [P in keyof T]: NonNullable<T[P]> }>; // null | undefined of property removed indexSignature
-
-type T_CVAProps = RequiredProperty<VariantProps<typeof STYLE_LEVEL>>;
+type T_CVAProps = T_CVARequiredProperty<VariantProps<typeof STYLE_LEVEL>>;
 
 interface I_TitleProps extends T_CVAProps {
   className?: string;
