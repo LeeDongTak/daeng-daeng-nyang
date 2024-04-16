@@ -11,7 +11,7 @@ interface I_ControlProps<
   name: TName;
   rules?: Omit<RegisterOptions<TFieldValues, TName>, 'valueAsNumber' | 'valueAsDate' | 'setValueAs' | 'disabled'>;
   className?: string;
-  label: string;
+  label?: string;
 }
 /**
  *
@@ -19,13 +19,14 @@ interface I_ControlProps<
  * @returns
  */
 const CustomInput = <T extends FieldValues>({ control, name, label, ...props }: I_ControlProps<T>) => {
+  const LABEL_NAME = label ? label : name;
   return (
     <FormField
       control={control}
       name={name}
       render={({ field }) => (
         <FormItem>
-          <FormLabel>{label}</FormLabel>
+          <FormLabel>{LABEL_NAME}</FormLabel>
           <FormControl>
             <Input {...field} {...props} />
           </FormControl>
