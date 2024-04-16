@@ -28,8 +28,8 @@ const SignIn = () => {
       <LayoutFormHeader title="로그인" />
       <LayoutFormBody>
         <AuthForm onSubmit={form.handleSubmit(submitHandler)}>
-          <AuthForm.input control={form.control} name="email" />
-          <AuthForm.input control={form.control} name="password" />
+          <AuthForm.input control={form.control} name="email" label="이메일" />
+          <AuthForm.input control={form.control} name="password" label="비밀번호" />
           <AuthForm.button type="submit" text="button" />
         </AuthForm>
       </LayoutFormBody>
