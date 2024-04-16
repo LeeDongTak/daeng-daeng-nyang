@@ -1,15 +1,28 @@
+import { I_ToastInfo } from '@/types/toast/toast';
 import { create } from 'zustand';
 
 
-interface countType {
-	count: number
+interface I_toastGroup {
+	toastGroup: I_ToastInfo[];
 }
-const useCountSotre = create<countType>()(() => ({
-  number: 0
+const useToastStore = create<I_toastGroup>()(() => ({
+  toastGroup: [],
 }))
 
-export const plusNumber = () => useCountSotre.setState((state) => ({ number: state.number + 1 }))
+export const addToastGroup = (toast: I_ToastInfo) => {
+  useToastStore.setState(state => ({ toastGroup: [...state.toastGroup, toast] }));
+};
 
-export const minusNumber = () => useCountSotre.setState((state) => ({ number: state.number 1 1 }))
+export const deleteToastGroup = () => {
+  useToastStore.setState(state => ({ toastGroup: [] }));
+};
 
-export default useCountStore
+export const deleteToastItem = (toastId?: string) => {
+  if (!toastId) return
+  const timer = setTimeout(()=>{
+    useToastStore.setState(state => ({ toastGroup: [...state.toastGroup.filter((toast)=> toast.id !== toastId)] }));
+    clearTimeout(timer);
+  },500);
+};
+
+export default useToastStore

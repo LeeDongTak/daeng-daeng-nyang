@@ -1,13 +1,7 @@
 import { cn } from '@/lib/utils';
-import React, { FunctionComponent } from 'react';
-import { cva } from 'class-variance-authority';
-import clsx from 'clsx';
-interface I_TitleProps {
-  className?: string;
-  level: 1 | 2 | 3 | 4 | 5;
-  text: string;
-}
-
+import { T_CVARequiredProperty } from '@/types/cva-props/cva';
+import { VariantProps, cva } from 'class-variance-authority';
+import { FunctionComponent } from 'react';
 /**
  * 
  * @param  level 1~5까지 들어가면 기본 styling이 적용 됩니다 
@@ -41,38 +35,48 @@ interface I_TitleProps {
     line-height: leading-[1.25rem];
     margin-bottom: mb-7;
   }
- * @returns 
+ *
  */
-const STYLE_LEVEL = cva('', {
+
+type T_CVAProps = T_CVARequiredProperty<VariantProps<typeof STYLE_LEVEL>>;
+
+interface I_TitleProps extends T_CVAProps {
+  className?: string;
+  text: string;
+}
+
+const STYLE_LEVEL = cva('normal-case mb-7', {
   variants: {
-    FONT_SIZE: {
-      1: 'text-5xl',
-      2: 'text-4xl',
-      3: 'text-3xl',
-      4: 'text-2xl',
-      5: 'text-xl',
-    },
-    LINE_HEIGHT: {
-      1: 'leading-[3rem]',
-      2: 'leading-[2.25rem]',
-      3: 'leading-[1.87rem]',
-      4: 'leading-[1.5rem',
-      5: 'leading-[1.25rem]',
-    },
-    FONT_WEIGHT: {
-      1: 'font-black',
-      2: 'font-black',
-      3: 'font-bold',
-      4: 'font-semibold',
-      5: 'font-medium',
-    },
-    MARGIN_BOTTOM: { 1: 'mb-3.5', 2: 'mb-3.5', 3: 'mb-7', 4: 'mb-7', 5: 'mb-7' },
-    TEXT_TRANSFORM: {
-      1: 'uppercase',
-      2: 'uppercase',
-      3: 'normal-case',
-      4: 'normal-case',
-      5: 'normal-case',
+    level: {
+      1: {
+        fontSize: 'text-5xl',
+        lineHeight: 'leading-[3rem]',
+        fontWeight: 'font-black',
+        marginBottom: 'mb-3.5',
+        textTransFrom: 'uppercase',
+      },
+      2: {
+        fontSize: 'text-4xl',
+        lineHeight: 'leading-[2.25rem]',
+        fontWeight: 'font-black',
+        marginBottom: 'mb-3.5',
+        textTransFrom: 'uppercase',
+      },
+      3: {
+        fontSize: 'text-3xl',
+        lineHeight: 'leading-[1.87rem]',
+        fontWeight: 'font-bold',
+      },
+      4: {
+        fontSize: 'text-2xl',
+        lineHeight: 'leading-[1.5rem]',
+        fontWeight: 'font-semibold',
+      },
+      5: {
+        fontSize: 'text-xl',
+        lineHeight: 'leading-[1.25rem]',
+        fontWeight: 'font-medium',
+      },
     },
   },
 });
@@ -84,11 +88,7 @@ const Title: FunctionComponent<I_TitleProps> = ({ className, level, text }) => {
     <Tag
       className={cn(
         STYLE_LEVEL({
-          FONT_SIZE: level,
-          LINE_HEIGHT: level,
-          FONT_WEIGHT: level,
-          MARGIN_BOTTOM: level,
-          TEXT_TRANSFORM: level,
+          level,
         }),
         className,
       )}
