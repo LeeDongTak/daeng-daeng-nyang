@@ -1,4 +1,3 @@
-import { ClassValue } from 'clsx';
 import { ComponentPropsWithoutRef } from 'react';
 import { Control, FieldPath, FieldValues, RegisterOptions } from 'react-hook-form';
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '../../ui/form';
@@ -11,7 +10,7 @@ interface I_ControlProps<
   control: Control<TFieldValues>;
   name: TName;
   rules?: Omit<RegisterOptions<TFieldValues, TName>, 'valueAsNumber' | 'valueAsDate' | 'setValueAs' | 'disabled'>;
-  classNmae?: ClassValue[];
+  className?: string;
 }
 /**
  *
