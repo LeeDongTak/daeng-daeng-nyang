@@ -1,121 +1,32 @@
-// import { cn } from '@/lib/utils';
-// import { cva, type VariantProps } from 'class-variance-authority';
-// import * as React from 'react';
-
-// const skeletonVariants = cva(
-//   'inline-flex items-center justify-center whitespace-nowrap relative overflow-hidden bg-muted animate-pulse rounded-md',
-//   {
-//     variants: {
-//       variant: {
-//         input: 'h-10 w-full',
-//         image: '',
-//         map: 'h-96 w-full',
-//         calendar: 'h-320 w-360',
-//         message: 'h-8 w-32',
-//         banner: 'h-80 w-full',
-//       },
-//       width: {
-//         auto: 'w-auto',
-//         full: 'w-full',
-//       },
-//       height: {
-//         auto: 'h-auto',
-//       },
-//       size: {
-//         small: 'h-32 w-32',
-//         medium: 'h-48 w-48',
-//         large: 'h-96 w-full',
-//       },
-//       round: {
-//         none: 'rounded-none',
-//         sm: 'rounded-sm',
-//         md: 'rounded-md',
-//         lg: 'rounded-lg',
-//         xl: 'rounded-xl',
-//         full: 'rounded-full',
-//       },
-//       animate: {
-//         true: 'animate-pulse',
-//         false: '',
-//       },
-//     },
-//     defaultVariants: {
-//       variant: 'image',
-//       size: 'medium',
-//       round: 'md',
-//       animate: true,
-//     },
-//   },
-// );
-
-// export interface I_SkeletonProps extends React.HTMLAttributes<HTMLDivElement>, VariantProps<typeof skeletonVariants> {
-
-// }
-
-// const Skeleton = React.forwardRef<HTMLDivElement, I_SkeletonProps>(
-//   ({ className, variant, size, round, animate, ...props }, ref) => {
-//     return <div ref={ref} className={cn(skeletonVariants({ variant, size, round, animate, className }))} {...props} />;
-//   },
-// );
-
-// Skeleton.displayName = 'Skeleton';
-
-// // Skeleton 컴포넌트 예시
-// const SkeletonInput = React.forwardRef<HTMLDivElement, I_SkeletonProps>((props, ref) => (
-//   <Skeleton {...props} ref={ref} variant="input" size="small" round="xl" />
-// ));
-
-// SkeletonInput.displayName = 'SkeletonInput';
-
-// const SkeletonMap = React.forwardRef<HTMLDivElement, I_SkeletonProps>((props, ref) => (
-//   <Skeleton {...props} ref={ref} variant="map" size="medium" />
-// ));
-
-// SkeletonMap.displayName = 'SkeletonMap';
-
-// const SkeletonBanner = React.forwardRef<HTMLDivElement, I_SkeletonProps>((props, ref) => (
-//   <Skeleton {...props} ref={ref} variant="banner" />
-// ));
-
-// SkeletonBanner.displayName = 'SkeletonBanner';
-
-// const SkeletonCalendar = React.forwardRef<HTMLDivElement, I_SkeletonProps>((props, ref) => (
-//   <Skeleton {...props} ref={ref} variant="calendar" />
-// ));
-
-// SkeletonCalendar.displayName = 'SkeletonCalendar';
-// export { Skeleton, SkeletonBanner, SkeletonCalendar, SkeletonInput, SkeletonMap };
-
 import { cn } from '@/lib/utils';
 import { VariantProps, cva } from 'class-variance-authority';
-
-export type SkeletonVariantProps = VariantProps<typeof SKELETON_TYPE>;
-export const SKELETON_TYPE = cva('animate-pulse rounded-md bg-muted', {
+type RequiredProperty<T> = Required<{ [P in keyof T]: NonNullable<T[P]> }>;
+type T_CVAProps = RequiredProperty<VariantProps<typeof STYLE_VARIANTS>>;
+interface I_SkeletonProps extends T_CVAProps {
+  className?: string;
+  text: string;
+}
+const STYLE_VARIANTS = cva('animate-pulse rounded-lg bg-gray-200', {
   variants: {
-    type: {
-      map: '',
-      calendar: '',
-      card: '',
-      image: '',
-      banner: '',
-      input: '',
-      chat: '',
+    size: {
+      map: { width: 'w-[80rem]', height: 'h-[43.125rem]' },
+      calendar: { width: 'w-[52.813rem]', height: 'h-[44.063rem]' },
+      card: { width: 'w-[18.875rem]', height: 'h-[20.313rem]' },
+      banner: { width: 'w-[80rem]', height: 'h-[38.75rem]' },
+      picture: { width: 'w-[18.875rem]', height: 'h-[12.5rem]', rounded: 'rounded-md' },
+      chat_message: { width: 'w-[55.375rem]', height: 'h-[40.625rem]', rounded: 'rounded-md' },
+      input: { width: 'w-[52.875rem]', height: 'h-[3rem]', rounded: 'rounded-md' },
+      filter: { width: 'w-[5.625rem]', height: 'h-[2.25rem]', rounded: 'rounded-xl' },
+      button: { width: 'w-[11.25rem]', height: 'h-[2.25rem]', rounded: 'rounded-xl' },
+      avatar: { width: 'w-[7.5rem]', height: 'h-[7.5rem]', rounded: 'rounded-full' },
     },
   },
 });
-// export interface I_SkeletonProps
-//   extends Omit<SkeletonVariantProps, "required">,
-//   Required<Pick<SkeletonVariantProps, "required">> {}
-//   export const Skeleton = (props: I_SkeletonProps) => SKELETON_TYPE(props);
-//   Skeleton({});
-
-interface I_SkeletonProps extends SkeletonVariantProps {
-  className?: string;
-  animate?: boolean;
-  rounded?: boolean;
+function Skeleton({ className, size, text, ...props }: I_SkeletonProps) {
+  return (
+    <div className={cn(STYLE_VARIANTS({ size }), className)} {...props}>
+      {text}
+    </div>
+  );
 }
-function Skeleton({ className, type, ...props }: I_SkeletonProps) {
-  return <div className={cn(SKELETON_TYPE({ type }), className)} {...props} />;
-}
-
-export { Skeleton };
+export default Skeleton;

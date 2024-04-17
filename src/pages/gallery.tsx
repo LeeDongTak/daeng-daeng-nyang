@@ -1,8 +1,14 @@
+import Skeleton from '@/components/ui/skeleton';
+
 const gallery = () => {
   return (
     <div>
-      <div></div>
-      <div></div>
+      <div>
+        <Skeleton size="banner" />
+      </div>
+      <div>
+        <Skeleton size="banner" />
+      </div>
     </div>
   );
 };
