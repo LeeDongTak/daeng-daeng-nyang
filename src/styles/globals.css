@@ -4,6 +4,10 @@
 html {
   font-size: 62.5%; /* 1rem Chrome 기준 10px*/
 }
+* {
+  font-family: var(--main-font);
+  letter-spacing: -0.6px;
+}
 @layer base {
   :root {
     --background: 0 0% 100%;
