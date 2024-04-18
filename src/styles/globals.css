@@ -1,9 +1,8 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-html {
-  font-size: 62.5%; /* 1rem Chrome 기준 10px*/
-}
+
+
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -45,4 +44,14 @@ html {
   body {
     @apply bg-background text-foreground;
   }
+}
+
+
+/* global 스타일 설정 */
+html {
+  font-size: 62.5%; /* 1rem Chrome 기준 10px*/
+}
+* {
+  font-family: var(--main-font);
+  letter-spacing: -0.6px;
 }
