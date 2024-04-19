@@ -51,6 +51,10 @@
 html {
   font-size: 62.5%; /* 1rem Chrome 기준 10px*/
 }
+html,body{
+  background-color: #f9f6eb;
+  color: #191919
+}
 * {
   font-family: var(--main-font);
   letter-spacing: -0.6px;

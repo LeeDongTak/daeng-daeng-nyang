@@ -1,4 +1,5 @@
 import Toast from '@/components/common/toast/Toast';
+import CommonLayout from '@/components/layout/CommonLayout';
 import Modal from '@/components/modal/Modal';
 import { cn } from '@/lib/utils';
 import '@/styles/globals.css';
@@ -15,7 +16,9 @@ export default function App({ Component, pageProps }: AppProps) {
     <QueryClientProvider client={queryClient}>
       <ReactQueryDevtools initialIsOpen={false} />
       <main className={cn(myFont.variable)}>
-        <Component {...pageProps} />
+        <CommonLayout>
+          <Component {...pageProps} />
+        </CommonLayout>
       </main>
       <Modal />
       <Toast />
