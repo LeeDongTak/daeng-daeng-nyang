@@ -1,11 +1,13 @@
 import { ReactNode } from 'react';
-import Header from './Header';
+import Footer from './footer/Footer';
+import Header from './header/Header';
 
 const CommonLayout = ({ children }: { children: ReactNode }) => {
   return (
     <>
       <Header />
       <div>{children}</div>
+      <Footer />
     </>
   );
 };

@@ -2,7 +2,7 @@ import { cn } from '@/lib/utils';
 
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import Logo from './Logo';
+import Logo from '../common/Logo';
 import MenuBox from './MenuBox';
 
 const Header = () => {
@@ -18,7 +18,7 @@ const Header = () => {
     <header className={cn('w-[100%] bg-[#fffdf9] h-[8rem]')}>
       <div
         className={cn(
-          `flex items-center w-[100%] max-w-[126.3rem] h-[100%] mx-auto ${
+          `flex items-center w-[100%] max-w-[128rem] h-[100%] mx-auto ${
             isNotAuthPathName ? 'justify-between' : 'justify-center'
           }`,
         )}

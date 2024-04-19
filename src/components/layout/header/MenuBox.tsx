@@ -1,7 +1,7 @@
 import { cn } from '@/lib/utils';
-import Avatar from '../../../public/icons/avatar.svg';
-import BellRing from '../../../public/icons/bell-ring.svg';
-import Search from '../../../public/icons/search.svg';
+import Avatar from '../../../../public/icons/avatar.svg';
+import BellRing from '../../../../public/icons/bell-ring.svg';
+import Search from '../../../../public/icons/search.svg';
 
 const MenuBox = () => {
   return (
