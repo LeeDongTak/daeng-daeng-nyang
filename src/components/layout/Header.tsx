@@ -1,14 +1,30 @@
 import { cn } from '@/lib/utils';
 
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
 import Logo from './Logo';
 import MenuBox from './MenuBox';
 
 const Header = () => {
+  const { pathname } = useRouter();
+  const [isNotAuthPathName, setIsNotAuthPathName] = useState(true);
+
+  useEffect(() => {
+    // /auth
+    setIsNotAuthPathName(pathname === '/auth' ? false : true);
+  }, [pathname]);
+
   return (
     <header className={cn('w-[100%] bg-[#fffdf9] h-[8rem]')}>
-      <div className={cn('flex items-center justify-between w-[100%] max-w-[126.3rem] h-[100%] mx-auto')}>
+      <div
+        className={cn(
+          `flex items-center w-[100%] max-w-[126.3rem] h-[100%] mx-auto ${
+            isNotAuthPathName ? 'justify-between' : 'justify-center'
+          }`,
+        )}
+      >
         <Logo />
-        <MenuBox />
+        {isNotAuthPathName && <MenuBox />}
       </div>
     </header>
   );
