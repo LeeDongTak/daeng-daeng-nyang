@@ -1,7 +1,9 @@
 import { cn } from '@/lib/utils';
 import { T_CVARequiredProperty } from '@/types/cva-props/cva';
 import { VariantProps, cva } from 'class-variance-authority';
+import { Outfit } from 'next/font/google';
 import { FunctionComponent } from 'react';
+
 /**
  * 
  * @param  level 1~5까지 들어가면 기본 styling이 적용 됩니다 
@@ -42,6 +44,7 @@ type T_CVAProps = T_CVARequiredProperty<VariantProps<typeof STYLE_LEVEL>>;
 
 interface I_TitleProps extends T_CVAProps {
   className?: string;
+  isOutfit?: boolean; // Outfit 폰트를 적용할건지 말건지 결정하는 type (기본폰트는 Pretendard이지만 로고와 큰제목은 Outfit임)
   text: string;
 }
 
@@ -81,7 +84,9 @@ const STYLE_LEVEL = cva('normal-case mb-7', {
   },
 });
 
-const Title: FunctionComponent<I_TitleProps> = ({ className, level, text }) => {
+const outfit = Outfit({ subsets: ['latin'] });
+
+const Title: FunctionComponent<I_TitleProps> = ({ className, level, text, isOutfit = false }) => {
   const Tag = `h${level}` as const;
 
   return (
@@ -90,6 +95,7 @@ const Title: FunctionComponent<I_TitleProps> = ({ className, level, text }) => {
         STYLE_LEVEL({
           level,
         }),
+        isOutfit && outfit.className,
         className,
       )}
     >
