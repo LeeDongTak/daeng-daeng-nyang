@@ -11,7 +11,7 @@ const gallery = () => {
         <Skeleton type="chat_message" />
         <Skeleton type="banner" />
         <Skeleton type="card" />
-        <Skeleton type="avatar" />
+        <Skeleton type="card" />
       </div>
     </div>
   );
