@@ -1,7 +1,9 @@
 import { cn } from '@/lib/utils';
 import { T_CVARequiredProperty } from '@/types/cva-props/cva';
 import { VariantProps, cva } from 'class-variance-authority';
+import { Outfit } from 'next/font/google';
 import { FunctionComponent } from 'react';
+
 /**
  * 
  * @param  level 1~5까지 들어가면 기본 styling이 적용 됩니다 
@@ -42,54 +44,33 @@ type T_CVAProps = T_CVARequiredProperty<VariantProps<typeof STYLE_LEVEL>>;
 
 interface I_TitleProps extends T_CVAProps {
   className?: string;
+  isOutfit?: boolean; // Outfit 폰트를 적용할건지 말건지 결정하는 type (기본폰트는 Pretendard이지만 로고와 큰제목은 Outfit임)
   text: string;
 }
 
 const STYLE_LEVEL = cva('normal-case mb-7', {
   variants: {
     level: {
-      1: {
-        fontSize: 'text-5xl',
-        lineHeight: 'leading-[3rem]',
-        fontWeight: 'font-black',
-        marginBottom: 'mb-3.5',
-        textTransFrom: 'uppercase',
-      },
-      2: {
-        fontSize: 'text-4xl',
-        lineHeight: 'leading-[2.25rem]',
-        fontWeight: 'font-black',
-        marginBottom: 'mb-3.5',
-        textTransFrom: 'uppercase',
-      },
-      3: {
-        fontSize: 'text-3xl',
-        lineHeight: 'leading-[1.87rem]',
-        fontWeight: 'font-bold',
-      },
-      4: {
-        fontSize: 'text-2xl',
-        lineHeight: 'leading-[1.5rem]',
-        fontWeight: 'font-semibold',
-      },
-      5: {
-        fontSize: 'text-xl',
-        lineHeight: 'leading-[1.25rem]',
-        fontWeight: 'font-medium',
-      },
+      1: 'text-5xl leading-[3rem] font-black mb-3.5 uppercase',
+      2: 'text-4xl leading-[2.25rem] font-black mb-3.5 uppercase',
+      3: 'text-3xl leading-[1.87rem] font-bold',
+      4: 'text-2xl leading-[1.5rem] font-semibold',
+      5: 'text-xl leading-[1.25rem] font-medium',
     },
   },
 });
 
-const Title: FunctionComponent<I_TitleProps> = ({ className, level, text }) => {
-  const Tag = `h${level}` as const;
+const outfit = Outfit({ subsets: ['latin'] });
 
+const Title: FunctionComponent<I_TitleProps> = ({ className, level, text, isOutfit = false }) => {
+  const Tag = `h${level}` as const;
   return (
     <Tag
       className={cn(
         STYLE_LEVEL({
           level,
         }),
+        isOutfit && outfit.className,
         className,
       )}
     >
