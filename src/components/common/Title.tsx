@@ -51,35 +51,11 @@ interface I_TitleProps extends T_CVAProps {
 const STYLE_LEVEL = cva('normal-case mb-7', {
   variants: {
     level: {
-      1: {
-        fontSize: 'text-5xl',
-        lineHeight: 'leading-[3rem]',
-        fontWeight: 'font-black',
-        marginBottom: 'mb-3.5',
-        textTransFrom: 'uppercase',
-      },
-      2: {
-        fontSize: 'text-4xl',
-        lineHeight: 'leading-[2.25rem]',
-        fontWeight: 'font-black',
-        marginBottom: 'mb-3.5',
-        textTransFrom: 'uppercase',
-      },
-      3: {
-        fontSize: 'text-3xl',
-        lineHeight: 'leading-[1.87rem]',
-        fontWeight: 'font-bold',
-      },
-      4: {
-        fontSize: 'text-2xl',
-        lineHeight: 'leading-[1.5rem]',
-        fontWeight: 'font-semibold',
-      },
-      5: {
-        fontSize: 'text-xl',
-        lineHeight: 'leading-[1.25rem]',
-        fontWeight: 'font-medium',
-      },
+      1: 'text-5xl leading-[3rem] font-black mb-3.5 uppercase',
+      2: 'text-4xl leading-[2.25rem] font-black mb-3.5 uppercase',
+      3: 'text-3xl leading-[1.87rem] font-bold',
+      4: 'text-2xl leading-[1.5rem] font-semibold',
+      5: 'text-xl leading-[1.25rem] font-medium',
     },
   },
 });
@@ -88,7 +64,6 @@ const outfit = Outfit({ subsets: ['latin'] });
 
 const Title: FunctionComponent<I_TitleProps> = ({ className, level, text, isOutfit = false }) => {
   const Tag = `h${level}` as const;
-
   return (
     <Tag
       className={cn(
