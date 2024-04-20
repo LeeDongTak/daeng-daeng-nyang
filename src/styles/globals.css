@@ -2,7 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -46,14 +45,14 @@
   }
 }
 
-
 /* global 스타일 설정 */
 html {
   font-size: 62.5%; /* 1rem Chrome 기준 10px*/
 }
-html,body{
+html,
+body {
   background-color: #f9f6eb;
-  color: #191919
+  color: #191919;
 }
 * {
   font-family: var(--main-font);
