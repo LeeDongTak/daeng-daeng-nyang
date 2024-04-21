@@ -1,7 +1,7 @@
 import { cn } from '@/lib/utils';
 
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Logo from '../common/Logo';
 import MenuBox from './MenuBox';
 
