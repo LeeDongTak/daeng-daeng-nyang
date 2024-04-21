@@ -15,7 +15,7 @@ const PetLstItem = () => {
   return (
     <div
       className={cn(
-        'flex flex-col justify-center items-center gap-[2.4rem] w-[100%] max-w-[84.6rem] h-[25.6rem] rounded-[3rem] p-[3.2rem] bg-[#fff]',
+        'flex flex-shrink-0 flex-col justify-center items-center gap-[2.4rem] w-[100%] max-w-[84.6rem] h-[25.6rem] rounded-[3rem] p-[3.2rem] bg-[#fff]',
       )}
     >
       <div
