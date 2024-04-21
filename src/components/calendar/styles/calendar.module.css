@@ -1,0 +1,43 @@
+/*
+미니 캘린더일 때
+*/
+.mini-calendar {
+  display: inline-flex;
+  padding: 2rem;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1.5rem;
+  border-radius: 0.5rem;
+  border: 1px solid #ededed;
+  background: #fff;
+}
+.mini-calendar-header-wrapper {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
+/*big Calendar 일 때*/
+.big-calendar {
+  display: flex;
+  max-width: 152rem;
+  margin: 0 auto;
+  width: 100%;
+  align-items: flex-start;
+  gap: clamp(2%, 4rem, 4rem);
+  justify-content: space-between;
+  margin-top: 2rem;
+  padding-bottom: 5rem;
+}
+.big-body-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2rem;
+  width: 78%;
+  max-width: 1260px;
+  padding: 3rem;
+  border-radius: 2rem;
+  border: 1px solid #ededed;
+}
