@@ -7,7 +7,7 @@ import MenuBox from './MenuBox';
 
 const Header = () => {
   const { pathname } = useRouter();
-  const [isNotAuthPathName, setIsNotAuthPathName] = useState(true);
+  const [isNotAuthPathName, setIsNotAuthPathName] = useState(pathname === '/auth' ? false : true);
 
   useEffect(() => {
     // /auth
