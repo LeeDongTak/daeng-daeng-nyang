@@ -1,13 +1,13 @@
 import { cn } from '@/lib/utils';
 
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Logo from '../common/Logo';
 import MenuBox from './MenuBox';
 
 const Header = () => {
   const { pathname } = useRouter();
-  const [isNotAuthPathName, setIsNotAuthPathName] = useState(true);
+  const [isNotAuthPathName, setIsNotAuthPathName] = useState(pathname === '/auth' ? false : true);
 
   useEffect(() => {
     // /auth
