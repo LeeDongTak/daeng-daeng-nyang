@@ -1,10 +1,10 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
+import LayoutForm from '../../common/form/form-layout/LayoutForm';
+import LayoutFormBody from '../../common/form/form-layout/layout-form-body/LayoutFormBody';
+import LayoutFormHeader from '../../common/form/form-layout/layout-form-header/LayoutFormHeader';
 import AuthForm from '../form/AuthForm';
-import LayoutForm from '../form/layout-form/LayoutForm';
-import LayoutFormBody from '../form/layout-form/layout-form-body/LayoutFormBody';
-import LayoutFormHeader from '../form/layout-form/layout-form-header/LayoutFormHeader';
 const formSchema = z.object({
   email: z.string().min(2),
   password: z.string().min(2),
