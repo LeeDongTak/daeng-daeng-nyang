@@ -1,7 +1,7 @@
 import { ComponentPropsWithoutRef } from 'react';
 import { Control, FieldPath, FieldValues, RegisterOptions } from 'react-hook-form';
-import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '../../ui/form';
-import { Input } from '../../ui/input';
+import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '../../../ui/form';
+import { Input } from '../../../ui/input';
 
 interface I_ControlProps<
   TFieldValues extends FieldValues = FieldValues,
