@@ -4,7 +4,7 @@ import { z } from 'zod';
 import LayoutForm from '../../common/form/form-layout/LayoutForm';
 import LayoutFormBody from '../../common/form/form-layout/layout-form-body/LayoutFormBody';
 import LayoutFormHeader from '../../common/form/form-layout/layout-form-header/LayoutFormHeader';
-import AuthForm from '../form/AuthForm';
+import AuthForm from '../auth-form/AuthForm';
 
 const formSchema = z.object({
   email: z.string().min(2),
