@@ -1,4 +1,4 @@
-import CustomInput from '@/components/common/form/input/CustomInput';
+import CustomInput from '@/components/common/form/input-text/CustomInput';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { ComponentPropsWithoutRef } from 'react';
