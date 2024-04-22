@@ -1,9 +1,7 @@
-import { useRouter } from 'next/router';
+import RegistPet from '@/components/regist-pet/RegistPet';
 
 const PetRegistPage = () => {
-  const { query } = useRouter();
-
-  return <div>{query.regist}</div>;
+  return <RegistPet />;
 };
 
 export default PetRegistPage;
