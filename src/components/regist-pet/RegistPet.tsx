@@ -22,6 +22,9 @@ const formSchema = z.object({
 type T_Schema = z.infer<typeof formSchema>;
 const RegistPet = () => {
   const form = useForm<T_Schema>({
+    defaultValues: {
+      file: null, // zod에서 nullable을 줬습니다. 그리고 null로 default를 해줘야 파일이 선택 안되어있을 때도 zod에서 parsing을 성공합니다. defaultValues를 안해주면 undefined이고, 버튼 클릭시 zod parsing이 실패로 됩니다.
+    },
     resolver: zodResolver(formSchema),
   });
   const submitHandler = (value: T_Schema) => {
