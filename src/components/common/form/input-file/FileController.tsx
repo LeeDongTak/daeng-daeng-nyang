@@ -26,7 +26,7 @@ interface I_FileControllerProps<
     field: ControllerRenderProps<TFieldValues, TName> & { type: 'file' };
     fieldState: ControllerFieldState;
     formState: UseFormStateReturn<TFieldValues>;
-    base64: unknown;
+    base64: string | null;
     select: () => void;
     remove: () => void;
   }) => React.ReactElement;
@@ -43,7 +43,7 @@ const FileController = <
   const inputRef = useRef<HTMLElement | null>(null);
   const { resetField } = useFormContext();
   const { field, fieldState, formState } = useController({ name, control });
-  const [base64, setBase64] = useState<unknown>(defaultValue ?? null);
+  const [base64, setBase64] = useState<string | null>(defaultValue ?? null);
   const onChange = async (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files?.[0]) {
       setBase64(await getBase64(e.target.files[0]));
