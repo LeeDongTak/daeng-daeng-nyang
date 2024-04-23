@@ -36,9 +36,7 @@ const RegistPet = () => {
         <FileController
           name="file"
           control={form.control}
-          render={({ base64, field: { ref, onChange, type, name }, remove, select, ...props }) => (
-            <CustomInput control={form.control} ref={ref} onChange={onChange} type={type} name={name} />
-          )}
+          render={({ base64, register, remove, select, ...props }) => <CustomInput {...register} />}
         />
         {/* <PetForm.input control={form.control} name="file" label="사진" type="file" /> */}
         {/* <PetForm.input control={form.control} name="name" label="이름" />
