@@ -36,7 +36,6 @@ const RegistPet = () => {
 
   return (
     <LayoutForm form={form}>
-      {/* <input type="file" onChange={} /> */}
       <LayoutFormHeader title="반려동물 등록" />
       <PetForm onSubmit={form.handleSubmit(submitHandler)}>
         <FileController
