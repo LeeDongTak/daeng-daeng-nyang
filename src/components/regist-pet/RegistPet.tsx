@@ -1,10 +1,13 @@
 import { zodResolver } from '@hookform/resolvers/zod';
+import { Fragment } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import LayoutForm from '../common/form/form-layout/LayoutForm';
 import LayoutFormHeader from '../common/form/form-layout/layout-form-header/LayoutFormHeader';
 import FileController from '../common/form/input-file/FileController';
-import CustomInput from '../common/form/input-text/CustomInput';
+import { Button } from '../ui/button';
+import { FormControl, FormItem, FormLabel, FormMessage } from '../ui/form';
+import { Input } from '../ui/input';
 import PetForm from './pet-form/PetForm';
 
 // https://github.com/colinhacks/zod#custom-schemas
@@ -39,7 +42,19 @@ const RegistPet = () => {
         <FileController
           name="file"
           control={form.control}
-          render={({ base64, register, remove, select, ...props }) => <CustomInput {...register} />}
+          render={({ base64, register, remove, select, ...props }) => (
+            <Fragment>
+              {base64 && <img src={base64} />}
+              <FormItem>
+                <FormLabel>파일</FormLabel>
+                <FormControl>
+                  <Input {...register} className="hidden" />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+              <Button text="삭제" onClick={remove} />
+            </Fragment>
+          )}
         />
         {/* <PetForm.input control={form.control} name="file" label="사진" type="file" /> */}
         {/* <PetForm.input control={form.control} name="name" label="이름" />
