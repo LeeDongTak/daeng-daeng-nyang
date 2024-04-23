@@ -8,6 +8,7 @@ import FileController from '../common/form/input-file/FileController';
 import { Button } from '../ui/button';
 import PetForm from './pet-form/PetForm';
 import FileInput from './pet-form/fileInput/FileInput';
+import PreviewImage from './preview-image/PreviewImage';
 
 // https://github.com/colinhacks/zod#custom-schemas
 const formSchema = z.object({
@@ -42,7 +43,8 @@ const RegistPet = () => {
           control={form.control}
           render={({ base64, register, remove, select, ...props }) => (
             <Fragment>
-              {base64 && <img src={base64} className="w-64 h-64" />}
+              {/* {base64 && <img src={base64} className="w-64 h-64" />} */}
+              <PreviewImage remove={remove} base64={base64} />
               <FileInput register={register} />
               <Button text="삭제" onClick={remove} />
             </Fragment>
