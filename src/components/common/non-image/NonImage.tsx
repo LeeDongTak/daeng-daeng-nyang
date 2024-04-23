@@ -3,8 +3,10 @@ import ImagePlus from '../../../../public/icons/image-plus.svg';
 
 interface I_PropsType {
   className?: string;
+  iconWidth?: string;
+  iconHeight?: string;
 }
-const NonImage = ({ className }: I_PropsType) => {
+const NonImage = ({ className, iconWidth = '3.6rem', iconHeight = '3.6rem' }: I_PropsType) => {
   return (
     <div
       className={cn(
@@ -12,7 +14,7 @@ const NonImage = ({ className }: I_PropsType) => {
         className,
       )}
     >
-      <ImagePlus width={'3.6rem'} height={'3.6rem'} />
+      <ImagePlus width={iconWidth} height={iconHeight} />
     </div>
   );
 };
