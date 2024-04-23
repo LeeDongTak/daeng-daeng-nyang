@@ -1,53 +1,49 @@
 import { cn } from '@/lib/utils';
-import PageArrowLeft from '../../../../public/icons/page-arrow-left.svg';
-import PageArrowRight from '../../../../public/icons/page-arrow-right.svg';
+import { useState } from 'react';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+import { Pagination } from 'swiper/modules';
+
+import { Swiper, SwiperClass, SwiperSlide } from 'swiper/react';
+import PageArrowPrev from '../../../../public/icons/page-arrow-left.svg';
+import PageArrowNext from '../../../../public/icons/page-arrow-right.svg';
+import PageArrow from './PageArrow';
 import PetLstItem from './PetLstItem';
 
 const PetList = () => {
+  const [swiper, setSwiper] = useState<SwiperClass | null>(null);
+
   return (
-    <div className={cn('flex justify-center items-center w-[100%] gap-[4.8rem] h-auto')}>
-      <div className={cn('relative group w-[4rem] h-[3.7rem]')}>
-        <span
-          className={cn(
-            `absolute top-0 left-0 cursor-pointer z-[100]
-            group-hover:last:[&_path]:fill-[#fff]
-            group-hover:[&>svg]:stroke-[#fff]
-            last:[&_path]:transition [&>svg]:duration-300`,
-          )}
-        >
-          <PageArrowLeft wight={'4rem'} height={'3.7rem'} />
-        </span>
-        <span
-          className={cn(
-            `absolute z-[99] top-0 left-0 w-[4rem] h-[3.7rem]
-            bg-[#191919] rounded-[0.9rem] opacity-0
-            group-hover:opacity-100 transition duration-300`,
-          )}
-        ></span>
+    <div className={cn('w-[100%] h-auto')}>
+      <div className={cn('flex justify-center items-center w-[100%] gap-[4.8rem] h-auto')}>
+        <PageArrow arrowSVG={<PageArrowPrev wight={'4rem'} height={'3.7rem'} />} swiper={swiper} arrowType="prev" />
+        <div className={cn('w-[84.6rem] h-[25.6rem]')}>
+          <Swiper
+            modules={[Pagination]}
+            loop={true}
+            pagination={{ el: '#pagination', clickable: true }}
+            onSwiper={e => {
+              setSwiper(e);
+            }}
+          >
+            <SwiperSlide>
+              <PetLstItem />
+            </SwiperSlide>
+          </Swiper>
+        </div>
+        <PageArrow arrowSVG={<PageArrowNext wight={'4rem'} height={'3.7rem'} />} swiper={swiper} arrowType="next" />
       </div>
-      <div className={cn('w-[100%] max-w-[84.6rem] h-[25.6rem] overflow-hidden')}>
-        <PetLstItem />
-        <PetLstItem />
-        <PetLstItem />
-      </div>
-      <div className={cn('relative group w-[4rem] h-[3.7rem]')}>
-        <span
+      <div className={cn('w-[100%] h-auto')}>
+        <div
+          id="pagination"
           className={cn(
-            `absolute top-0 left-0 cursor-pointer z-[100]
-            group-hover:last:[&_path]:fill-[#fff]
-            group-hover:[&>svg]:stroke-[#fff]
-            last:[&_path]:transition [&>svg]:duration-300`,
+            `flex justify-center items-center gap-[1.2rem] w-[100px] h-[110px] mx-auto mt-[4rem] mb-0
+            [&>.swiper-pagination-bullet]:w-[1.2rem] [&>.swiper-pagination-bullet]:h-[1.2rem]
+            [&>.swiper-pagination-bullet]:m-0 [&>.swiper-pagination-bullet]:bg-[#c5c9cf]
+            [&>.swiper-pagination-bullet-active]:bg-[#35a37e]`,
           )}
-        >
-          <PageArrowRight wight={'4rem'} height={'3.7rem'} />
-        </span>
-        <span
-          className={cn(
-            `absolute z-[99] top-0 left-0 w-[4rem] h-[3.7rem]
-            bg-[#191919] rounded-[0.9rem] opacity-0
-            group-hover:opacity-100 transition duration-300`,
-          )}
-        ></span>
+        ></div>
       </div>
     </div>
   );

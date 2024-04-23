@@ -1,5 +1,6 @@
+import CommonLayout from '@/components/common/layout/CommonLayout';
 import Toast from '@/components/common/toast/Toast';
-import CommonLayout from '@/components/layout/CommonLayout';
+
 import Modal from '@/components/modal/Modal';
 import { cn } from '@/lib/utils';
 import '@/styles/globals.css';
