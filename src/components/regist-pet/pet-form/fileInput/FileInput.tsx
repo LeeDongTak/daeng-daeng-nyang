@@ -1,10 +1,12 @@
+import NonImage from '@/components/common/non-image/NonImage';
 import { FormControl, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { Control, FieldPath, FieldValues, RefCallBack, UseFormRegisterReturn } from 'react-hook-form';
+import { InputHTMLAttributes } from 'react';
+import { Control, FieldPath, FieldValues, RefCallBack, UseFormRegisterReturn, useFormContext } from 'react-hook-form';
 interface I_FileInputProps<
   TFieldValues extends FieldValues = FieldValues,
   TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
-> {
+> extends InputHTMLAttributes<HTMLInputElement> {
   register: {
     type: 'file';
     ref: RefCallBack;
@@ -13,19 +15,23 @@ interface I_FileInputProps<
     register: UseFormRegisterReturn<TName>;
     onChange: (...event: any[]) => void;
   };
+  labelCn?: string;
 }
 const FileInput = <
   TFieldValues extends FieldValues = FieldValues,
   TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
 >({
   register,
+  labelCn,
   ...props
 }: I_FileInputProps<TFieldValues, TName>) => {
+  const form = useFormContext();
+  const hasPreviewImage = form.getValues(register.name);
   return (
     <FormItem>
-      <FormLabel>파일</FormLabel>
+      <FormLabel className={labelCn}>{!hasPreviewImage && <NonImage width="w-[2rem]" height="h-[2rem]" />}</FormLabel>
       <FormControl>
-        <Input {...register} className="hidden" />
+        <Input {...register} className="hidden" {...props} />
       </FormControl>
       <FormMessage />
     </FormItem>
