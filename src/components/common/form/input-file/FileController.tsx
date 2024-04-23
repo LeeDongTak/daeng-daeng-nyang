@@ -41,7 +41,7 @@ const FileController = <
 }: I_FileControllerProps<TFieldValues, TName>) => {
   const { control, name, defaultValue } = props;
   const inputRef = useRef<HTMLElement | null>(null);
-  const { setValue } = useFormContext();
+  const { resetField } = useFormContext();
   const { field, fieldState, formState } = useController({ name, control });
   const [base64, setBase64] = useState<unknown>(defaultValue ?? null);
   const onChange = async (e: ChangeEvent<HTMLInputElement>) => {
@@ -65,7 +65,7 @@ const FileController = <
     base64,
     select: () => inputRef.current?.click(),
     remove: () => {
-      setValue(name, null);
+      resetField(name);
       setBase64(null);
     },
     fieldState,
