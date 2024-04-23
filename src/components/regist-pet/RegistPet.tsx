@@ -1,18 +1,20 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { HeartHandshake } from 'lucide-react';
+import { Fragment } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import LayoutForm from '../common/form/form-layout/LayoutForm';
 import LayoutFormHeader from '../common/form/form-layout/layout-form-header/LayoutFormHeader';
 import FileController from '../common/form/input-file/FileController';
-import CustomInput from '../common/form/input-text/CustomInput';
+import { Button } from '../ui/button';
+import { FormControl, FormItem, FormLabel, FormMessage } from '../ui/form';
+import { Input } from '../ui/input';
 import PetForm from './pet-form/PetForm';
 
 // https://github.com/colinhacks/zod#custom-schemas
 const formSchema = z.object({
   // name: z.string(), // 반려동물 이름
   // age: z.string(), // 반려동물 나이
-  file: z.instanceof(File).optional(), // 반려동물 이미지
+  file: z.instanceof(File).nullable(), // 반려동물 이미지
   // el : z.custom<File>((val)=>{
   //   return  val === File
   // })
@@ -23,6 +25,9 @@ const formSchema = z.object({
 type T_Schema = z.infer<typeof formSchema>;
 const RegistPet = () => {
   const form = useForm<T_Schema>({
+    defaultValues: {
+      file: null, // zod에서 nullable을 줬습니다. 그리고 null로 default를 해줘야 파일이 선택 안되어있을 때도 zod에서 parsing을 성공합니다. defaultValues를 안해주면 undefined이고, 버튼 클릭시 zod parsing이 실패로 됩니다.
+    },
     resolver: zodResolver(formSchema),
   });
   const submitHandler = (value: T_Schema) => {
@@ -37,9 +42,18 @@ const RegistPet = () => {
         <FileController
           name="file"
           control={form.control}
-          defaultValue={<HeartHandshake />}
-          render={({ base64, field: { ref, onChange, type, name }, remove, select, ...props }) => (
-            <CustomInput control={form.control} ref={ref} onChange={onChange} type={type} name={name} />
+          render={({ base64, register, remove, select, ...props }) => (
+            <Fragment>
+              {base64 && <img src={base64} />}
+              <FormItem>
+                <FormLabel>파일</FormLabel>
+                <FormControl>
+                  <Input {...register} className="hidden" />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+              <Button text="삭제" onClick={remove} />
+            </Fragment>
           )}
         />
         {/* <PetForm.input control={form.control} name="file" label="사진" type="file" /> */}

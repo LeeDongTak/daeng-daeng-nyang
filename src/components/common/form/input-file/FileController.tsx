@@ -1,11 +1,13 @@
 import { getBase64 } from '@/lib/utils';
 import { ChangeEvent, useRef, useState } from 'react';
 import {
+  Control,
   ControllerFieldState,
-  ControllerRenderProps,
   FieldPath,
   FieldValues,
+  RefCallBack,
   UseControllerProps,
+  UseFormRegisterReturn,
   UseFormStateReturn,
   useController,
   useFormContext,
@@ -15,18 +17,28 @@ interface I_FileControllerProps<
   TFieldValues extends FieldValues = FieldValues,
   TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
 > extends UseControllerProps<TFieldValues, TName> {
+  name: TName;
+  control: Control<TFieldValues>;
   render: ({
-    field,
+    register,
     fieldState,
     formState,
     select,
     remove,
     base64,
   }: {
-    field: ControllerRenderProps<TFieldValues, TName> & { type: 'file' };
+    register: {
+      type: 'file';
+      ref: RefCallBack;
+      name: TName;
+      control: Control<TFieldValues>;
+      register: UseFormRegisterReturn<TName>;
+      // onChange: Pick<ControllerRenderProps<TFieldValues, TName>, 'onChange'>;
+      onChange: (...event: any[]) => void;
+    };
     fieldState: ControllerFieldState;
     formState: UseFormStateReturn<TFieldValues>;
-    base64: unknown;
+    base64: string | null;
     select: () => void;
     remove: () => void;
   }) => React.ReactElement;
@@ -36,14 +48,15 @@ const FileController = <
   TFieldValues extends FieldValues = FieldValues,
   TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
 >({
+  control,
+  name,
   render,
   ...props
 }: I_FileControllerProps<TFieldValues, TName>) => {
-  const { control, name, defaultValue } = props;
-  const inputRef = useRef<HTMLElement | null>(null);
-  const { setValue } = useFormContext();
+  const inputRef = useRef<HTMLInputElement | null>(null);
+  const { resetField, register } = useFormContext();
   const { field, fieldState, formState } = useController({ name, control });
-  const [base64, setBase64] = useState<unknown>(defaultValue ?? null);
+  const [base64, setBase64] = useState<string | null>(null);
   const onChange = async (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files?.[0]) {
       setBase64(await getBase64(e.target.files[0]));
@@ -52,21 +65,25 @@ const FileController = <
   };
 
   return render({
-    field: {
-      ...field,
+    register: {
       name,
       type: 'file',
       onChange,
-      ref: (instance: HTMLElement) => {
+      ref: (instance: HTMLInputElement) => {
         field.ref(instance);
         inputRef.current = instance;
       },
+      register: register(name),
+      control,
     },
     base64,
     select: () => inputRef.current?.click(),
     remove: () => {
-      setValue(name, null);
-      setBase64(null);
+      if (inputRef.current) {
+        inputRef.current.value = '';
+        resetField(name);
+        setBase64(null);
+      }
     },
     fieldState,
     formState,
