@@ -5,7 +5,6 @@ import { z } from 'zod';
 import LayoutForm from '../common/form/form-layout/LayoutForm';
 import LayoutFormHeader from '../common/form/form-layout/layout-form-header/LayoutFormHeader';
 import FileController from '../common/form/input-file/FileController';
-import { Button } from '../ui/button';
 import PetForm from './pet-form/PetForm';
 import FileInput from './pet-form/fileInput/FileInput';
 import PreviewImage from './preview-image/PreviewImage';
@@ -43,10 +42,8 @@ const RegistPet = () => {
           control={form.control}
           render={({ base64, register, remove, select, ...props }) => (
             <Fragment>
-              {/* {base64 && <img src={base64} className="w-64 h-64" />} */}
               <PreviewImage remove={remove} base64={base64} />
               <FileInput register={register} />
-              <Button text="삭제" onClick={remove} />
             </Fragment>
           )}
         />
