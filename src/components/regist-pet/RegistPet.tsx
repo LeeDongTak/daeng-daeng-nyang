@@ -1,5 +1,4 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { HeartHandshake } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import LayoutForm from '../common/form/form-layout/LayoutForm';
@@ -12,7 +11,7 @@ import PetForm from './pet-form/PetForm';
 const formSchema = z.object({
   // name: z.string(), // 반려동물 이름
   // age: z.string(), // 반려동물 나이
-  file: z.instanceof(File).optional(), // 반려동물 이미지
+  file: z.instanceof(File).nullable(), // 반려동물 이미지
   // el : z.custom<File>((val)=>{
   //   return  val === File
   // })
@@ -37,7 +36,6 @@ const RegistPet = () => {
         <FileController
           name="file"
           control={form.control}
-          defaultValue={<HeartHandshake />}
           render={({ base64, field: { ref, onChange, type, name }, remove, select, ...props }) => (
             <CustomInput control={form.control} ref={ref} onChange={onChange} type={type} name={name} />
           )}
