@@ -53,7 +53,7 @@ const FileController = <
   render,
   ...props
 }: I_FileControllerProps<TFieldValues, TName>) => {
-  const inputRef = useRef<HTMLElement | null>(null);
+  const inputRef = useRef<HTMLInputElement | null>(null);
   const { resetField, register } = useFormContext();
   const { field, fieldState, formState } = useController({ name, control });
   const [base64, setBase64] = useState<string | null>(null);
@@ -69,7 +69,7 @@ const FileController = <
       name,
       type: 'file',
       onChange,
-      ref: (instance: HTMLElement) => {
+      ref: (instance: HTMLInputElement) => {
         field.ref(instance);
         inputRef.current = instance;
       },
@@ -79,8 +79,11 @@ const FileController = <
     base64,
     select: () => inputRef.current?.click(),
     remove: () => {
-      resetField(name);
-      setBase64(null);
+      if (inputRef.current) {
+        inputRef.current.value = '';
+        resetField(name);
+        setBase64(null);
+      }
     },
     fieldState,
     formState,
