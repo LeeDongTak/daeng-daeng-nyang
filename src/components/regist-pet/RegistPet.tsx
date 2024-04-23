@@ -1,15 +1,18 @@
 import { zodResolver } from '@hookform/resolvers/zod';
+import { HeartHandshake } from 'lucide-react';
 import { useForm } from 'react-hook-form';
-import { ZodType, z } from 'zod';
+import { z } from 'zod';
 import LayoutForm from '../common/form/form-layout/LayoutForm';
 import LayoutFormHeader from '../common/form/form-layout/layout-form-header/LayoutFormHeader';
+import FileController from '../common/form/input-file/FileController';
+import CustomInput from '../common/form/input-text/CustomInput';
 import PetForm from './pet-form/PetForm';
 
 // https://github.com/colinhacks/zod#custom-schemas
 const formSchema = z.object({
   // name: z.string(), // 반려동물 이름
   // age: z.string(), // 반려동물 나이
-  file: z.any() as ZodType<FileList>, // 반려동물 이미지
+  file: z.instanceof(File).optional(), // 반려동물 이미지
   // el : z.custom<File>((val)=>{
   //   return  val === File
   // })
@@ -28,8 +31,17 @@ const RegistPet = () => {
 
   return (
     <LayoutForm form={form}>
+      {/* <input type="file" onChange={} /> */}
       <LayoutFormHeader title="반려동물 등록" />
       <PetForm onSubmit={form.handleSubmit(submitHandler)}>
+        <FileController
+          name="file"
+          control={form.control}
+          defaultValue={<HeartHandshake />}
+          render={({ base64, field: { ref, onChange, type, name }, remove, select, ...props }) => (
+            <CustomInput control={form.control} ref={ref} onChange={onChange} type={type} name={name} />
+          )}
+        />
         {/* <PetForm.input control={form.control} name="file" label="사진" type="file" /> */}
         {/* <PetForm.input control={form.control} name="name" label="이름" />
       <PetForm.input control={form.control} name="age" label="나이" />
