@@ -1,3 +1,4 @@
+import NonImage from '@/components/common/non-image/NonImage';
 import { FormControl, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { InputHTMLAttributes } from 'react';
@@ -28,7 +29,11 @@ const FileInput = <
   const hasPreviewImage = form.getValues(register.name);
   return (
     <FormItem className="w-64">
-      {!hasPreviewImage && <FormLabel className="w-64 h-64 block"></FormLabel>}
+      {!hasPreviewImage && (
+        <FormLabel className="w-64 h-64 block">
+          <NonImage className="h-64 rounded-full" />
+        </FormLabel>
+      )}
       <FormControl>
         <Input {...register} className="hidden" {...props} />
       </FormControl>
