@@ -33,7 +33,6 @@ interface I_FileControllerProps<
       name: TName;
       control: Control<TFieldValues>;
       register: UseFormRegisterReturn<TName>;
-      // onChange: Pick<ControllerRenderProps<TFieldValues, TName>, 'onChange'>;
       onChange: (...event: any[]) => void;
     };
     fieldState: ControllerFieldState;

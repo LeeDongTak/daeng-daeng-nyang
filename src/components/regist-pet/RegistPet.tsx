@@ -5,10 +5,9 @@ import { z } from 'zod';
 import LayoutForm from '../common/form/form-layout/LayoutForm';
 import LayoutFormHeader from '../common/form/form-layout/layout-form-header/LayoutFormHeader';
 import FileController from '../common/form/input-file/FileController';
-import { Button } from '../ui/button';
-import { FormControl, FormItem, FormLabel, FormMessage } from '../ui/form';
-import { Input } from '../ui/input';
 import PetForm from './pet-form/PetForm';
+import FileInput from './pet-form/fileInput/FileInput';
+import PreviewImage from './preview-image/PreviewImage';
 
 // https://github.com/colinhacks/zod#custom-schemas
 const formSchema = z.object({
@@ -36,7 +35,6 @@ const RegistPet = () => {
 
   return (
     <LayoutForm form={form}>
-      {/* <input type="file" onChange={} /> */}
       <LayoutFormHeader title="반려동물 등록" />
       <PetForm onSubmit={form.handleSubmit(submitHandler)}>
         <FileController
@@ -44,15 +42,8 @@ const RegistPet = () => {
           control={form.control}
           render={({ base64, register, remove, select, ...props }) => (
             <Fragment>
-              {base64 && <img src={base64} />}
-              <FormItem>
-                <FormLabel>파일</FormLabel>
-                <FormControl>
-                  <Input {...register} className="hidden" />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-              <Button text="삭제" onClick={remove} />
+              <PreviewImage remove={remove} base64={base64} />
+              <FileInput register={register} />
             </Fragment>
           )}
         />
