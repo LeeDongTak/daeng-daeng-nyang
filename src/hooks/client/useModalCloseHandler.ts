@@ -10,10 +10,11 @@ const useModalCloseHandler = () => {
    * <button onclick={()=>{clickModalCloseHandler(modalId)}} />
    * @param modalId 
    */
-  const clickModalCloseHandler = (modalId: string) => {
+  const clickModalCloseHandler = (modalId?: string) => {
     DaengModal.hide(modalId ?? '');
-  }
- return {clickModalCloseHandler}
+  };
+
+ return { clickModalCloseHandler };
 }
 
-export default useModalCloseHandler
+export default useModalCloseHandler;

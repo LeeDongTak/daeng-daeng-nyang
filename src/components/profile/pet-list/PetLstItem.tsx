@@ -1,15 +1,22 @@
 import Title from '@/components/common/Title';
 import { Button } from '@/components/ui/button';
+import { useModal } from '@/hooks/client/ui/useModal';
 import { cn } from '@/lib/utils';
 import Avatar from '../../../../public/icons/avatar.svg';
+import PetUpdateModal from '../pet-update-modal/PetUpdateModal';
 
 const PetLstItem = () => {
+  const { DaengModal } = useModal();
   const PET_INFO_GROUP = {
     name: ['이름', '모찌'],
     birthDate: ['생년월일', '2020.02.16'],
     gender: ['성별', '암컷'],
     weight: ['몸무게', '6kg'],
     breed: ['종류', '강아지/코리안 숏헤어'],
+  };
+
+  const clickPetInfoUpdateHandler = () => {
+    DaengModal.fire(<PetUpdateModal petId={'1'} />);
   };
 
   return (
@@ -24,7 +31,7 @@ const PetLstItem = () => {
         )}
       >
         <Title level={5} className="text-[2.4rem] h-auto m-0 font-[600]" text="반려동물 정보" />
-        <Button type="button" variant={'update'} text="수정" />
+        <Button type="button" variant={'update'} text="수정" onClick={clickPetInfoUpdateHandler} />
       </div>
       <div className={cn('flex justify-start items-center w-[100%] gap-[2.4rem]')}>
         <div className={cn('w-[12rem] h-[12rem] rounded-[50%]')}>
