@@ -1,3 +1,4 @@
+import CustomRadioInput from '@/components/common/form/input-radio/CustomRadioInput';
 import CustomInput from '@/components/common/form/input-text/CustomInput';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
@@ -19,5 +20,6 @@ const PetForm = (props: I_FormProps) => {
 PetForm.input = CustomInput;
 PetForm.file = FileInput;
 PetForm.previewImage = PreviewImage;
+PetForm.radio = CustomRadioInput;
 PetForm.button = Button;
 export default PetForm;
