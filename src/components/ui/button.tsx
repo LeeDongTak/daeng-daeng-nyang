@@ -17,12 +17,15 @@ const buttonVariants = cva(
         link: 'text-primary underline-offset-4 hover:underline',
         update: 'text-primary text-[1.4rem] font-[700] bg-[#E1E6EC] hover:bg-destructive/50',
         delete: 'text-primary text-[1.4rem] font-[700] bg-[#FF583D] hover:bg-destructive/50',
+        modal:
+          'text-secondary text-[1.4rem] font-[700] bg-[#191919] rounded-[50px] hover:bg-destructive/30 hover:text-[#555]',
       },
       size: {
         default: 'h-10 px-[3.2rem] py-[0.75rem]',
         sm: 'h-9 rounded-md px-3',
         lg: 'h-11 rounded-md px-8',
         icon: 'h-10 w-10',
+        modal: 'px-[3.2rem] py-[0.8rem]',
       },
     },
     defaultVariants: {
