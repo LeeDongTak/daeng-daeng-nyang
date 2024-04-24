@@ -1,6 +1,7 @@
 import { cn } from '@/lib/utils';
 import MyGallery from './my-gallery/MyGallery';
 import PetList from './pet-list/PetList';
+import PetUpdateModal from './pet-update-modal/PetUpdateModal';
 import ProfileTitle from './profile-title/ProfileTitle';
 import Schedule from './schedule/Schedule';
 
@@ -16,6 +17,7 @@ const Profile = () => {
         <PetList />
         <Schedule />
         <MyGallery />
+        <PetUpdateModal />
       </div>
     </div>
   );
