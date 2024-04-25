@@ -1,6 +1,5 @@
 import { FormControl, FormField, FormItem, FormLabel } from '@/components/ui/form';
-import { RadioGroup } from '@/components/ui/radio-group';
-import { RadioGroupItem } from '@radix-ui/react-radio-group';
+import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { ComponentPropsWithRef } from 'react';
 import { Control, FieldPath, FieldValues } from 'react-hook-form';
 interface I_RadioProps<
@@ -22,9 +21,9 @@ const CustomRadioInput = <T extends FieldValues>({ control, name, title, radioIt
         <FormItem className="space-y-3">
           <FormLabel className={titleCn}>{title}</FormLabel>
           <FormControl>
-            <RadioGroup {...field} className="flex sapce-y-1">
+            <RadioGroup onValueChange={field.onChange} defaultValue={field.value} className="flex flex-col space-y-1">
               {radioItem.map(item => (
-                <FormItem className="flex item-center space-x-3 space-y-0">
+                <FormItem key={item.label} className="flex item-center space-x-3 space-y-0">
                   <FormControl>
                     <RadioGroupItem value={item.value} />
                   </FormControl>
