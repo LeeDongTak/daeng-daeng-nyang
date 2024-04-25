@@ -1,5 +1,5 @@
-const map = () => {
+const MapPage = () => {
   return <div></div>;
 };
 
-export default map;
+export default MapPage;
