@@ -1,3 +1,4 @@
+import CustomCalendarInput from '@/components/common/form/input-calendar/CustomCalendarInput';
 import CustomRadioInput from '@/components/common/form/input-radio/CustomRadioInput';
 import CustomInput from '@/components/common/form/input-text/CustomInput';
 import { Button } from '@/components/ui/button';
@@ -17,6 +18,7 @@ const PetForm = (props: I_FormProps) => {
     </form>
   );
 };
+PetForm.calendar = CustomCalendarInput;
 PetForm.input = CustomInput;
 PetForm.file = FileInput;
 PetForm.previewImage = PreviewImage;
