@@ -16,6 +16,7 @@
     "@tanstack/react-query-devtools": "^5.29.0",
     "@types/lodash": "^4.17.0",
     "axios": "^1.6.8",
+    "cheerio": "1.0.0-rc.12",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
     "dayjs": "^1.11.10",
