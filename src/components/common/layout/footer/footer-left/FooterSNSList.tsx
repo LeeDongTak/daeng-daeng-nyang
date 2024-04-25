@@ -1,9 +1,9 @@
 import { cn } from '@/lib/utils';
-import Facebook from '../../../../../public/icons/Facebook.svg';
-import Instagram from '../../../../../public/icons/Instagram.svg';
-import Linkedin from '../../../../../public/icons/Linkedin.svg';
-import TikTok from '../../../../../public/icons/TikTok.svg';
-import Youtube from '../../../../../public/icons/Youtube.svg';
+import Facebook from '../../../../../../public/icons/Facebook.svg';
+import Instagram from '../../../../../../public/icons/Instagram.svg';
+import Linkedin from '../../../../../../public/icons/Linkedin.svg';
+import TikTok from '../../../../../../public/icons/TikTok.svg';
+import Youtube from '../../../../../../public/icons/Youtube.svg';
 
 const FooterSNSList = () => {
   return (

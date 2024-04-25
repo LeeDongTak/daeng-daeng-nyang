@@ -1,12 +1,12 @@
-import { ComponentPropsWithoutRef } from 'react';
+import { ComponentPropsWithRef } from 'react';
 import { Control, FieldPath, FieldValues, RegisterOptions } from 'react-hook-form';
-import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '../../ui/form';
-import { Input } from '../../ui/input';
+import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '../../../ui/form';
+import { Input } from '../../../ui/input';
 
 interface I_ControlProps<
   TFieldValues extends FieldValues = FieldValues,
   TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
-> extends ComponentPropsWithoutRef<'input'> {
+> extends ComponentPropsWithRef<'input'> {
   control: Control<TFieldValues>;
   name: TName;
   rules?: Omit<RegisterOptions<TFieldValues, TName>, 'valueAsNumber' | 'valueAsDate' | 'setValueAs' | 'disabled'>;
