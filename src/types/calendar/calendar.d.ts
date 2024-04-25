@@ -44,3 +44,7 @@ export interface HolidayType {
   name: string;
   anniversary: string;
 }
+
+export interface HolidaysType {
+  [key: string]: HolidayType[];
+}

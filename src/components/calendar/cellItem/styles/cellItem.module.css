@@ -47,7 +47,8 @@
 }
 
 .mini-after-date {
-  opacity: 0.5 !important;
+  opacity: 0.5;
+  cursor: pointer;
 }
 
 /*
@@ -116,7 +117,7 @@
 }
 
 .big-calendar-current-date::after {
-  content: "오늘" !important;
+  content: '오늘' !important;
   position: absolute !important;
   display: flex !important;
   padding: 0.5rem 1rem !important;
