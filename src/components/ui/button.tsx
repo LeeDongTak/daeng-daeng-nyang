@@ -36,17 +36,12 @@ export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
     VariantProps<typeof buttonVariants> {
   asChild?: boolean;
-  text: string; // children으로 버튼이라 명시하기 보단 props로 조금더 깔끔하게 하기 위해서 props 생성했습니다.
 }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant, size, asChild = false, text, ...props }, ref) => {
+  ({ className, variant, size, asChild = false, ...props }, ref) => {
     const Comp = asChild ? Slot : 'button';
-    return (
-      <Comp className={cn(buttonVariants({ variant, size, className }))} ref={ref} {...props}>
-        {text}
-      </Comp>
-    );
+    return <Comp className={cn(buttonVariants({ variant, size, className }))} ref={ref} {...props} />;
   },
 );
 Button.displayName = 'Button';

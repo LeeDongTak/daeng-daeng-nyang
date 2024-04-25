@@ -6,6 +6,7 @@ import LayoutForm from '../common/form/form-layout/LayoutForm';
 import LayoutFormBody from '../common/form/form-layout/layout-form-body/LayoutFormBody';
 import LayoutFormFooter from '../common/form/form-layout/layout-form-footer/LayoutFormFooter';
 import LayoutFormHeader from '../common/form/form-layout/layout-form-header/LayoutFormHeader';
+import CustomCalendarInput from '../common/form/input-calendar/CustomCalendarInput';
 import FileController from '../common/form/input-file/FileController';
 import PetForm from './pet-form/PetForm';
 
@@ -16,6 +17,7 @@ const formSchema = z.object({
   age: z.string(), // 반려동물 나이
   breed: z.string(), // 종류
   gender: z.enum(['수컷', '암컷', '중성']), //수컷 암컷, 중성 // checkbox로 하기
+  date: z.date(),
 });
 const PET_GENDER_GROUP = [
   { value: '수컷', label: '수컷' },
@@ -36,7 +38,6 @@ const RegistPet = () => {
   const submitHandler = (value: T_Schema) => {
     console.log(value);
   };
-  console.log(form.getValues('file'));
   return (
     <LayoutForm form={form}>
       <LayoutFormHeader title="반려동물 등록" />
@@ -53,6 +54,7 @@ const RegistPet = () => {
             )}
           />
           <div>
+            <CustomCalendarInput control={form.control} name="date" />
             <PetForm.radio control={form.control} name="gender" title="성별" radioItem={PET_GENDER_GROUP} />
             <PetForm.input control={form.control} name="name" label="이름" />
             <PetForm.input control={form.control} name="age" label="나이" />
