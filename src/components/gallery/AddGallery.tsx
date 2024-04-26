@@ -1,8 +1,8 @@
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
-import GalleryForm from '../auth/form/GalleryForm';
-import LayoutForm from '../auth/form/layout-form/LayoutForm';
-import LayoutFormBody from '../auth/form/layout-form/layout-form-body/LayoutFormBody';
+import LayoutForm from '../common/form/form-layout/LayoutForm';
+import LayoutFormBody from '../common/form/form-layout/layout-form-body/LayoutFormBody';
+import GalleryForm from './gallery-form/GalleryForm';
 
 const galleryFormSchema = z.object({
   title: z.string().min(1),
@@ -45,7 +45,7 @@ const AddGallery = () => {
             label="내용"
             className="w-[84.6rem] h-[24rem]"
           />
-          <GalleryForm.button type="submit" text="등록" />
+          <GalleryForm.button type="submit">등록</GalleryForm.button>
         </GalleryForm>
       </LayoutFormBody>
     </LayoutForm>
