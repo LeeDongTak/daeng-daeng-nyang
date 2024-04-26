@@ -8,9 +8,9 @@ import CalenderDetail from '../../../../public/image/calender-detail.png';
 import Calender from '../../../../public/image/calender.png';
 
 const HomeCalender = () => {
-  const [Animation, setAnimation] = useState('translate-y-[20%] opacity-0');
+  const [animation, setAnimation] = useState('translate-y-[20%] opacity-0');
   const { ref } = useInView({
-    threshold: 0.5,
+    threshold: 0.75,
     onChange(inView, entry) {
       console.log(entry);
       if (window.scrollY > 1050) {
@@ -29,7 +29,7 @@ const HomeCalender = () => {
         <div
           className={cn(
             'flex flex-col items-end justify-start w-[50%] pr-[15%] transition-all duration-1000',
-            Animation,
+            animation,
           )}
         >
           <div className={cn('flex flex-col items-start justify-start w-[auto]')}>
@@ -41,7 +41,7 @@ const HomeCalender = () => {
             </p>
           </div>
         </div>
-        <div className={cn('relative w-[50%] h-[47em] transition-all duration-1000', Animation)}>
+        <div className={cn('relative w-[50%] h-[47em] transition-all duration-1000', animation)}>
           <p className={cn('absolute top-0 right-0 w-[80%] shadow-[0_0_1rem_0_rgba(0,0,0,0.2)] rounded-[2rem]')}>
             <Image src={Calender} alt="달력 이미지" />
           </p>
