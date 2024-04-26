@@ -1,4 +1,5 @@
 import { Button } from '@/components/ui/button';
+import useTab from '@/hooks/client/useTab';
 
 const CONTENT_TYPE = [
   {
@@ -11,8 +12,9 @@ const CONTENT_TYPE = [
   },
 ];
 const MapTab = () => {
+  const { currentItem, changeItem } = useTab({ initialValue: 0, allTabs: CONTENT_TYPE });
   return (
-    <div>
+    <div className="">
       {CONTENT_TYPE.map((content, idx) => (
         <Button>{content.tab}</Button>
       ))}
