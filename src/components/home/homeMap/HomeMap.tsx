@@ -3,19 +3,38 @@ import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import Image from 'next/image';
 import { useState } from 'react';
+import { useInView } from 'react-intersection-observer';
 import MapImage from '../../../../public/image/map-page.png';
 
 const HomeMap = () => {
+  const [imageAnimation, setImageAnimation] = useState('translate-y-[20%] opacity-0');
+  const [textAnimation, setTextAnimation] = useState('opacity-0');
+  const { ref } = useInView({
+    threshold: 1,
+    onChange(inView, entry) {
+      console.log(entry);
+      if (window.scrollY > 550) {
+        return;
+      } else if (inView) {
+        setImageAnimation('translate-y-[0%] opacity-100');
+        setTextAnimation('opacity-100');
       } else {
+        setImageAnimation('translate-y-[20%] opacity-0');
+        setTextAnimation('opacity-0');
+      }
+    },
+  });
 
   return (
     <div className={cn('w-full h-auto mt-[10rem]')} ref={ref}>
       <div className={cn('flex justify-between items-center w-[128rem] mx-auto')}>
+        <div className={cn('flex justify-start items-center w-[50%] transition-all duration-1000', imageAnimation)}>
           <p className={cn('w-[70%] p-[2rem] rounded-[3rem] bg-white shadow-[0_0_1rem_0_rgba(0,0,0,0.2)]')}>
             <Image src={MapImage} alt="지도 이미지" />
           </p>
         </div>
         <div
+          className={cn('flex flex-col items-start justify-start w-[50%] transition-all duration-1000', textAnimation)}
         >
           <div className={cn('flex flex-col items-start justify-start w-[auto]')}>
             <Title level={5} className={cn('text-[4.8rem] font-bold')} text="댕댕냥이가 아프다면?" />

@@ -3,15 +3,34 @@ import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import Image from 'next/image';
 import { useState } from 'react';
+import { useInView } from 'react-intersection-observer';
 import CalenderDetail from '../../../../public/image/calender-detail.png';
 import Calender from '../../../../public/image/calender.png';
 
 const HomeCalender = () => {
+  const [Animation, setAnimation] = useState('translate-y-[20%] opacity-0');
+  const { ref } = useInView({
+    threshold: 0.5,
+    onChange(inView, entry) {
+      console.log(entry);
+      if (window.scrollY > 1050) {
+        return;
+      } else if (inView) {
+        setAnimation('translate-y-[0%] opacity-100');
+      } else {
+        setAnimation('translate-y-[20%] opacity-0');
+      }
+    },
+  });
 
   return (
     <div className={cn('w-full h-auto mt-[10rem]')} ref={ref}>
       <div className={cn('flex justify-between items-center w-[128rem] mx-auto')}>
         <div
+          className={cn(
+            'flex flex-col items-end justify-start w-[50%] pr-[15%] transition-all duration-1000',
+            Animation,
+          )}
         >
           <div className={cn('flex flex-col items-start justify-start w-[auto]')}>
             <Title level={5} className={cn('text-[4.8rem] font-bold')} text="댕댕냥이랑 뭐하지?" />
@@ -22,6 +41,7 @@ const HomeCalender = () => {
             </p>
           </div>
         </div>
+        <div className={cn('relative w-[50%] h-[47em] transition-all duration-1000', Animation)}>
           <p className={cn('absolute top-0 right-0 w-[80%] shadow-[0_0_1rem_0_rgba(0,0,0,0.2)] rounded-[2rem]')}>
             <Image src={Calender} alt="달력 이미지" />
           </p>
