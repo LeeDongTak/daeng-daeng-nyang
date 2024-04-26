@@ -1,5 +1,7 @@
+import KakaoMap from './kakao-map/KakaoMap';
+
 const Map = () => {
-  return <div></div>;
+  return <KakaoMap />;
 };
 
 export default Map;

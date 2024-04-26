@@ -1,5 +1,7 @@
+import Map from '@/components/map/Map';
+
 const MapPage = () => {
-  return <div></div>;
+  return <Map />;
 };
 
 export default MapPage;
