@@ -2,7 +2,6 @@ import { cn } from '@/lib/utils';
 import Avatar from '../../../../public/icons/avatar.svg';
 import BellRing from '../../../../public/icons/bell-ring.svg';
 import Search from '../../../../public/icons/search.svg';
-
 const MenuBox = () => {
   return (
     <div className={cn('flex items-center w-auto h-[100%] gap-[3.2rem]')}>
