@@ -6,7 +6,7 @@ const KakaoMap = () => {
   return (
     <Fragment>
       <Script src={KAKAO_SDK_URL} strategy="beforeInteractive" />
-      <Map center={{ lat: 33.5563, lng: 126.79581 }} level={4} style={{ width: '800px', height: '600px' }}>
+      <Map center={{ lat: 33.5563, lng: 126.79581 }} style={{ width: '800px', height: '600px' }}>
         <MapMarker position={{ lat: 33.55635, lng: 126.795841 }}>
           <div style={{ color: '#000' }}>Hello World!</div>
         </MapMarker>
