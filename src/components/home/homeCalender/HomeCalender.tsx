@@ -11,11 +11,8 @@ const HomeCalender = () => {
   const [animation, setAnimation] = useState('translate-y-[20%] opacity-0');
   const { ref } = useInView({
     threshold: 0.75,
-    onChange(inView, entry) {
-      console.log(entry);
-      if (window.scrollY > 1050) {
-        return;
-      } else if (inView) {
+    onChange(inView) {
+      if (inView) {
         setAnimation('translate-y-[0%] opacity-100');
       } else {
         setAnimation('translate-y-[20%] opacity-0');

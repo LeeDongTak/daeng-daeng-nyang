@@ -11,11 +11,8 @@ const HomeMap = () => {
   const [textAnimation, setTextAnimation] = useState('opacity-0');
   const { ref } = useInView({
     threshold: 1,
-    onChange(inView, entry) {
-      console.log(entry);
-      if (window.scrollY > 550) {
-        return;
-      } else if (inView) {
+    onChange(inView) {
+      if (inView) {
         setImageAnimation('translate-y-[0%] opacity-100');
         setTextAnimation('opacity-100');
       } else {
