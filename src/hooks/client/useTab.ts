@@ -1,10 +1,12 @@
 import { useState } from 'react';
 
-interface I_UseTabProps<T> {
+interface I_UseTabProps {
   initialValue: number;
-  allTabs: T[];
+  allTabs: Record<string, string>[];
 }
-const useTab = <T extends { [key: string]: string }>({ initialValue, allTabs }: I_UseTabProps<T>) => {
+
+const useTab = (props: I_UseTabProps) => {
+  const { initialValue, allTabs } = props;
   const [currentIndex, setCurrentIndex] = useState<number>(initialValue);
 
   return {
