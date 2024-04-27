@@ -1,17 +1,21 @@
-import Script from 'next/script';
-import { Fragment } from 'react';
-import { Map, MapMarker } from 'react-kakao-maps-sdk';
-const KAKAO_SDK_URL = `//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_PUBLIC_KAKAO_MAP_API_KEY}&autoload=false`;
+import Skeleton from '@/components/ui/skeleton';
+import useKakaoLoader from '@/hooks/client/map/useKakaoLoader';
+import { CSSProperties, useState } from 'react';
+import { Map } from 'react-kakao-maps-sdk';
+import CustomMarker from './custom-marker/CustomMarker';
+
+const MAP_STYLE: CSSProperties = { width: '800px', height: '600px', position: 'relative' };
+const INITIAL_ZOOM = 3;
+const position = { lat: 33.5563, lng: 126.79581 };
 const KakaoMap = () => {
+  const [loading, error] = useKakaoLoader();
+  const [map, setMap] = useState<kakao.maps.Map | null>(null);
+  if (loading || error) return <Skeleton type="map" />;
+
   return (
-    <Fragment>
-      <Script src={KAKAO_SDK_URL} strategy="beforeInteractive" />
-      <Map center={{ lat: 33.5563, lng: 126.79581 }} style={{ width: '800px', height: '600px' }}>
-        <MapMarker position={{ lat: 33.55635, lng: 126.795841 }}>
-          <div style={{ color: '#000' }}>Hello World!</div>
-        </MapMarker>
-      </Map>
-    </Fragment>
+    <Map center={position} style={MAP_STYLE} level={INITIAL_ZOOM} onCreate={setMap}>
+      <CustomMarker position={{ lat: 33.5563, lng: 126.79581 }}></CustomMarker>
+    </Map>
   );
 };
 
