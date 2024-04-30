@@ -31,7 +31,9 @@ const PetLstItem = () => {
         )}
       >
         <Title level={5} className="text-[2.4rem] h-auto m-0 font-[600]" text="반려동물 정보" />
-        <Button type="button" variant={'update'} text="수정" onClick={clickPetInfoUpdateHandler} />
+        <Button type="button" variant={'update'} onClick={clickPetInfoUpdateHandler}>
+          수정
+        </Button>
       </div>
       <div className={cn('flex justify-start items-center w-[100%] gap-[2.4rem]')}>
         <div className={cn('w-[12rem] h-[12rem] rounded-[50%]')}>

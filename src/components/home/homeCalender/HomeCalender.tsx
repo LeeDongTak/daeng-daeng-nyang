@@ -34,7 +34,9 @@ const HomeCalender = () => {
             <p className={cn('flex justify-center w-[100%] text-[1.8rem]')}>캘린더에 일정을 등록해 보세요</p>
             <p className={cn('flex justify-center w-[100%] text-[1.8rem]')}>댕댕냥이와 함께하는 라이프 스타일!</p>
             <p className={cn('flex justify-center w-[100%] mt-[10%]')}>
-              <Button type="button" variant="more" size="more" text="일정 등록하기" />
+              <Button type="button" variant="more" size="more">
+                일정 등록하기
+              </Button>
             </p>
           </div>
         </div>

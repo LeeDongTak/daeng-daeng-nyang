@@ -29,7 +29,9 @@ const ChattingRoomInput = () => {
         }}
       />
 
-      <Button type="button" variant="chat" size="chat" disabled={isButtonDisabled} text="전송" />
+      <Button type="button" variant="chat" size="chat" disabled={isButtonDisabled}>
+        전송
+      </Button>
     </div>
   );
 };

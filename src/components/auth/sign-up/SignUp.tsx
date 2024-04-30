@@ -33,7 +33,7 @@ const SignUp = () => {
           <AuthForm.input control={form.control} name="email" label="이메일" />
           <AuthForm.input control={form.control} name="password" label="비밀번호" />
           <AuthForm.input control={form.control} name="passwordCheck" label="비밀번호 확인" />
-          <AuthForm.button type="submit" text="회원가입" />
+          <AuthForm.button type="submit">회원가입</AuthForm.button>
         </AuthForm>
       </LayoutFormBody>
     </LayoutForm>
