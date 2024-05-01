@@ -1,4 +1,5 @@
-import { T_Search } from '@/components/map/map-body/search-location-tab/MapTabs';
+import { T_Search } from '@/components/map/map-body/search-location-tab/SearchLocationTab';
+import { setSearchType } from '@/store/map/search-location/search-store';
 import { useEffect, useState } from 'react';
 
 interface I_UseTabProps {
@@ -12,6 +13,7 @@ const useTab = (props: I_UseTabProps) => {
   // 기존 clickChangeItem 내부에서 아래의 로직을 추가하면 state변경이 뒤늦게 일어나기에 useEffect안에서 변경되게끔 했습니다.
   useEffect(() => {
     const SEARCH_TYPE = allTabs[currentIndex]['CALL_TYPE'];
+    setSearchType(SEARCH_TYPE);
   }, [currentIndex]);
 
   const clickChangeItem = (idx: number) => () => {
