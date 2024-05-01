@@ -5,6 +5,7 @@ import useKakaoMapStore, {
   setCurrentLocation,
   setCurrentPosition,
   setKakaoMap,
+  setMarkers,
 } from '@/store/map/kakako-map/kakaoMap-store';
 import useSearchLocationStore from '@/store/map/search-location/search-store';
 import { CSSProperties, useEffect } from 'react';
@@ -35,6 +36,9 @@ const KakaoMap = () => {
 
   const handleIdleMap = async (map: kakao.maps.Map) => {
     setKakaoMap(map);
+    const markers = await searchPlaces(map);
+    if (!markers) return setMarkers(null);
+    if (markers) setMarkers(markers);
   };
   /**
    * 초기 위치값 설정 useEffect
