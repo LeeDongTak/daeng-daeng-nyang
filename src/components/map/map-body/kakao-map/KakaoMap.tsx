@@ -8,8 +8,9 @@ import useKakaoMapStore, {
   setMarkers,
 } from '@/store/map/kakako-map/kakaoMap-store';
 import useSearchLocationStore from '@/store/map/search-location/search-store';
+import { MapPin } from 'lucide-react';
 import { CSSProperties, useEffect } from 'react';
-import { Map } from 'react-kakao-maps-sdk';
+import { CustomOverlayMap, Map } from 'react-kakao-maps-sdk';
 import CustomMarker from './custom-marker/CustomMarker';
 
 const MAP_STYLE: CSSProperties = { width: '1264px', height: '600px', position: 'relative', overflow: 'hidden' };
@@ -24,7 +25,7 @@ const CATETGORY_CODE: I_Category_code = {
 };
 const KakaoMap = () => {
   const [loading, error] = useKakaoLoader();
-  const { map: kakaoMap, currentPosition, markers } = useKakaoMapStore();
+  const { map: kakaoMap, currentPosition, markers, currentLocation } = useKakaoMapStore();
   const category_type = useSearchLocationStore(state => state.category_type);
   const DEFAULT_SEARCH_VALUES = category_type === 'hospital' ? '동물병원' : '공원';
 
@@ -123,6 +124,9 @@ const KakaoMap = () => {
         onIdle은 맵의 움직임을 동적으로 감지합니다. 따라서 중심좌표의 변경, 줌level등을 동적으로 사용자의 인터렉션에 따라 감지 할수 있습니다. 활용 예시로는 중심좌표가 변화하면 그에 따른 유저가 원하는 location을 중심좌표 주변으로 검색할수 있겠끔 해줄수 있습니다. 
        */
     >
+      <CustomOverlayMap position={currentLocation}>
+        <MapPin size={48} color="#1f4da8" />
+      </CustomOverlayMap>
       {markers?.map(marker => {
         return (
           <CustomMarker
