@@ -1,5 +1,6 @@
 import Skeleton from '@/components/ui/skeleton';
-import useKakaoLoader from '@/hooks/client/map/useKakaoLoader';
+
+import useKakaoLoader from '@/hooks/client/map/kakao-map/useKakaoLoader';
 import { CSSProperties, useState } from 'react';
 import { Map } from 'react-kakao-maps-sdk';
 import CustomMarker from './custom-marker/CustomMarker';
