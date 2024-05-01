@@ -40,6 +40,12 @@ const KakaoMap = () => {
     if (!markers) return setMarkers(null);
     if (markers) setMarkers(markers);
   };
+
+  const moveMapCenterLatLng = (marker: kakao.maps.Marker) => {
+    if (!kakaoMap) return;
+    const newLatLng = new kakao.maps.LatLng(marker.getPosition().getLat(), marker.getPosition().getLng());
+    kakaoMap.panTo(newLatLng);
+  };
   /**
    * 초기 위치값 설정 useEffect
    */
@@ -120,6 +126,7 @@ const KakaoMap = () => {
       {markers?.map(marker => {
         return (
           <CustomMarker
+            onClick={moveMapCenterLatLng}
             key={`marker-${marker.position.lat},${marker.position.lng}`}
             position={marker.position}
           ></CustomMarker>
