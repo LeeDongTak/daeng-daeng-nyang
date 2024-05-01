@@ -53,6 +53,9 @@ const KakaoMap = () => {
       level={INITIAL_ZOOM}
       onCreate={kakaoMapHandler}
       onIdle={handleIdleMap}
+      /**
+        onIdle은 맵의 움직임을 동적으로 감지합니다. 따라서 중심좌표의 변경, 줌level등을 동적으로 사용자의 인터렉션에 따라 감지 할수 있습니다. 활용 예시로는 중심좌표가 변화하면 그에 따른 유저가 원하는 location을 중심좌표 주변으로 검색할수 있겠끔 해줄수 있습니다. 
+       */
     >
       <CustomMarker position={{ lat: 33.5563, lng: 126.79581 }}></CustomMarker>
     </Map>
