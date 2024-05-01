@@ -9,7 +9,7 @@ import { CSSProperties, useEffect } from 'react';
 import { Map } from 'react-kakao-maps-sdk';
 import CustomMarker from './custom-marker/CustomMarker';
 
-const MAP_STYLE: CSSProperties = { width: '800px', height: '600px', position: 'relative' };
+const MAP_STYLE: CSSProperties = { width: '1264px', height: '600px', position: 'relative', overflow: 'hidden' };
 const INITIAL_ZOOM = 3;
 
 const KakaoMap = () => {
