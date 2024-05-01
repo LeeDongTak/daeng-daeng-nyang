@@ -1,18 +1,26 @@
 import Skeleton from '@/components/ui/skeleton';
-
 import useKakaoLoader from '@/hooks/client/map/kakao-map/useKakaoLoader';
-import { setCurrentLocation, setCurrentPosition } from '@/store/map/kakako-map/kakaoMap-store';
-import { CSSProperties, useEffect, useState } from 'react';
+import useKakaoMapStore, {
+  setCurrentLocation,
+  setCurrentPosition,
+  setKakaoMap,
+} from '@/store/map/kakako-map/kakaoMap-store';
+import { CSSProperties, useEffect } from 'react';
 import { Map } from 'react-kakao-maps-sdk';
 import CustomMarker from './custom-marker/CustomMarker';
 
 const MAP_STYLE: CSSProperties = { width: '800px', height: '600px', position: 'relative' };
 const INITIAL_ZOOM = 3;
-const position = { lat: 33.5563, lng: 126.79581 };
+
 const KakaoMap = () => {
   const [loading, error] = useKakaoLoader();
-  const [map, setMap] = useState<kakao.maps.Map | null>(null);
+  const { map: kakaoMap, currentPosition } = useKakaoMapStore();
 
+  const kakaoMapHandler = (map: kakao.maps.Map) => {
+    if (!kakaoMap) {
+      setKakaoMap(map);
+    }
+  };
   /**
    * 초기 위치값 설정 useEffect
    */
@@ -35,7 +43,7 @@ const KakaoMap = () => {
   if (loading || error) return <Skeleton type="map" />;
 
   return (
-    <Map center={position} style={MAP_STYLE} level={INITIAL_ZOOM} onCreate={setMap}>
+    <Map center={currentPosition} style={MAP_STYLE} level={INITIAL_ZOOM} onCreate={kakaoMapHandler}>
       <CustomMarker position={{ lat: 33.5563, lng: 126.79581 }}></CustomMarker>
     </Map>
   );

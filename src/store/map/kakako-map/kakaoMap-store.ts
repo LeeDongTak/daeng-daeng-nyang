@@ -4,7 +4,7 @@ import { create } from 'zustand';
  * @example currentPosition은 맵의 중심좌표
  * @example currentLocation은 geolocation에서 받아온 user의 고유 위치 좌표입니다.
  */
-interface I_CustomMarkerProps extends MapMarkerProps {
+export interface I_CustomMarkerProps extends MapMarkerProps {
   id: string;
   position: { lng: number; lat: number }; //  marker를 배열 돌릴 때 key값을 넣으려면 type custom 해야함
 }
