@@ -1,10 +1,10 @@
 import KakaoMap from './kakao-map/KakaoMap';
-import MapTab from './map-tab-menu/MapTab';
+import SearchLocationTab from './search-location-tab/SearchLocationTab';
 
 const MapBody = () => {
   return (
     <div>
-      <MapTab />
+      <SearchLocationTab />
       <KakaoMap />
     </div>
   );
