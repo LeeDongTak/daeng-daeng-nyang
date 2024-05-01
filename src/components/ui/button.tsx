@@ -20,6 +20,9 @@ const buttonVariants = cva(
         modal:
           'text-secondary text-[1.4rem] font-[700] bg-[#191919] rounded-full hover:bg-destructive/30 hover:text-[#555]',
         chat: 'text-secondary text-[1.4rem] font-[600] bg-[#191919] rounded-full hover:bg-destructive/30 hover:text-[#555] disabled:pointer-events-none disabled:text-[#191919] disabled:bg-[#E1E6EC] disabled:opacity-100',
+        more: 'text-secondary text-[1.2rem] font-[600] bg-[#191919] rounded-full hover:bg-destructive/30 hover:text-[#555] disabled:pointer-events-none disabled:text-[#191919] disabled:bg-[#E1E6EC] disabled:opacity-100',
+        jumbotron:
+          'text-primary text-[1.6rem] font-[600] bg-[#E1E6EC] rounded-full hover:bg-[#E1E6EC]/75 disabled:pointer-events-none disabled:text-[#191919] disabled:bg-[#E1E6EC] disabled:opacity-100',
       },
       size: {
         default: 'h-10 px-[3.2rem] py-[0.75rem]',
@@ -28,6 +31,8 @@ const buttonVariants = cva(
         icon: 'h-10 w-10',
         modal: 'px-[3.2rem] py-[0.8rem]',
         chat: 'py-[1.35rem] px-[3.25rem]',
+        more: 'py-[1.15rem] px-[5.5rem]',
+        jumbotron: 'py-[1.15rem] px-[5.5rem]',
       },
     },
     defaultVariants: {

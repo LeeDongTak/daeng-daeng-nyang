@@ -1,7 +1,7 @@
 import { cn } from '@/lib/utils';
 import ChattingGroup from './ChattingGroup';
-import ChattingRoomInput from './ChattingRoominput';
-import ChattingRoomTitle from './ChattingRoomtitle';
+import ChattingRoomInput from './ChattingRoomInput';
+import ChattingRoomTitle from './ChattingRoomTitle';
 
 const ChattingRoom = () => {
   return (
