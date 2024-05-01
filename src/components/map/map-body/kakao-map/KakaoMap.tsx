@@ -21,6 +21,10 @@ const KakaoMap = () => {
       setKakaoMap(map);
     }
   };
+
+  const handleIdleMap = async (map: kakao.maps.Map) => {
+    setKakaoMap(map);
+  };
   /**
    * 초기 위치값 설정 useEffect
    */
@@ -43,7 +47,13 @@ const KakaoMap = () => {
   if (loading || error) return <Skeleton type="map" />;
 
   return (
-    <Map center={currentPosition} style={MAP_STYLE} level={INITIAL_ZOOM} onCreate={kakaoMapHandler}>
+    <Map
+      center={currentPosition}
+      style={MAP_STYLE}
+      level={INITIAL_ZOOM}
+      onCreate={kakaoMapHandler}
+      onIdle={handleIdleMap}
+    >
       <CustomMarker position={{ lat: 33.5563, lng: 126.79581 }}></CustomMarker>
     </Map>
   );
