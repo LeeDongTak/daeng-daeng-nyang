@@ -10,29 +10,22 @@ import CustomMarker from './custom-marker/CustomMarker';
 
 const MAP_STYLE: CSSProperties = { width: '1264px', height: '600px', position: 'relative', overflow: 'hidden' };
 const INITIAL_ZOOM = 3;
-interface I_Category_code {
-  hospital: ['HP8', 'PM9'];
-  walk: ['AT4', 'CT1'];
-}
-const CATETGORY_CODE: I_Category_code = {
-  hospital: ['HP8', 'PM9'],
-  walk: ['AT4', 'CT1'],
-};
+
 const KakaoMap = () => {
-  const { handleIdleMap, kakaoMap, kakaoMapHandler, markers, currentPosition, currentLocation } = useKakaoMap();
+  const {
+    handleIdleMap,
+    kakaoMap,
+    kakaoMapHandler,
+    markers,
+    currentPosition,
+    currentLocation,
+    clickMoveToUserLocation,
+    moveMapCenterLatLng,
+  } = useKakaoMap();
   const [loading, error] = useKakaoLoader();
-  const moveMapCenterLatLng = (marker: kakao.maps.Marker) => {
-    if (!kakaoMap) return;
-    const newLatLng = new kakao.maps.LatLng(marker.getPosition().getLat(), marker.getPosition().getLng());
-    kakaoMap.panTo(newLatLng);
-  };
+
   const CURRENT_POSITION = { lat: kakaoMap?.getCenter().getLat(), lng: kakaoMap?.getCenter().getLng() };
 
-  const clickMoveToUserLocation = () => {
-    if (!kakaoMap) return;
-    const userLocationLatLng = new kakao.maps.LatLng(currentLocation.lat, currentLocation.lng);
-    kakaoMap.setCenter(userLocationLatLng);
-  };
   /**
    * 초기 위치값 설정 useEffect
    */

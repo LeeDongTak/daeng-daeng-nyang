@@ -79,7 +79,16 @@ const useKakaoMap = () => {
       setKakaoMap(map);
     }
   };
-
+  const clickMoveToUserLocation = () => {
+    if (!kakaoMap) return;
+    const userLocationLatLng = new kakao.maps.LatLng(currentLocation.lat, currentLocation.lng);
+    kakaoMap.setCenter(userLocationLatLng);
+  };
+  const moveMapCenterLatLng = (marker: kakao.maps.Marker) => {
+    if (!kakaoMap) return;
+    const newLatLng = new kakao.maps.LatLng(marker.getPosition().getLat(), marker.getPosition().getLng());
+    kakaoMap.panTo(newLatLng);
+  };
   return {
     searchPlaces,
     kakaoMap,
@@ -88,6 +97,8 @@ const useKakaoMap = () => {
     currentPosition,
     handleIdleMap,
     currentLocation,
+    clickMoveToUserLocation,
+    moveMapCenterLatLng,
   };
 };
 
