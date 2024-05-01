@@ -12,26 +12,26 @@ const position = { lat: 33.5563, lng: 126.79581 };
 const KakaoMap = () => {
   const [loading, error] = useKakaoLoader();
   const [map, setMap] = useState<kakao.maps.Map | null>(null);
+
+  /**
+   * 초기 위치값 설정 useEffect
+   */
   useEffect(() => {
-    /**
-     * 초기 위치값 설정 useEffect
-     */
-    useEffect(() => {
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(position => {
-          const { coords } = position;
-          setCurrentPosition({
-            lat: coords.latitude,
-            lng: coords.longitude,
-          });
-          setCurrentLocation({
-            lat: coords.latitude,
-            lng: coords.longitude,
-          });
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(position => {
+        const { coords } = position;
+        setCurrentPosition({
+          lat: coords.latitude,
+          lng: coords.longitude,
         });
-      }
-    }, []);
+        setCurrentLocation({
+          lat: coords.latitude,
+          lng: coords.longitude,
+        });
+      });
+    }
   }, []);
+
   if (loading || error) return <Skeleton type="map" />;
 
   return (
