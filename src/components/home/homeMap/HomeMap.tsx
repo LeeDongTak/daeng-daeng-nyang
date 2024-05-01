@@ -40,7 +40,9 @@ const HomeMap = () => {
               동물약까지 취급하는 약국도 지도를 통해 찾아볼 수 있습니다
             </p>
             <p className={cn('flex justify-center w-[100%] mt-[10%]')}>
-              <Button type="button" variant="more" size="more" text="지도 보러 가기" />
+              <Button type="button" variant="more" size="more">
+                지도 보러 가기
+              </Button>
             </p>
           </div>
         </div>

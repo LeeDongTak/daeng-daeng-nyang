@@ -44,7 +44,9 @@ const HomeGallery = () => {
           </div>
           <p className={cn('font-[500] text-[2.4rem]')}>#겔러리 #반려동물 #자랑 #일상 #행복</p>
           <p className={cn('mt-[3.6rem] transition-all delay-300 duration-1000', animation)}>
-            <Button type="button" variant="more" size="more" text="겔러리 보러 가기" />
+            <Button type="button" variant="more" size="more">
+              겔러리 보러 가기
+            </Button>
           </p>
         </div>
         <div
