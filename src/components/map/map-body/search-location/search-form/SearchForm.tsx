@@ -9,7 +9,7 @@ import { setSearchValue } from '@/store/map/search-location/search-store';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
-import SearchIcon from '../../../../../public/icons/search.svg';
+import SearchIcon from '../../../../../../public/icons/search.svg';
 const formSchema = z.object({
   search_location: z.string().min(2),
 });
@@ -25,7 +25,6 @@ const SearchForm = () => {
     resolver: zodResolver(formSchema),
   });
 
-  //http://openapi.seoul.go.kr:8088/process.env.NEXT_PUBLIC_ANIMAL_PHARAMCY/json/LOCALDATA_020302/1/5/
   const submitHandler = async (values: T_Schema) => {
     setSearchValue(values.search_location);
     const markers = await searchPlaces(kakaoMap, values.search_location);
