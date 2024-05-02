@@ -7,8 +7,6 @@ import { cn } from '@/lib/utils';
 import useKakaoMapStore, { setMarkers } from '@/store/map/kakako-map/kakaoMap-store';
 import { setSearchValue } from '@/store/map/search-location/search-store';
 import { zodResolver } from '@hookform/resolvers/zod';
-import axios from 'axios';
-import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import SearchIcon from '../../../../../public/icons/search.svg';
@@ -35,19 +33,7 @@ const SearchForm = () => {
     if (markers) setMarkers(markers);
     form.resetField('search_location');
   };
-  const pharamcyAPI = axios.create({
-    baseURL: `http://openapi.seoul.go.kr:8088/${process.env.NEXT_PUBLIC_ANIMAL_PHARAMCY}/json/LOCALDATA_020302_GA/1/100/01`,
-  });
 
-  const handle = async () => {
-    const { data } = await pharamcyAPI.get('/');
-    console.log(data);
-    const result = data.LOCALDATA_020302_GA.row.filter(store => store.TRDSTATEGBN !== '03');
-    // console.log(result);
-  };
-  useEffect(() => {
-    handle();
-  }, []);
   return (
     <LayoutForm form={form} className={cn('m-3 w-[28rem] overflow-hidden bg-transparent  border-none ')}>
       <LayoutFormBody className="p-3 bg-white">
