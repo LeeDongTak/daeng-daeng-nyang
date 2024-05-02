@@ -1,11 +1,11 @@
 import KakaoMap from './kakao-map/KakaoMap';
 import SearchForm from './search-form/SearchForm';
-import SearchLocationTab from './search-location-tab/SearchLocationTab';
+import SearchLocationType from './search-location-tab/SearchLocationType';
 
 const MapBody = () => {
   return (
     <div>
-      <SearchLocationTab />
+      <SearchLocationType />
       <SearchForm />
       <KakaoMap />
     </div>

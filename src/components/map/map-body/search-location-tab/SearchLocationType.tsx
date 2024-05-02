@@ -13,7 +13,7 @@ const CONTENT_TYPE = [
   },
 ] as const;
 export type T_Search = typeof CONTENT_TYPE;
-const SearchLocationTab = () => {
+const SearchLocationType = () => {
   const { changeItem, currentIndex } = useTab({ initialValue: 0, allTabs: CONTENT_TYPE });
   return (
     <div className="border-b-2 border-[#C5C9CF] ">
@@ -32,4 +32,4 @@ const SearchLocationTab = () => {
   );
 };
 
-export default SearchLocationTab;
+export default SearchLocationType;

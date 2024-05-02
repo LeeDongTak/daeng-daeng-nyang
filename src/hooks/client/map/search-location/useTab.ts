@@ -1,4 +1,4 @@
-import { T_Search } from '@/components/map/map-body/search-location-tab/SearchLocationTab';
+import { T_Search } from '@/components/map/map-body/search-location-tab/SearchLocationType';
 import { setSearchType } from '@/store/map/search-location/search-store';
 import { useEffect, useState } from 'react';
 
