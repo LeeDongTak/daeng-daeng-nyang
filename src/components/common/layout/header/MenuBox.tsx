@@ -1,14 +1,8 @@
 import { cn } from '@/lib/utils';
-<<<<<<< HEAD:src/components/layout/header/MenuBox.tsx
-import Avatar from '../../../../public/icons/avatar.svg';
-import BellRing from '../../../../public/icons/bell-ring.svg';
-import Search from '../../../../public/icons/search.svg';
-=======
 import Avatar from '../../../../../public/icons/avatar.svg';
 import BellRing from '../../../../../public/icons/bell-ring.svg';
 import Search from '../../../../../public/icons/search.svg';
 
->>>>>>> 52a034e5e7d43d483e87ec4e219b67feffad8317:src/components/common/layout/header/MenuBox.tsx
 const MenuBox = () => {
   return (
     <div className={cn('flex items-center w-auto h-[100%] gap-[3.2rem]')}>
