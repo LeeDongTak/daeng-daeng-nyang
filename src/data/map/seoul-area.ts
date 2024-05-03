@@ -1,4 +1,4 @@
-const SEOUL_LOCATION = [
+export const SEOUL_LOCATION = [
   {
     location: '중구',
     api_type: 'JG',
