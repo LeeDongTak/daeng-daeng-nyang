@@ -1,4 +1,4 @@
-import SearchArea from './search-area/SearchArea';
+import SearchAreaTabs from './search-area/SearchAreaTabs';
 import SearchForm from './search-form/SearchForm';
 import SearchLocationType from './search-location-type/SearchLocationType';
 
@@ -7,7 +7,7 @@ const SearchLocation = () => {
     <div>
       <SearchLocationType />
       <SearchForm />
-      <SearchArea />
+      <SearchAreaTabs />
     </div>
   );
 };

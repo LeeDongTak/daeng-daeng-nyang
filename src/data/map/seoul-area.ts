@@ -76,7 +76,7 @@ export const SEOUL_LOCATION = [
     api_type: 'MP',
   },
   {
-    loaction: '도봉구',
+    location: '도봉구',
     api_type: 'DB',
   },
   {
@@ -88,7 +88,7 @@ export const SEOUL_LOCATION = [
     api_type: 'SB',
   },
   {
-    loaction: '관악구',
+    location: '관악구',
     api_type: 'GA',
   },
   {
