@@ -2,7 +2,6 @@ import { create } from 'zustand';
 
 interface I_MapSearch {
   category_type: 'hospital' | 'walk'; // 병원&약국 , 산책
-
   searchValue: string;
 }
 

@@ -32,12 +32,18 @@ import axios from 'axios';
  * 구로구 : GR
  * 강남구 : GN
  */
-
+/**
+ * @param LOCALDATA_020301_${api_query}/01/endPoint
+ */
 export const animalHospital_API = axios.create({
   baseURL: `http://openapi.seoul.go.kr:8088/${process.env.NEXT_PUBLIC_ANIMAL_HOSPITAL}/json/`,
 });
-export const pharamcyAPI = axios.create({
-  baseURL: `http://openapi.seoul.go.kr:8088/${process.env.NEXT_PUBLIC_ANIMAL_PHARAMCY}/json/LOCALDATA_020302_`,
+
+/**
+ * @param LOCALDATA_020302_${api_query}/01/endPoint
+ */
+export const animalPharamcyAPI = axios.create({
+  baseURL: `http://openapi.seoul.go.kr:8088/${process.env.NEXT_PUBLIC_ANIMAL_PHARAMCY}/json/`,
 });
 
 /**
@@ -45,7 +51,9 @@ export const pharamcyAPI = axios.create({
  * @example http://openAPI.seoul.go.kr:8088/process.env.NEXT_PUBLIC_SEOUL_PARK/json/SearchParkInfoService/1/132/
  * 132개의 데이터가 들어 있습니다.
  * 지역구별로 정리하려면 따로 데이터 가공 해야합니다.
+ *
+ * @param SearchParkInfoService/1/135/
  */
 export const searchSeoulParkInfo = axios.create({
-  baseURL: `http://openAPI.seoul.go.kr:8088/${process.env.NEXT_PUBLIC_SEOUL_PARK}/json/SearchParkInfoService/1/135/`,
+  baseURL: `http://openAPI.seoul.go.kr:8088/${process.env.NEXT_PUBLIC_SEOUL_PARK}/json/`,
 });

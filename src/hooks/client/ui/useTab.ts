@@ -8,7 +8,7 @@ const useTab = <T extends { [P in keyof T]: T[P] }>(props: I_UseTabProps<T>) => 
   const { initialValue, allTabs } = props;
   const [currentIndex, setCurrentIndex] = useState<number | null>(initialValue);
 
-  const clickChangeItem = (idx: number) => () => {
+  const clickChangeItem = (idx: number) => {
     setCurrentIndex(idx);
   };
 

@@ -26,7 +26,7 @@ const SearchLocationType = () => {
             'text-3xl tracking-[0.2rem] bg-transparent text-black  hover:text-white py-8 px-10 hover:border-b-2',
             currentIndex === idx && 'border-b-2 bg-primary/90 text-white border-b-primary',
           )}
-          onClick={changeItem(idx)}
+          onClick={() => changeItem(idx)}
         >
           {content.tab}
         </Button>
