@@ -1,7 +1,7 @@
 import { searchSeoulParkInfo } from '@/components/map/api/seoul_api';
 import { useEffect } from 'react';
 import SeoulLocation from './seoul-location/SeoulLocation';
-
+const SCROLL_HORIZONTAL_CONTAINER = 'relative h-[40px] mb-6';
 const SearchAreaTabs = () => {
   const handle = async () => {
     // const { data } = await pharamcyAPI.get('/');
@@ -14,7 +14,7 @@ const SearchAreaTabs = () => {
     handle();
   }, []);
   return (
-    <div className="relative m-6 pb-11 pt-6 h-40px">
+    <div className={SCROLL_HORIZONTAL_CONTAINER}>
       <SeoulLocation />
     </div>
   );
