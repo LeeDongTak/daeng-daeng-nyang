@@ -79,11 +79,18 @@ const useKakaoMap = () => {
       setKakaoMap(map);
     }
   };
+  /**
+   * @explain user의 local위치로 이동
+   */
   const clickMoveToUserLocation = () => {
     if (!kakaoMap) return;
     const userLocationLatLng = new kakao.maps.LatLng(currentLocation.lat, currentLocation.lng);
     kakaoMap.setCenter(userLocationLatLng);
   };
+  /**
+   *
+   * @param marker marker클릭시 map의 중심ㄱ좌표 이동
+   */
   const moveMapCenterLatLng = (marker: kakao.maps.Marker) => {
     if (!kakaoMap) return;
     const newLatLng = new kakao.maps.LatLng(marker.getPosition().getLat(), marker.getPosition().getLng());

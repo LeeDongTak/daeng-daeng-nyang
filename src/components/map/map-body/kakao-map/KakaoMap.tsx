@@ -46,7 +46,6 @@ const KakaoMap = () => {
   }, []);
   // error || loading시 Skeleton
   if (loading || error) return <Skeleton type="map" />;
-  console.log(markers);
   return (
     <Map
       center={currentPosition}
