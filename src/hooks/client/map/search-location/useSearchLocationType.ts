@@ -13,6 +13,7 @@ const useSearchLocationType = <T extends { [P in keyof T]: T[P] }>(props: I_UseT
 
   // 기존 clickChangeItem 내부에서 아래의 로직을 추가하면 state변경이 뒤늦게 일어나기에 useEffect안에서 변경되게끔 했습니다.
   useEffect(() => {
+    if (!currentIndex) return;
     const SEARCH_TYPE = allTabs[currentIndex][type];
     setSearchType(SEARCH_TYPE);
   }, [currentIndex]);
