@@ -10,8 +10,9 @@ const SeoulLocation = () => {
   const { changeItem, currentIndex } = useTab({ initialValue: null, allTabs: SEOUL_LOCATION });
   return (
     <div className={SCROLL_HORIZONTAL_WRAPPER}>
-      {SEOUL_LOCATION.map(({ location }, idx) => (
+      {SEOUL_LOCATION.map(({ location, api_query }, idx) => (
         <Button
+          name={api_query}
           className={cn(
             'bg-transparent text-primary border border-primary rounded-full font-semibold text-lg  leading-relaxedpx-8 hover:text-white ',
             SCROLL_HORIZONTAL_ELEMENT,
