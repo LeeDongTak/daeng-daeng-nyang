@@ -4,7 +4,7 @@ import axios from 'axios';
  * @example 동물약국 api
  * http://openapi.seoul.go.kr:8088/(인증키)/json/LOCALDATA_020302_${지역구}/1/1000/01
  * @example 동물 병원 api
- * http://openapi.seoul.go.kr:8088/(인증키)/xml/LOCALDATA_020301_GS/1/5/
+ * http://openapi.seoul.go.kr:8088/(인증키)/json/LOCALDATA_020301_${지역구}/1/5/
  *
  * 중구 : JG
  * 양천구 : YC
@@ -33,9 +33,13 @@ import axios from 'axios';
  * 강남구 : GN
  */
 
-export const pharamcyAPI = axios.create({
-  baseURL: `http://openapi.seoul.go.kr:8088/${process.env.NEXT_PUBLIC_ANIMAL_PHARAMCY}/json/LOCALDATA_020302_GA/1/100/01`,
+export const animalHospital_API = axios.create({
+  baseURL: `http://openapi.seoul.go.kr:8088/${process.env.NEXT_PUBLIC_ANIMAL_HOSPITAL}/json/`,
 });
+export const pharamcyAPI = axios.create({
+  baseURL: `http://openapi.seoul.go.kr:8088/${process.env.NEXT_PUBLIC_ANIMAL_PHARAMCY}/json/LOCALDATA_020302_`,
+});
+
 /**
  * @explain 서울시 주요 산책로 api
  * @example http://openAPI.seoul.go.kr:8088/process.env.NEXT_PUBLIC_SEOUL_PARK/json/SearchParkInfoService/1/132/
