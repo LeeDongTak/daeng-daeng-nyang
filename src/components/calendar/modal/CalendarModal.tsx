@@ -1,6 +1,5 @@
 import { useModal } from '@/hooks/client/ui/useModal';
 import ModalCalendarBody from './body/ModalCalendarBody';
-import { ModalCalendarFooter } from './footer/ModalCalendarFooter';
 import { ModalCalendarHeader } from './header/ModalCalendarHeader';
 
 const CalendarModal = ({ modalId }: { modalId?: string }) => {
@@ -10,10 +9,9 @@ const CalendarModal = ({ modalId }: { modalId?: string }) => {
     DaengModal.hide(modalId ?? '');
   };
   return (
-    <div className="p-8">
+    <div className="relative p-8">
       <ModalCalendarHeader clickCloseModal={clickCloseModal} />
       <ModalCalendarBody />
-      <ModalCalendarFooter clickCloseModal={clickCloseModal} />
     </div>
   );
 };

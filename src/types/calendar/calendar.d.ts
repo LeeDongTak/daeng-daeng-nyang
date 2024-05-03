@@ -37,15 +37,22 @@ interface CellItemProps {
 "anniversary": ""
 */
 
-export interface CalendarDataType {
-  // sales?: number;
-  date: string;
-}
-
 /**
- *  매출 달력에서 모달 닫기
+ *  달력에서 모달 닫기
  */
 
 export interface CloseModalType {
   clickCloseModal: () => void;
+}
+
+/**
+ * 매출달력 일때
+ */
+export interface CalendarDataType {
+  // sales: number;
+  // date: string;
+  // min?: boolean;
+  // max?: boolean;
+  // to_go: IsTakeOutType[] | null;
+  // store: IsTakeOutType[] | null;
 }

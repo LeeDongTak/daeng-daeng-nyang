@@ -1,6 +1,7 @@
 import useSelectDay from '@/hooks/client/calendar/useSelectDay';
 import { useModal } from '@/hooks/client/ui/useModal';
 import useCalendarState from '@/store/calendar/calendar-store';
+import useScheduleStore from '@/store/calendar/data-store';
 import { CalendarCellType } from '@/types/calendar/calendar';
 import clsx from 'clsx';
 import { BIG_MODE, FORMAT_CELL_DATE_TYPE, MINI_MODE } from '../calendar-type/calendarType';
@@ -25,6 +26,9 @@ const Cell = ({ mode, page }: CalendarCellType) => {
   const startDay = currentDate.startOf('month').startOf('week');
   // monthStart가 속한 마지막 주
   const endDay = currentDate.endOf('month').endOf('week');
+
+  // 유저의 전체 스케쥴 가져오기
+  const calendarBindingData = useScheduleStore(state => state.calendarBindingData);
 
   const { DaengModal } = useModal();
 
