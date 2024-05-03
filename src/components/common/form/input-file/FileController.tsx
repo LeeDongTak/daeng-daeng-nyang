@@ -33,7 +33,7 @@ interface I_FileControllerProps<
       name: TName;
       control: Control<TFieldValues>;
       register: UseFormRegisterReturn<TName>;
-      onChange: (...event: any[]) => void;
+      onChange: (event: ChangeEvent<HTMLInputElement>) => Promise<void>;
     };
     fieldState: ControllerFieldState;
     formState: UseFormStateReturn<TFieldValues>;

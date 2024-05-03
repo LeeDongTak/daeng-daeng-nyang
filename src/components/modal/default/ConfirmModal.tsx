@@ -23,12 +23,10 @@ const ConfirmModal = ({ confirmOption }: { confirmOption: ModalConfirmTypeOption
         <p className="text-center">{confirmOption.content}</p>
       </div>
       <div className="flex justify-end w-full gap-4">
-        <Button
-          variant="secondary"
-          onClick={handleClickCancel}
-          text={confirmOption.cancelButtonText ?? '취소'}
-        ></Button>
-        <Button onClick={handleClickConfirm} text={confirmOption.confirmButtonText ?? '확인'}></Button>
+        <Button variant="secondary" onClick={handleClickCancel}>
+          {confirmOption.cancelButtonText ?? '취소'}
+        </Button>
+        <Button onClick={handleClickConfirm}>{confirmOption.confirmButtonText ?? '확인'}</Button>
       </div>
     </div>
   );

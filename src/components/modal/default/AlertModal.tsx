@@ -15,9 +15,7 @@ const AlertModal = ({ alert }: { alert: ModalAlertTypeOption }) => {
   return (
     <div className="flex flex-col justify-evenly w-[85vw] h-fit p-8 items-center gap-8">
       <p className="text-center">{alert.content}</p>
-      {alert.showButton && (
-        <Button onClick={hideAlert.bind(null, alert.id ?? '')} text={alert.buttonText ?? '확인'}></Button>
-      )}
+      {alert.showButton && <Button onClick={hideAlert.bind(null, alert.id ?? '')}>{alert.buttonText ?? '확인'}</Button>}
     </div>
   );
 };

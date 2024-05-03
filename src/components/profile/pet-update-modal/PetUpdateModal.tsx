@@ -1,4 +1,5 @@
 import LayoutForm from '@/components/common/form/form-layout/LayoutForm';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import PetModalButton from './PetModalButton';
@@ -7,7 +8,8 @@ import PetModalTitle from './PetModalTitle';
 
 export type PetInfoValuetype = z.infer<typeof petInfoSchema>;
 const petInfoSchema = z.object({
-  name: z.string(),
+  petFile: z.instanceof(File).nullable(),
+  petName: z.string(),
   birthDate: z.string(),
   gender: z.string(),
   weight: z.string(),
@@ -16,17 +18,19 @@ const petInfoSchema = z.object({
 
 const PetUpdateModal = ({ modalId, petId }: { modalId?: string; petId: string }) => {
   const PET_INFO_VALUE_GROUP = {
-    name: '모찌',
+    petFile: null,
+    petName: '모찌',
     birthDate: '2020.02.16',
     gender: '암컷',
     weight: '6kg',
     breed: '강아지/코리안 숏헤어',
   };
   const form = useForm<PetInfoValuetype>({
-    defaultValues: PET_INFO_VALUE_GROUP,
+    defaultValues: { ...PET_INFO_VALUE_GROUP },
+    resolver: zodResolver(petInfoSchema),
   });
 
-  const submitHandler = data => {};
+  const submitHandler = () => {};
   return (
     <LayoutForm form={form}>
       <form
