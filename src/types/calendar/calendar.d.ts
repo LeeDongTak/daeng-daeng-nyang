@@ -23,11 +23,9 @@ interface CalendarCellType {
 interface CellItemProps {
   day: Dayjs;
   selectDayHandler?: (day: Dayjs) => () => void;
-  // getMinMaxSalesType?: (param: CalendarDataType) => GetMinMaxSalesReturnType;
-  // clickShowDataOfDateHandler?: (day: Dayjs) => () => Promise<void>;
-  // holiday: HolidayType[];
   mode: CalendarModeType;
   page?: CalendarPageType;
+  id: string;
 
   // 페이지마다 내려줄 props 추가해주시면 됩니다.
 }
@@ -38,13 +36,16 @@ interface CellItemProps {
 "name": "설날 연휴",
 "anniversary": ""
 */
-export interface HolidayType {
-  holidayNumber: string;
+
+export interface CalendarDataType {
+  // sales?: number;
   date: string;
-  name: string;
-  anniversary: string;
 }
 
-export interface HolidaysType {
-  [key: string]: HolidayType[];
+/**
+ *  매출 달력에서 모달 닫기
+ */
+
+export interface CloseModalType {
+  clickCloseModal: () => void;
 }
