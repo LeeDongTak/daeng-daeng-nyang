@@ -1,3 +1,4 @@
+import axios from 'axios';
 /**
  * @explain 동물 병원& 약국은 각 지역구 마다 api 호출할 수 있습니다.
  * @example 동물약국 api
@@ -31,3 +32,16 @@
  * 구로구 : GR
  * 강남구 : GN
  */
+
+export const pharamcyAPI = axios.create({
+  baseURL: `http://openapi.seoul.go.kr:8088/${process.env.NEXT_PUBLIC_ANIMAL_PHARAMCY}/json/LOCALDATA_020302_GA/1/100/01`,
+});
+/**
+ * @explain 서울시 주요 산책로 api
+ * @example http://openAPI.seoul.go.kr:8088/process.env.NEXT_PUBLIC_SEOUL_PARK/json/SearchParkInfoService/1/132/
+ * 132개의 데이터가 들어 있습니다.
+ * 지역구별로 정리하려면 따로 데이터 가공 해야합니다.
+ */
+export const searchSeoulParkInfo = axios.create({
+  baseURL: `http://openAPI.seoul.go.kr:8088/${process.env.NEXT_PUBLIC_SEOUL_PARK}/json/SearchParkInfoService/1/135/`,
+});
