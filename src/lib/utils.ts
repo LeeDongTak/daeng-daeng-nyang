@@ -15,3 +15,15 @@ export function getBase64(file: File) {
     reader.onerror = error => reject(error);
   });
 }
+
+export function formattedGroupByKey<T extends { [key: string | number]: unknown }>(array: T[], key: keyof T) {
+  return array.reduce((acc, cur) => {
+    const stringkey = cur[key] as string;
+    if (acc.get(stringkey)) {
+      acc.get(stringkey)?.push(cur);
+    } else {
+      acc.set(stringkey, [cur]);
+    }
+    return acc;
+  }, new Map<string, T[]>());
+}
