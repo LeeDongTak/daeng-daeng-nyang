@@ -48,11 +48,19 @@ export interface I_SeoulWalkAPi {
   USE_REFER: string; // 이용시 참고사항
   VISIT_ROAD: string; // 오시는길
 }
-
+/**
+ * @explain
+ * APVPERMYMD: string; // id
+ * BPLCNM: string; // 상호명
+ * RDNWHLADDR: string; //도로명
+ * SITETEL: string; // 전화번호
+ * X: string; // x축
+ * Y: string; // y축
+ */
 export interface I_SeoulAnimalMedicineAPI {
   APVCANCELYMD: string;
-  APVPERMYMD: string;
-  BPLCNM: string;
+  APVPERMYMD: string; // id
+  BPLCNM: string; // 상호명
   CLGENDDT: string;
   CLGSTDT: string;
   DCBYMD: string;
@@ -65,12 +73,12 @@ export interface I_SeoulAnimalMedicineAPI {
   MGTNO: string;
   OPNSFTEAMCODE: string;
   RDNPOSTNO: string;
-  RDNWHLADDR: string;
+  RDNWHLADDR: string; //도로명
   RGTMBDSNO: string;
   ROPNYMD: string;
   SITEAREA: string;
   SITEPOSTNO: string;
-  SITETEL: string;
+  SITETEL: string; // 전화번호
   SITEWHLADDR: string;
   TOTEPNUM: string;
   TRDSTATEGBN: string;
@@ -78,6 +86,6 @@ export interface I_SeoulAnimalMedicineAPI {
   UPDATEDT: string;
   UPDATEGBN: string;
   UPTAENM: string;
-  X: string;
-  Y: string;
+  X: string; // x축
+  Y: string; // y축
 }

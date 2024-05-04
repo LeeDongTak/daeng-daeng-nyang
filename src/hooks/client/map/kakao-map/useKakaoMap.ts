@@ -6,13 +6,8 @@ import useKakaoMapStore, {
   setMarkers,
 } from '@/store/map/kakako-map/kakaoMap-store';
 import useSearchLocationStore from '@/store/map/search-location/search-store';
+import { I_CustomMarkerProps } from '@/types/map/kakao';
 import { useEffect } from 'react';
-import { MapMarkerProps } from 'react-kakao-maps-sdk';
-
-interface I_CustomMarker extends MapMarkerProps {
-  id: string;
-  position: { lng: number; lat: number }; //  marker를 배열 돌릴 때 key값을 넣으려면 type custom 해야함
-}
 
 const useKakaoMap = () => {
   const { map: kakaoMap, currentPosition, currentLocation, markers } = useKakaoMapStore();
@@ -23,7 +18,7 @@ const useKakaoMap = () => {
     setKakaoMap(map);
     const markers = await searchParallPlaces(map, CATETGORY_CODE[category_type], category_type);
     if (!markers) return setMarkers(null);
-    if (markers) setMarkers(markers as I_CustomMarker[]);
+    if (markers) setMarkers(markers as I_CustomMarkerProps[]);
   };
 
   const kakaoMapHandler = (map: kakao.maps.Map) => {

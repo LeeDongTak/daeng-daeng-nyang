@@ -4,8 +4,9 @@ import { CATETGORY_CODE, searchParallPlaces } from '@/components/map/api/kakao_a
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { cn } from '@/lib/utils';
-import useKakaoMapStore, { I_CustomMarkerProps, setMarkers } from '@/store/map/kakako-map/kakaoMap-store';
+import useKakaoMapStore, { setMarkers } from '@/store/map/kakako-map/kakaoMap-store';
 import useSearchLocationStore, { setSearchValue } from '@/store/map/search-location/search-store';
+import { I_CustomMarkerProps } from '@/types/map/kakao';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
