@@ -128,7 +128,11 @@ export const searchParallPlaces = async (
   const flatArr = results.flat();
   return flatArr;
 };
-
+/**
+ * @param map kakaoMap
+ * @param resMarkers react-query로 seoul api 호출해서 받아온 응답 데이터 입니다.
+ * @returns
+ */
 export const querySearchPlaces = (map: kakao.maps.Map | null, resMarkers: I_CustomMarkerProps[]) => {
   if (!map) return [];
   if (!resMarkers) return;
