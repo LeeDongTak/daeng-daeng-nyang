@@ -35,14 +35,15 @@ import axios from 'axios';
 /**
  * @param LOCALDATA_020301_${api_query}/01/endPoint
  */
-export const animalHospital_API = axios.create({
+
+const animalHospitalAPI = axios.create({
   baseURL: `http://openapi.seoul.go.kr:8088/${process.env.NEXT_PUBLIC_ANIMAL_HOSPITAL}/json/`,
 });
 
 /**
  * @param LOCALDATA_020302_${api_query}/01/endPoint
  */
-export const animalPharamcyAPI = axios.create({
+const animalPharamcyAPI = axios.create({
   baseURL: `http://openapi.seoul.go.kr:8088/${process.env.NEXT_PUBLIC_ANIMAL_PHARAMCY}/json/`,
 });
 
@@ -57,3 +58,22 @@ export const animalPharamcyAPI = axios.create({
 export const searchSeoulParkInfo = axios.create({
   baseURL: `http://openAPI.seoul.go.kr:8088/${process.env.NEXT_PUBLIC_SEOUL_PARK}/json/`,
 });
+const api_queries = [
+  { api_name: 'animal-hospital', fn: animalHospitalAPI, query_key: 'LOCALDATA_020301_' },
+  { api_name: 'animal-pharmacy', fn: animalPharamcyAPI, query_key: 'LOCALDATA_020302_' },
+];
+
+export const ParalledQueriesAnimalMedicineAPI = async (api_query: string | null) => {
+  try {
+    const results = await Promise.all(
+      api_queries.map(query => {
+        const data = query.fn(`${query.query_key}${api_query}/1/1000/01`);
+        return data;
+      }),
+    );
+
+    return results;
+  } catch (err) {
+    return {};
+  }
+};
