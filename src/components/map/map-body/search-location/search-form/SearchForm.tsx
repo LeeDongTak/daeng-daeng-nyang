@@ -5,7 +5,10 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { cn } from '@/lib/utils';
 import useKakaoMapStore, { setMarkers } from '@/store/map/kakako-map/kakaoMap-store';
-import useSearchLocationStore, { setSearchValue } from '@/store/map/search-location/search-store';
+import useSearchLocationStore, {
+  setIsUsingInnerKakaoApi,
+  setSearchValue,
+} from '@/store/map/search-location/search-store';
 import { I_CustomMarkerProps } from '@/types/map/kakao';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
@@ -28,6 +31,7 @@ const SearchForm = () => {
 
   const submitHandler = async (values: T_Schema) => {
     setSearchValue(values.search_location);
+    setIsUsingInnerKakaoApi(true);
     const markers = await searchParallPlaces(
       kakaoMap,
       CATETGORY_CODE[category_type],

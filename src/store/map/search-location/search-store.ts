@@ -30,5 +30,5 @@ export const setApiQuery = (api_query: string | null) =>
 
 export const setIsUsingInnerKakaoApi = (isUsingInnerKakaoApi: boolean) => {
   if (isUsingInnerKakaoApi === initialValue.isUsingInnerKakaoApi) return;
-  useSearchLocationStore.setState(state => ({ ...state, isUsingInnerKakoApi: isUsingInnerKakaoApi }));
+  useSearchLocationStore.setState(state => ({ ...state, isUsingInnerKakaoApi: isUsingInnerKakaoApi }));
 };

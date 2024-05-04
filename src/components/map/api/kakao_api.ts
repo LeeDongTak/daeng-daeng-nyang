@@ -136,7 +136,6 @@ export const querySearchPlaces = (map: kakao.maps.Map | null, resMarkers: I_Cust
   resMarkers.forEach(marker => {
     bounds.extend(new kakao.maps.LatLng(marker.position.lat, marker.position.lng));
   });
-  console.log(bounds);
   setMarkers(resMarkers);
   map.setBounds(bounds);
 };

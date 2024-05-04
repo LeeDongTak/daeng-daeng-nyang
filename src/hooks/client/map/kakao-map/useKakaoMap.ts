@@ -5,7 +5,7 @@ import useKakaoMapStore, {
   setKakaoMap,
   setMarkers,
 } from '@/store/map/kakako-map/kakaoMap-store';
-import useSearchLocationStore from '@/store/map/search-location/search-store';
+import useSearchLocationStore, { setIsUsingInnerKakaoApi } from '@/store/map/search-location/search-store';
 import { I_CustomMarkerProps } from '@/types/map/kakao';
 import { useEffect } from 'react';
 
@@ -15,6 +15,7 @@ const useKakaoMap = () => {
 
   const handleDragEndMap = async (map: kakao.maps.Map) => {
     setKakaoMap(map);
+    setIsUsingInnerKakaoApi(true);
     const markers = await searchParallPlaces(map, CATETGORY_CODE[category_type], category_type);
     if (!markers) return setMarkers(null);
     if (markers) setMarkers(markers as I_CustomMarkerProps[]);

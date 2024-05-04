@@ -40,7 +40,6 @@ function extractSeoulApiData(
  * @param extraction 추출된 data를 marker로 변형시킵니다.
  */
 function formattingDataMarkers(extraction: I_SeoulAnimalMedicineAPI[]) {
-  console.log(extraction);
   const markers = extraction.map(data => {
     const marker = new Object() as I_CustomMarkerProps;
     marker.id = data.APVPERMYMD;
