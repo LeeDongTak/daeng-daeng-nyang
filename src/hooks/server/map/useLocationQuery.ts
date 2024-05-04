@@ -28,12 +28,14 @@ const useLocationQuery = (props: I_QueryProps) => {
     queryFn: () => ParalledQueriesAnimalMedicineAPI(api_query),
     enabled: !!api_query && api_type === 'hospital',
     select: res => {
-      console.log(res, 'resres');
-      // const results = res.map(result=>{
-      //     result.data[`LOCALDATA_020301_${result.api_query}`]
-      // })
+      const results = res
+        .map(result => result.data.data[`${result.query_string}${result.api_query}`].row)
+        .flat()
+        .filter(target => target.DTLSTATENM === '정상');
+      return results;
     },
   });
+  console.log('🚀 ~ useLocationQuery ~ medicine:', medicine);
 
   const { data: park } = useQuery({
     queryKey: [LOCATION_QUERY.PARK, api_query, api_type],
