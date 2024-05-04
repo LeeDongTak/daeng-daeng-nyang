@@ -29,7 +29,7 @@ export interface I_SearchParkInfoService {
     row: I_SeoulParkAPI[];
   };
 }
-export interface I_SeoulParkAPI {
+export type I_SeoulParkAPI = {
   AREA: string; //부지 면적
   GUIDANCE: string; // 안내도
   G_LATITUDE: string; // Y좌표(GRS80TM)
@@ -50,7 +50,7 @@ export interface I_SeoulParkAPI {
   TEMPLATE_URL: string; // 홈페이지 바로가기 url
   USE_REFER: string; // 이용시 참고사항
   VISIT_ROAD: string; // 오시는길
-}
+};
 /**
  * @explain
  * APVPERMYMD: string; // id

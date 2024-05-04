@@ -1,5 +1,6 @@
 import Map from '@/components/map/Map';
 import { searchSeoulParkInfo } from '@/components/map/api/seoul_api';
+import { formattedGroupByKey } from '@/lib/utils';
 import { I_SearchParkInfoService, I_SeoulParkAPI } from '@/types/map/searchArea/seoul_api_type';
 import { GetStaticProps } from 'next';
 export const getStaticProps = (async () => {
@@ -10,6 +11,8 @@ export const getStaticProps = (async () => {
   seoulParkInfo: I_SeoulParkAPI[];
 }>;
 const MapPage = ({ seoulParkInfo }: { seoulParkInfo: I_SeoulParkAPI[] }) => {
+  const formattedData = formattedGroupByKey<I_SeoulParkAPI>(seoulParkInfo, 'P_ZONE');
+  console.log('🚀 ~ MapPage ~ formattedData:', formattedData);
   return <Map />;
 };
 
