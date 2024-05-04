@@ -9,7 +9,7 @@ interface I_UseTabProps<T> {
 const useSeoulLocation = <T extends { [P in keyof T]: T[P] }>(props: I_UseTabProps<T>) => {
   const { initialValue, allTabs } = props;
   const { api_query, isUsingInnerKakaoApi, category_type: api_type } = useSearchLocationStore();
-  console.log(isUsingInnerKakaoApi);
+
   const { changeItem, currentIndex } = useTab({ initialValue, allTabs });
 
   useEffect(() => {
