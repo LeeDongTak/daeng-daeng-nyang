@@ -68,12 +68,12 @@ export const ParalledQueriesAnimalMedicineAPI = async (api_query: string | null)
     const results = await Promise.all(
       api_queries.map(query => {
         const data = query.fn(`${query.query_key}${api_query}/1/1000/01`);
-        return data;
+        return { data, query_string: query.query_key, api_query }; //데이터 추출 하기 위해서 return 값에 key,value 추가
       }),
     );
 
     return results;
   } catch (err) {
-    return {};
+    return []; // 성공 실패시 균일하게 해주기 위해서
   }
 };

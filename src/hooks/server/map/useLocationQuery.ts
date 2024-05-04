@@ -11,6 +11,8 @@ enum LOCATION_QUERY {
   PARK = 'park',
 }
 
+enum API_QUERY_STRING {}
+
 // api_type에 따라서 병원&약국 아니면 산책로
 // api_query에 따라서 각 지역구를 호출
 // api_query가 null이면 호출 하지 않기
@@ -25,6 +27,12 @@ const useLocationQuery = (props: I_QueryProps) => {
     queryKey: [LOCATION_QUERY.HOSPITAL, api_query],
     queryFn: () => ParalledQueriesAnimalMedicineAPI(api_query),
     enabled: !!api_query && api_type === 'hospital',
+    select: res => {
+      console.log(res, 'resres');
+      // const results = res.map(result=>{
+      //     result.data[`LOCALDATA_020301_${result.api_query}`]
+      // })
+    },
   });
 
   const { data: park } = useQuery({
