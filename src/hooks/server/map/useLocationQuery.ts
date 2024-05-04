@@ -1,4 +1,5 @@
 import { ParalledQueriesAnimalMedicineAPI, searchSeoulParkInfo } from '@/components/map/api/seoul_api';
+import { extractSeoulApiData } from '@/lib/utils';
 import { useQuery } from '@tanstack/react-query';
 interface I_QueryProps {
   api_type: 'hospital' | 'walk';
@@ -27,13 +28,7 @@ const useLocationQuery = (props: I_QueryProps) => {
     queryKey: [LOCATION_QUERY.HOSPITAL, api_query],
     queryFn: () => ParalledQueriesAnimalMedicineAPI(api_query),
     enabled: !!api_query && api_type === 'hospital',
-    select: res => {
-      const results = res
-        .map(result => result.data.data[`${result.query_string}${result.api_query}`].row)
-        .flat()
-        .filter(target => target.DTLSTATENM === '정상');
-      return results;
-    },
+    select: extractSeoulApiData,
   });
   console.log('🚀 ~ useLocationQuery ~ medicine:', medicine);
 
@@ -42,7 +37,7 @@ const useLocationQuery = (props: I_QueryProps) => {
     queryFn: () => searchSeoulParkInfo('SearchParkInfoService/1/135/'),
     enabled: api_type === 'walk',
   });
-
+  console.log(park);
   return {
     medicine,
   };
