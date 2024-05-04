@@ -1,11 +1,11 @@
 import LayoutForm from '@/components/common/form/form-layout/LayoutForm';
 import LayoutFormBody from '@/components/common/form/form-layout/layout-form-body/LayoutFormBody';
+import { searchParallPlaces } from '@/components/map/api/kakao_api';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import useKakaoMap from '@/hooks/client/map/kakao-map/useKakaoMap';
 import { cn } from '@/lib/utils';
-import useKakaoMapStore, { setMarkers } from '@/store/map/kakako-map/kakaoMap-store';
-import { setSearchValue } from '@/store/map/search-location/search-store';
+import useKakaoMapStore, { I_CustomMarkerProps, setMarkers } from '@/store/map/kakako-map/kakaoMap-store';
+import useSearchLocationStore, { setSearchValue } from '@/store/map/search-location/search-store';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
@@ -13,11 +13,18 @@ import SearchIcon from '../../../../../../public/icons/search.svg';
 const formSchema = z.object({
   search_location: z.string().min(2),
 });
+interface I_Category_code {
+  hospital: ['HP8', 'PM9'];
+  walk: ['AT4', 'CT1'];
+}
+const CATETGORY_CODE: I_Category_code = {
+  hospital: ['HP8', 'PM9'],
+  walk: ['AT4', 'CT1'],
+};
 type T_Schema = z.infer<typeof formSchema>;
 const SearchForm = () => {
-  const { searchPlaces } = useKakaoMap();
   const kakaoMap = useKakaoMapStore(state => state.map);
-
+  const category_type = useSearchLocationStore(state => state.category_type);
   const form = useForm<T_Schema>({
     defaultValues: {
       search_location: '',
@@ -27,9 +34,14 @@ const SearchForm = () => {
 
   const submitHandler = async (values: T_Schema) => {
     setSearchValue(values.search_location);
-    const markers = await searchPlaces(kakaoMap, values.search_location);
+    const markers = await searchParallPlaces(
+      kakaoMap,
+      CATETGORY_CODE[category_type],
+      category_type,
+      values.search_location,
+    );
     if (!markers) return setMarkers(null);
-    if (markers) setMarkers(markers);
+    if (markers) setMarkers(markers as I_CustomMarkerProps[]);
     form.resetField('search_location');
   };
 

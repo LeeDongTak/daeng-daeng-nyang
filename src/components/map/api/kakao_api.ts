@@ -108,10 +108,11 @@ export const searchParallPlaces = async (
   map: kakao.maps.Map | null,
   category_code: T_Category_code,
   type: 'hospital' | 'walk',
+  searchValue?: string,
 ) => {
   const results = await Promise.all(
     parallPlaces.map(query => {
-      if (query.type === type) return query.inner_api(map, category_code);
+      if (query.type === type) return query.inner_api(map, category_code, searchValue);
       if (query.type !== type) return []; // undefined를 없애려고
     }),
   );
