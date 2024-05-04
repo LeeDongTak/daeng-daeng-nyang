@@ -13,7 +13,7 @@ const useKakaoMap = () => {
   const { map: kakaoMap, currentPosition, currentLocation, markers } = useKakaoMapStore();
   const category_type = useSearchLocationStore(state => state.category_type);
 
-  const handleIdleMap = async (map: kakao.maps.Map) => {
+  const handleDragEndMap = async (map: kakao.maps.Map) => {
     setKakaoMap(map);
     const markers = await searchParallPlaces(map, CATETGORY_CODE[category_type], category_type);
     if (!markers) return setMarkers(null);
@@ -63,11 +63,10 @@ const useKakaoMap = () => {
   }, []);
 
   return {
-    kakaoMap,
     kakaoMapHandler,
     markers,
     currentPosition,
-    handleIdleMap,
+    handleDragEndMap,
     currentLocation,
     clickMoveToUserLocation,
     moveMapCenterLatLng,

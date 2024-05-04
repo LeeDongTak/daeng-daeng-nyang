@@ -12,8 +12,7 @@ const INITIAL_ZOOM = 3;
 
 const KakaoMap = () => {
   const {
-    handleIdleMap,
-    kakaoMap,
+    handleDragEndMap,
     kakaoMapHandler,
     markers,
     currentPosition,
@@ -31,8 +30,7 @@ const KakaoMap = () => {
       style={MAP_STYLE}
       level={INITIAL_ZOOM}
       onCreate={kakaoMapHandler}
-      // onIdle={handleIdleMap}
-      onDragEnd={handleIdleMap}
+      onDragEnd={handleDragEndMap}
     >
       <Button onClick={clickMoveToUserLocation}>내 위치</Button>
       {/*onIdle은 맵의 움직임을 동적으로 감지합니다. 따라서 중심좌표의 변경, 줌level등을 동적으로 사용자의 인터렉션에 따라 감지 할수 있습니다. 활용 예시로는 중심좌표가 변화하면 그에 따른 유저가 원하는 location을 중심좌표 주변으로 검색할수 있겠끔 해줄수 있습니다. */}
