@@ -1,3 +1,4 @@
+import { setMarkers } from '@/store/map/kakako-map/kakaoMap-store';
 import { setSearchType } from '@/store/map/search-location/search-store';
 import { useEffect } from 'react';
 import useTab from '../../ui/useTab';
@@ -15,6 +16,7 @@ const useSearchLocationType = <T extends { [P in keyof T]: T[P] }>(props: I_UseT
   useEffect(() => {
     const SEARCH_TYPE = allTabs[currentIndex as number][type];
     setSearchType(SEARCH_TYPE);
+    setMarkers(null);
   }, [currentIndex]);
 
   return {
