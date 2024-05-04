@@ -35,3 +35,15 @@ export function extractSeoulApiData(
     .filter(target => target.DTLSTATENM === '정상');
   return results;
 }
+
+function formatMarkers(data) {}
+
+export function refineSeoulApiData(
+  axiosRes: {
+    data: AxiosResponse;
+    query_string: string;
+    api_query: string | null;
+  }[],
+) {
+  const extractData = extractSeoulApiData(axiosRes);
+}

@@ -48,3 +48,36 @@ export interface I_SeoulWalkAPi {
   USE_REFER: string; // 이용시 참고사항
   VISIT_ROAD: string; // 오시는길
 }
+
+export interface I_SeoulAnimalMedicineAPI {
+  APVCANCELYMD: string;
+  APVPERMYMD: string;
+  BPLCNM: string;
+  CLGENDDT: string;
+  CLGSTDT: string;
+  DCBYMD: string;
+  DTLSTATEGBN: string;
+  DTLSTATENM: string;
+  LASTMODTS: string;
+  LINDJOBGBNNM: string;
+  LINDPRCBGBNNM: string;
+  LINDSEQNO: string;
+  MGTNO: string;
+  OPNSFTEAMCODE: string;
+  RDNPOSTNO: string;
+  RDNWHLADDR: string;
+  RGTMBDSNO: string;
+  ROPNYMD: string;
+  SITEAREA: string;
+  SITEPOSTNO: string;
+  SITETEL: string;
+  SITEWHLADDR: string;
+  TOTEPNUM: string;
+  TRDSTATEGBN: string;
+  TRDSTATENM: string;
+  UPDATEDT: string;
+  UPDATEGBN: string;
+  UPTAENM: string;
+  X: string;
+  Y: string;
+}
