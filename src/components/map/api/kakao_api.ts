@@ -52,7 +52,7 @@ const searchKeyword = async (
     );
   });
 };
-export const searchAnimalHospitalPlaces = async (
+const searchAnimalHospitalPlaces = async (
   map: kakao.maps.Map | null,
   category_code: T_Category_code,
   searchValue = DEFUALT_ANIMAL_HOSPITAL_VALUES,
@@ -64,7 +64,7 @@ export const searchAnimalHospitalPlaces = async (
 };
 
 const DEFAULT_ANIMAL_PHARMACY_VALUES = '동물약국';
-export const searchAnimalPharmacyPlaces = async (
+const searchAnimalPharmacyPlaces = async (
   map: kakao.maps.Map | null,
   category_code: T_Category_code,
   searchValue = DEFAULT_ANIMAL_PHARMACY_VALUES,
@@ -76,7 +76,7 @@ export const searchAnimalPharmacyPlaces = async (
 };
 
 const DEFAULT_PARK_VALUES = '공원';
-export const searchParkPlaces = async (
+const searchParkPlaces = async (
   map: kakao.maps.Map | null,
   category_code: T_Category_code,
   searchValue = DEFAULT_PARK_VALUES,
@@ -86,6 +86,7 @@ export const searchParkPlaces = async (
   const psInstance = new kakao.maps.services.Places(searchValue === DEFAULT_PARK_VALUES ? map : undefined);
   return searchKeyword(map, category_code, searchValue, psInstance, DEFAULT_PARK_VALUES);
 };
+
 const parallPlaces = [
   {
     inner_api: searchAnimalHospitalPlaces,
