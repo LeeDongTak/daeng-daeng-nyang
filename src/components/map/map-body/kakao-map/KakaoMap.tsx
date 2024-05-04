@@ -21,10 +21,7 @@ const KakaoMap = () => {
     clickMoveToUserLocation,
     moveMapCenterLatLng,
   } = useKakaoMap();
-  console.log('🚀 ~ KakaoMap ~ markers:', markers);
   const [loading, error] = useKakaoLoader();
-
-  const CURRENT_POSITION = { lat: kakaoMap?.getCenter().getLat(), lng: kakaoMap?.getCenter().getLng() };
 
   // error || loading시 Skeleton
   if (loading || error) return <Skeleton type="map" />;
