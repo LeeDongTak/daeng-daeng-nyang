@@ -1,4 +1,6 @@
-import { I_CustomMarkerProps } from '@/store/map/kakako-map/kakaoMap-store';
+import { setMarkers } from '@/store/map/kakako-map/kakaoMap-store';
+import { I_CustomMarkerProps } from '@/types/map/kakao';
+
 type T_Category_code = ['HP8', 'PM9'] | ['AT4', 'CT1'];
 interface I_Category_code {
   hospital: ['HP8', 'PM9'];
@@ -125,4 +127,16 @@ export const searchParallPlaces = async (
 
   const flatArr = results.flat();
   return flatArr;
+};
+
+export const querySearchPlaces = (map: kakao.maps.Map | null, resMarkers: I_CustomMarkerProps[]) => {
+  if (!map) return [];
+  if (!resMarkers) return;
+  const bounds = new kakao.maps.LatLngBounds();
+  resMarkers.forEach(marker => {
+    bounds.extend(new kakao.maps.LatLng(marker.position.lat, marker.position.lng));
+  });
+  console.log(bounds);
+  setMarkers(resMarkers);
+  map.setBounds(bounds);
 };

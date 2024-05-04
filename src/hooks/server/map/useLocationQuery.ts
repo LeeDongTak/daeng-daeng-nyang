@@ -1,6 +1,9 @@
+import { querySearchPlaces } from '@/components/map/api/kakao_api';
 import { ParalledQueriesAnimalMedicineAPI, searchSeoulParkInfo } from '@/components/map/api/seoul_api';
 import { refineSeoulApiData } from '@/components/map/utility/map-utils';
 import {} from '@/lib/utils';
+import useKakaoMapStore from '@/store/map/kakako-map/kakaoMap-store';
+import { I_CustomMarkerProps } from '@/types/map/kakao';
 import { useQuery } from '@tanstack/react-query';
 interface I_QueryProps {
   api_type: 'hospital' | 'walk';
@@ -19,6 +22,7 @@ enum LOCATION_QUERY {
 // kakao 내장 검색으로 위치 찾으면 호출 하지 않기
 const useLocationQuery = (props: I_QueryProps) => {
   const { api_type, api_query } = props;
+  const kakaoMap = useKakaoMapStore(state => state.map);
   const {
     data: medicine,
     isLoading,
@@ -28,15 +32,17 @@ const useLocationQuery = (props: I_QueryProps) => {
     queryFn: () => ParalledQueriesAnimalMedicineAPI(api_query),
     enabled: !!api_query && api_type === 'hospital',
     select: refineSeoulApiData,
+    refetchOnWindowFocus: false,
   });
-  console.log('🚀 ~ useLocationQuery ~ medicine:', medicine);
 
   const { data: park } = useQuery({
     queryKey: [LOCATION_QUERY.PARK, api_query, api_type],
     queryFn: () => searchSeoulParkInfo('SearchParkInfoService/1/135/'),
     enabled: api_type === 'walk',
+    refetchOnWindowFocus: false,
   });
 
+  querySearchPlaces(kakaoMap, medicine as I_CustomMarkerProps[]);
   return {
     medicine,
     park,

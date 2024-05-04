@@ -11,7 +11,6 @@ import { useEffect } from 'react';
 
 const useKakaoMap = () => {
   const { map: kakaoMap, currentPosition, currentLocation, markers } = useKakaoMapStore();
-  console.log('🚀 ~ useKakaoMap ~ markers:', markers);
   const category_type = useSearchLocationStore(state => state.category_type);
 
   const handleIdleMap = async (map: kakao.maps.Map) => {
