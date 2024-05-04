@@ -15,8 +15,7 @@ const CATETGORY_CODE: I_Category_code = {
   walk: ['AT4', 'CT1'],
 };
 const useKakaoMap = () => {
-  const { map: kakaoMap, currentPosition, currentLocation } = useKakaoMapStore();
-  const markers = useKakaoMapStore(state => state.markers);
+  const { map: kakaoMap, currentPosition, currentLocation, markers } = useKakaoMapStore();
   const category_type = useSearchLocationStore(state => state.category_type);
 
   const DEFAULT_SEARCH_VALUES = category_type === 'hospital' ? '동물병원' : '공원';

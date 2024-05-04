@@ -27,13 +27,15 @@ const useLocationQuery = (props: I_QueryProps) => {
     enabled: !!api_query && api_type === 'hospital',
   });
 
-  console.log(isFetching);
-
   const { data: park } = useQuery({
     queryKey: [LOCATION_QUERY.PARK, api_query, api_type],
     queryFn: () => searchSeoulParkInfo('SearchParkInfoService/1/135/'),
     enabled: api_type === 'walk',
   });
+
+  return {
+    medicine,
+  };
 };
 
 export default useLocationQuery;
