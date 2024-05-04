@@ -9,7 +9,7 @@ const FOCUS_ITEM = 'bg-primary text-white';
 
 const SeoulLocation = () => {
   const { clickGetSeoulLocation, currentIndex } = useSeoulLocation({ initialValue: null, allTabs: SEOUL_LOCATION });
-  console.log(currentIndex);
+
   return (
     <div className={SCROLL_HORIZONTAL_WRAPPER}>
       {SEOUL_LOCATION.map(({ location, api_query }, idx) => (
