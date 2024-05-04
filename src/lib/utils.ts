@@ -25,5 +25,5 @@ export function formattedGroupByKey<T extends { [key: string | number]: unknown 
       acc.set(stringkey, [cur]);
     }
     return acc;
-  }, new Map<string, T[]>());
+  }, new Map<keyof T, T[]>());
 }
