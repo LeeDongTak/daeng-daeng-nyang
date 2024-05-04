@@ -30,7 +30,7 @@ function formattingDataMarkers(extraction: I_SeoulAnimalMedicineAPI[]) {
   const markers = extraction.map(data => {
     const marker = new Object() as I_CustomMarkerProps;
     marker.id = data.APVPERMYMD;
-    marker.place = data.RDNWHLADDR;
+    marker.place = data.BPLCNM;
     marker.address = data.RDNWHLADDR;
     marker.position = { lat: Number(data.X), lng: Number(data.Y) };
     return marker;
