@@ -23,10 +23,13 @@
  */
 
 export interface I_SearchParkInfoService {
-  [key: string]: unknown;
-  row: I_SeoulWalkAPi[];
+  SearchParkInfoService: {
+    RESULT: { CODE: string; MESSAGE: string };
+    list_total_count: number;
+    row: I_SeoulParkAPI[];
+  };
 }
-export interface I_SeoulWalkAPi {
+export interface I_SeoulParkAPI {
   AREA: string; //부지 면적
   GUIDANCE: string; // 안내도
   G_LATITUDE: string; // Y좌표(GRS80TM)

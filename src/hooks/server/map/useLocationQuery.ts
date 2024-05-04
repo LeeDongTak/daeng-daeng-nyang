@@ -41,11 +41,10 @@ const useLocationQuery = (props: I_QueryProps) => {
     enabled: api_type === 'walk',
     refetchOnWindowFocus: false,
   });
-
+  console.log(park);
   querySearchPlaces(kakaoMap, medicine as I_CustomMarkerProps[]);
   return {
     medicine,
-    park,
   };
 };
 
