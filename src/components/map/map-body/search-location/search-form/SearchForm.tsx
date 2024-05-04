@@ -1,6 +1,6 @@
 import LayoutForm from '@/components/common/form/form-layout/LayoutForm';
 import LayoutFormBody from '@/components/common/form/form-layout/layout-form-body/LayoutFormBody';
-import { searchParallPlaces } from '@/components/map/api/kakao_api';
+import { CATETGORY_CODE, searchParallPlaces } from '@/components/map/api/kakao_api';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { cn } from '@/lib/utils';
@@ -13,14 +13,7 @@ import SearchIcon from '../../../../../../public/icons/search.svg';
 const formSchema = z.object({
   search_location: z.string().min(2),
 });
-interface I_Category_code {
-  hospital: ['HP8', 'PM9'];
-  walk: ['AT4', 'CT1'];
-}
-const CATETGORY_CODE: I_Category_code = {
-  hospital: ['HP8', 'PM9'],
-  walk: ['AT4', 'CT1'],
-};
+
 type T_Schema = z.infer<typeof formSchema>;
 const SearchForm = () => {
   const kakaoMap = useKakaoMapStore(state => state.map);

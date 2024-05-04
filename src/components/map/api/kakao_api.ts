@@ -1,8 +1,14 @@
 import { I_CustomMarkerProps } from '@/store/map/kakako-map/kakaoMap-store';
 type T_Category_code = ['HP8', 'PM9'] | ['AT4', 'CT1'];
-
+interface I_Category_code {
+  hospital: ['HP8', 'PM9'];
+  walk: ['AT4', 'CT1'];
+}
+export const CATETGORY_CODE: I_Category_code = {
+  hospital: ['HP8', 'PM9'],
+  walk: ['AT4', 'CT1'],
+};
 const DEFUALT_ANIMAL_HOSPITAL_VALUES = '동물병원';
-
 const searchKeyword = async (
   map: kakao.maps.Map,
   category_code: T_Category_code,

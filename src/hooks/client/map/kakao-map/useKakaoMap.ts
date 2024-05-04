@@ -1,4 +1,4 @@
-import { searchParallPlaces } from '@/components/map/api/kakao_api';
+import { CATETGORY_CODE, searchParallPlaces } from '@/components/map/api/kakao_api';
 import useKakaoMapStore, { setKakaoMap, setMarkers } from '@/store/map/kakako-map/kakaoMap-store';
 import useSearchLocationStore from '@/store/map/search-location/search-store';
 import { MapMarkerProps } from 'react-kakao-maps-sdk';
@@ -7,14 +7,7 @@ interface I_CustomMarker extends MapMarkerProps {
   id: string;
   position: { lng: number; lat: number }; //  marker를 배열 돌릴 때 key값을 넣으려면 type custom 해야함
 }
-interface I_Category_code {
-  hospital: ['HP8', 'PM9'];
-  walk: ['AT4', 'CT1'];
-}
-const CATETGORY_CODE: I_Category_code = {
-  hospital: ['HP8', 'PM9'],
-  walk: ['AT4', 'CT1'],
-};
+
 const useKakaoMap = () => {
   const { map: kakaoMap, currentPosition, currentLocation, markers } = useKakaoMapStore();
   const category_type = useSearchLocationStore(state => state.category_type);
