@@ -1,6 +1,12 @@
 import { CATETGORY_CODE, searchParallPlaces } from '@/components/map/api/kakao_api';
-import useKakaoMapStore, { setKakaoMap, setMarkers } from '@/store/map/kakako-map/kakaoMap-store';
+import useKakaoMapStore, {
+  setCurrentLocation,
+  setCurrentPosition,
+  setKakaoMap,
+  setMarkers,
+} from '@/store/map/kakako-map/kakaoMap-store';
 import useSearchLocationStore from '@/store/map/search-location/search-store';
+import { useEffect } from 'react';
 import { MapMarkerProps } from 'react-kakao-maps-sdk';
 
 interface I_CustomMarker extends MapMarkerProps {
@@ -34,13 +40,32 @@ const useKakaoMap = () => {
   };
   /**
    *
-   * @param marker marker클릭시 map의 중심ㄱ좌표 이동
+   * @param marker marker클릭시 map의 중심좌표 이동
    */
   const moveMapCenterLatLng = (marker: kakao.maps.Marker) => {
     if (!kakaoMap) return;
     const newLatLng = new kakao.maps.LatLng(marker.getPosition().getLat(), marker.getPosition().getLng());
     kakaoMap.panTo(newLatLng);
   };
+
+  /**
+   * 초기 위치값 설정 useEffect
+   */
+  useEffect(() => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(position => {
+        const { coords } = position;
+        setCurrentPosition({
+          lat: coords.latitude,
+          lng: coords.longitude,
+        });
+        setCurrentLocation({
+          lat: coords.latitude,
+          lng: coords.longitude,
+        });
+      });
+    }
+  }, []);
   return {
     kakaoMap,
     kakaoMapHandler,

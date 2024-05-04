@@ -2,9 +2,8 @@ import { Button } from '@/components/ui/button';
 import Skeleton from '@/components/ui/skeleton';
 import useKakaoLoader from '@/hooks/client/map/kakao-map/useKakaoLoader';
 import useKakaoMap from '@/hooks/client/map/kakao-map/useKakaoMap';
-import { setCurrentLocation, setCurrentPosition } from '@/store/map/kakako-map/kakaoMap-store';
 import { MapPin } from 'lucide-react';
-import { CSSProperties, useEffect } from 'react';
+import { CSSProperties } from 'react';
 import { CustomOverlayMap, Map } from 'react-kakao-maps-sdk';
 import CustomMarker from './custom-marker/CustomMarker';
 
@@ -26,24 +25,6 @@ const KakaoMap = () => {
 
   const CURRENT_POSITION = { lat: kakaoMap?.getCenter().getLat(), lng: kakaoMap?.getCenter().getLng() };
 
-  /**
-   * 초기 위치값 설정 useEffect
-   */
-  useEffect(() => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(position => {
-        const { coords } = position;
-        setCurrentPosition({
-          lat: coords.latitude,
-          lng: coords.longitude,
-        });
-        setCurrentLocation({
-          lat: coords.latitude,
-          lng: coords.longitude,
-        });
-      });
-    }
-  }, []);
   // error || loading시 Skeleton
   if (loading || error) return <Skeleton type="map" />;
   return (
