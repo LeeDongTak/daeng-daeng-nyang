@@ -1,5 +1,6 @@
 import { ParalledQueriesAnimalMedicineAPI, searchSeoulParkInfo } from '@/components/map/api/seoul_api';
-import { refineSeoulApiData } from '@/lib/utils';
+import { refineSeoulApiData } from '@/components/map/utility/map-utils';
+import {} from '@/lib/utils';
 import { useQuery } from '@tanstack/react-query';
 interface I_QueryProps {
   api_type: 'hospital' | 'walk';
