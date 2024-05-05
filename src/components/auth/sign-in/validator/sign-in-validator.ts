@@ -1,6 +1,6 @@
 import { z } from 'zod';
 export type T_SignInSchema = z.infer<typeof SignInSchema>;
-export const INPUTS = [
+export const SIGN_IN_INPUTS = [
   {
     label: '이메일',
     name: 'email',

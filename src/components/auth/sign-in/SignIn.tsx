@@ -5,7 +5,8 @@ import LayoutForm from '../../common/form/form-layout/LayoutForm';
 import LayoutFormBody from '../../common/form/form-layout/layout-form-body/LayoutFormBody';
 import AuthForm from '../auth-form/AuthForm';
 import AuthTitle from '../auth-title/AuthTitle';
-import { INPUTS, SignInSchema, T_SignInSchema } from './validator/sign-in-validator';
+import AccountManagement from './account-management/AccountManagement';
+import { SIGN_IN_INPUTS, SignInSchema, T_SignInSchema } from './validator/sign-in-validator';
 
 const SignIn = () => {
   const form = useForm<T_SignInSchema>({
@@ -25,7 +26,7 @@ const SignIn = () => {
       <LayoutForm form={form} className="w-[33.2rem] bg-transparent border-0 shadow-none">
         <LayoutFormBody>
           <AuthForm onSubmit={form.handleSubmit(submitHandler)} className="flex flex-col gap-10">
-            {INPUTS.map(input => (
+            {SIGN_IN_INPUTS.map(input => (
               <AuthForm.input
                 control={form.control}
                 labelCn="text-xl font-bold"
@@ -42,6 +43,7 @@ const SignIn = () => {
             >
               로그인
             </AuthForm.button>
+            <AccountManagement />
           </AuthForm>
         </LayoutFormBody>
       </LayoutForm>
