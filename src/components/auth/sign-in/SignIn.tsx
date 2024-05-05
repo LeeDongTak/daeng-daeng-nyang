@@ -1,4 +1,3 @@
-import Title from '@/components/common/Title';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Label } from '@/components/ui/label';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -9,6 +8,7 @@ import LayoutForm from '../../common/form/form-layout/LayoutForm';
 import LayoutFormBody from '../../common/form/form-layout/layout-form-body/LayoutFormBody';
 import LayoutFormHeader from '../../common/form/form-layout/layout-form-header/LayoutFormHeader';
 import AuthForm from '../auth-form/AuthForm';
+import AuthTitle from '../auth-title/AuthTitle';
 
 const formSchema = z.object({
   email: z.string().min(2),
@@ -30,10 +30,7 @@ const SignIn = () => {
   };
   return (
     <Fragment>
-      <div className="capitalize text-center">
-        <Title level={1} text="Login" className="text-[5.4rem] capitalize font-extrabold" />
-        <p className="text-[1.4rem] font-semibold">나의 반려동물을 자랑해보세요</p>
-      </div>
+      <AuthTitle title="Login" subTitle="나의 반려동물을 자랑해보세요" />
       <LayoutForm form={form} className="w-[33.2rem] bg-transparent border-0 shadow-none">
         <LayoutFormHeader title="" />
         <LayoutFormBody>
