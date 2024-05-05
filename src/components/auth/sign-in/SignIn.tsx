@@ -8,6 +8,14 @@ import AuthForm from '../auth-form/AuthForm';
 import AuthTitle from '../auth-title/AuthTitle';
 import AccountManagement from './account-management/AccountManagement';
 import { SIGN_IN_INPUTS, SignInSchema, T_SignInSchema } from './validator/sign-in-validator';
+const STYLE_CSS = {
+  button: { className: 'rounded-full py-8 text-2xl tracking-widest hover:bg-destructive/30 bg-[#E1E6EC] ' },
+  input: {
+    labelCn: 'text-xl font-bold',
+    className: 'h-[4.8rem] text-xl rounded-2xl pl-7',
+    messageCn: 'text-lg',
+  },
+};
 
 const SignIn = ({ clickChangeCom }: I_AuthProps) => {
   const form = useForm<T_SignInSchema>({
@@ -28,20 +36,9 @@ const SignIn = ({ clickChangeCom }: I_AuthProps) => {
         <LayoutFormBody>
           <AuthForm onSubmit={form.handleSubmit(submitHandler)} className="flex flex-col gap-10">
             {SIGN_IN_INPUTS.map(input => (
-              <AuthForm.input
-                control={form.control}
-                labelCn="text-xl font-bold"
-                className="h-[4.8rem] text-xl rounded-2xl pl-7"
-                name={input.name}
-                label={input.label}
-                placeholder={input.placeholder}
-              />
+              <AuthForm.input {...STYLE_CSS.input} control={form.control} {...input} />
             ))}
-            <AuthForm.button
-              type="submit"
-              className="rounded-full py-8 text-2xl tracking-widest hover:bg-destructive/30 bg-[#E1E6EC] "
-              variant={'auth'}
-            >
+            <AuthForm.button type="submit" {...STYLE_CSS.button} variant={'auth'}>
               로그인
             </AuthForm.button>
             <AccountManagement clickChangeCom={clickChangeCom} />
