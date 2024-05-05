@@ -12,7 +12,6 @@ import { useEffect } from 'react';
 const useKakaoMap = () => {
   const { map: kakaoMap, currentPosition, currentLocation, markers } = useKakaoMapStore();
   const category_type = useSearchLocationStore(state => state.category_type);
-
   const handleDragEndMap = async (map: kakao.maps.Map) => {
     setKakaoMap(map);
     setIsUsingInnerKakaoApi(true); // map에 드래그 하면 자동적으로 searchParallPlaces함수가 호출되는데 카카오 내장 api가 실행됩니다. 이때 seoul api와 충돌을 막기위한 상태 변경입니다.

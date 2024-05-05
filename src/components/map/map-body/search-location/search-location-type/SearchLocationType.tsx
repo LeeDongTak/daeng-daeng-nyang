@@ -13,11 +13,12 @@ const CONTENT_TYPE = [
   },
 ];
 const SearchLocationType = () => {
-  const { changeItem, currentIndex } = useSearchLocationType({
+  const { changeAPI, currentIndex } = useSearchLocationType({
     initialValue: 0,
     allTabs: CONTENT_TYPE,
     type: 'CALL_TYPE',
   });
+
   return (
     <div className="border-b-2 border-[#C5C9CF] ">
       {CONTENT_TYPE.map((content, idx) => (
@@ -26,7 +27,7 @@ const SearchLocationType = () => {
             'text-3xl tracking-[0.2rem] bg-transparent text-black  hover:text-white py-8 px-10 hover:border-b-2',
             currentIndex === idx && 'border-b-2 bg-primary/90 text-white border-b-primary',
           )}
-          onClick={() => changeItem(idx)}
+          onClick={() => changeAPI(idx)}
         >
           {content.tab}
         </Button>

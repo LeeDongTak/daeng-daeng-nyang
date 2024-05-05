@@ -31,6 +31,7 @@ export const setKakaoMap = (map: NonNullable<I_KakaoMap['map']>) =>
 
 export const setMarkers = (markers: I_KakaoMap['markers']) =>
   useKakaoMapStore.setState(state => ({ ...state, markers }));
+
 /**
  *
  * @param currentPosition user가 맵을 움직이거나, 보고 있을 때의 중심좌표를 담습니다.
