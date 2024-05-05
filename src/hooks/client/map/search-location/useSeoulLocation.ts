@@ -17,10 +17,6 @@ const useSeoulLocation = <T extends { [P in keyof T]: T[P] }>(props: I_UseTabPro
   useLocationQuery({ api_query, isUsingInnerKakaoApi, api_type });
   const seoulPark = useSeoulParkStore(state => state.seoulPark);
 
-  useEffect(() => {
-    if (api_type === 'hospital' || !api_query) return;
-    setMarkers(seoulPark?.get(api_query) as I_CustomMarkerProps[]);
-  }, [api_type]);
   /**
    * isUsingInnerKakaoAPi를 사용하고 있으면 setApiQuery의 값과 changeItem즉 tab css를 초기화 합니다.
    */
@@ -34,6 +30,8 @@ const useSeoulLocation = <T extends { [P in keyof T]: T[P] }>(props: I_UseTabPro
     setApiQuery(api_query);
     changeItem(idx); // tab CSS change
     if (isUsingInnerKakaoApi) setIsUsingInnerKakaoApi(false); // kakao api 의 내장함수를 사용하지 않겠다는 state 입니다.
+
+    if (api_type === 'walk') setMarkers(seoulPark?.get(api_query) as I_CustomMarkerProps[]);
   };
   return {
     clickGetSeoulLocation,
