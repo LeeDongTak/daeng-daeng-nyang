@@ -92,6 +92,9 @@ dependencies:
   next-optimized-images:
     specifier: ^2.6.2
     version: 2.6.2(webpack@4.47.0)
+  proj4:
+    specifier: ^2.11.0
+    version: 2.11.0
   react:
     specifier: ^18
     version: 18.2.0
@@ -110,6 +113,9 @@ dependencies:
   react-intersection-observer:
     specifier: ^9.8.2
     version: 9.8.2(react-dom@18.2.0)(react@18.2.0)
+  react-kakao-maps-sdk:
+    specifier: ^1.1.26
+    version: 1.1.26(react-dom@18.2.0)(react@18.2.0)
   react-responsive:
     specifier: ^10.0.0
     version: 10.0.0(react@18.2.0)
@@ -122,6 +128,9 @@ dependencies:
   tailwind-merge:
     specifier: ^2.2.2
     version: 2.2.2
+  tailwind-scrollbar-hide:
+    specifier: ^1.1.7
+    version: 1.1.7
   tailwindcss-animate:
     specifier: ^1.0.7
     version: 1.0.7(tailwindcss@3.4.3)
@@ -139,6 +148,9 @@ devDependencies:
   '@types/node':
     specifier: ^20
     version: 20.12.5
+  '@types/proj4':
+    specifier: ^2.5.5
+    version: 2.5.5
   '@types/react':
     specifier: ^18
     version: 18.2.74
@@ -2920,6 +2932,10 @@ packages:
     resolution: {integrity: sha512-BD+BjQ9LS/D8ST9p5uqBxghlN+S42iuNxjsUGjeZobe/ciXzk2qb1B6IXc6AnRLS+yFJRpN2IPEHMzwspfDJNw==}
     dependencies:
       undici-types: 5.26.5
+
+  /@types/proj4@2.5.5:
+    resolution: {integrity: sha512-y4tHUVVoMEOm2nxRLQ2/ET8upj/pBmoutGxFw2LZJTQWPgWXI+cbxVEUFFmIzr/bpFR83hGDOTSXX6HBeObvZA==}
+    dev: true
 
   /@types/prop-types@15.7.12:
     resolution: {integrity: sha512-5zvhXYtRNRluoE/jAp4GVsSduVUzNWKkOZrCDBWYtE7biZywwdC2AcEzg+cSMLFRfVgeAFqpfNabiPjxFddV1Q==}
@@ -6205,6 +6221,10 @@ packages:
     resolution: {integrity: sha512-8q7VEgMJW4J8tcfVPy8g09NcQwZdbwFEqhe/WZkoIzjn/3TGDwtOCYtXGxA3O8tPzpczCCDgv+P2P5y00ZJOOg==}
     engines: {node: '>= 8'}
 
+  /mgrs@1.0.0:
+    resolution: {integrity: sha512-awNbTOqCxK1DBGjalK3xqWIstBZgN6fxsMSiXLs9/spqWkF2pAhb2rrYCFSsr1/tT7PhcDGjZndG8SWYn0byYA==}
+    dev: false
+
   /micromatch@3.1.10:
     resolution: {integrity: sha512-MWikgl9n9M3w+bpsY3He8L+w9eF9338xRl8IAO5viDizwSzziFEyUzo2xrrloB64ADbTf8uA8vRqqttDTOmccg==}
     engines: {node: '>=0.10.0'}
@@ -6974,6 +6994,13 @@ packages:
   /process@0.11.10:
     resolution: {integrity: sha512-cdGef/drWFoydD1JsMzuFf8100nZl+GT+yacc2bEced5f9Rjk4z+WtFUTBu9PhOi9j/jfmBPu0mMEY4wIdAF8A==}
     engines: {node: '>= 0.6.0'}
+    dev: false
+
+  /proj4@2.11.0:
+    resolution: {integrity: sha512-SasuTkAx8HnWQHfIyhkdUNJorSJqINHAN3EyMWYiQRVorftz9DHz650YraFgczwgtHOxqnfuDxSNv3C8MUnHeg==}
+    dependencies:
+      mgrs: 1.0.0
+      wkt-parser: 1.3.3
     dev: false
 
   /promise-inflight@1.0.1(bluebird@3.7.2):
@@ -7965,6 +7992,10 @@ packages:
       '@babel/runtime': 7.24.4
     dev: false
 
+  /tailwind-scrollbar-hide@1.1.7:
+    resolution: {integrity: sha512-X324n9OtpTmOMqEgDUEA/RgLrNfBF/jwJdctaPZDzB3mppxJk7TLIDmOreEDm1Bq4R9LSPu4Epf8VSdovNU+iA==}
+    dev: false
+
   /tailwind-scrollbar@3.1.0(tailwindcss@3.4.3):
     resolution: {integrity: sha512-pmrtDIZeHyu2idTejfV59SbaJyvp1VRjYxAjZBH0jnyrPRo6HL1kD5Glz8VPagasqr6oAx6M05+Tuw429Z8jxg==}
     engines: {node: '>=12.13.0'}
@@ -8544,6 +8575,10 @@ packages:
     hasBin: true
     dependencies:
       isexe: 2.0.0
+
+  /wkt-parser@1.3.3:
+    resolution: {integrity: sha512-ZnV3yH8/k58ZPACOXeiHaMuXIiaTk1t0hSUVisbO0t4RjA5wPpUytcxeyiN2h+LZRrmuHIh/1UlrR9e7DHDvTw==}
+    dev: false
 
   /worker-farm@1.7.0:
     resolution: {integrity: sha512-rvw3QTZc8lAxyVrqcSGVm5yP/IJ2UcB3U0graE3LCFoZ0Yn2x4EoVSqJKdB/T5M+FLcRPjz4TDacRf3OCfNUzw==}

@@ -1,5 +1,5 @@
 import { Button } from '@/components/ui/button';
-import useTab from '@/hooks/client/map/search-location/useTab';
+import useSearchLocationType from '@/hooks/client/map/search-location/useSearchLocationType';
 import { cn } from '@/lib/utils';
 
 const CONTENT_TYPE = [
@@ -11,10 +11,14 @@ const CONTENT_TYPE = [
     tab: '산책로',
     CALL_TYPE: 'walk',
   },
-] as const;
-export type T_Search = typeof CONTENT_TYPE;
-const SearchLocationTab = () => {
-  const { changeItem, currentIndex } = useTab({ initialValue: 0, allTabs: CONTENT_TYPE });
+];
+const SearchLocationType = () => {
+  const { changeAPI, currentIndex } = useSearchLocationType({
+    initialValue: 0,
+    allTabs: CONTENT_TYPE,
+    type: 'CALL_TYPE',
+  });
+
   return (
     <div className="border-b-2 border-[#C5C9CF] ">
       {CONTENT_TYPE.map((content, idx) => (
@@ -23,7 +27,7 @@ const SearchLocationTab = () => {
             'text-3xl tracking-[0.2rem] bg-transparent text-black  hover:text-white py-8 px-10 hover:border-b-2',
             currentIndex === idx && 'border-b-2 bg-primary/90 text-white border-b-primary',
           )}
-          onClick={changeItem(idx)}
+          onClick={() => changeAPI(idx)}
         >
           {content.tab}
         </Button>
@@ -32,4 +36,4 @@ const SearchLocationTab = () => {
   );
 };
 
-export default SearchLocationTab;
+export default SearchLocationType;

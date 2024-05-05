@@ -1,7 +1,8 @@
-import { PropsWithChildren } from 'react';
+import { ReactNode } from 'react';
 import { MapMarker, MapMarkerProps } from 'react-kakao-maps-sdk';
-interface I_MarkerProps extends MapMarkerProps {}
-interface I_MarkerProps extends PropsWithChildren {}
+interface I_MarkerProps extends MapMarkerProps {
+  children?: ReactNode;
+}
 
 const MAREKR_IMAGE_SRC = '/icons/location.svg';
 const MARKER_PROPS = {
