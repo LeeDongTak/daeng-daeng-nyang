@@ -1,8 +1,6 @@
-import { querySearchPlaces } from '@/components/map/api/kakao_api';
 import { ParalledQueriesAnimalMedicineAPI } from '@/components/map/api/seoul_api';
 import { refineSeoulApiData } from '@/components/map/utility/map-utils';
 import {} from '@/lib/utils';
-import { I_CustomMarkerProps } from '@/types/map/kakao';
 import { useQuery } from '@tanstack/react-query';
 interface I_QueryProps {
   api_type: 'hospital' | 'walk';
@@ -35,7 +33,6 @@ const useLocationQuery = (props: I_QueryProps) => {
     refetchOnWindowFocus: false,
   });
 
-  querySearchPlaces(kakaoMap, medicine as I_CustomMarkerProps[]);
   return {
     medicine,
   };

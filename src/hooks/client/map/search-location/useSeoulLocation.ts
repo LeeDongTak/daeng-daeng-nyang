@@ -16,9 +16,17 @@ const useSeoulLocation = <T extends { [P in keyof T]: T[P] }>(props: I_UseTabPro
   const { changeItem, currentIndex } = useTab({ initialValue, allTabs });
   const kakaoMap = useKakaoMapStore(state => state.map);
   const { api_query, isUsingInnerKakaoApi, category_type: api_type } = useSearchLocationStore();
-  useLocationQuery({ api_query, isUsingInnerKakaoApi, api_type, kakaoMap });
   const seoulPark = useSeoulParkStore(state => state.seoulPark);
+  const { medicine } = useLocationQuery({ api_query, isUsingInnerKakaoApi, api_type, kakaoMap });
 
+  /**
+   * react-query로 받아온 medicine 데이터를 kakao map에 그려주는 useEffect입니다.
+   */
+  useEffect(() => {
+    if (api_type !== 'hospital') return;
+    if (!api_query) return;
+    querySearchPlaces(kakaoMap, medicine as I_CustomMarkerProps[]);
+  }, [api_type, api_query, medicine]);
   /**
    * isUsingInnerKakaoAPi를 사용하고 있으면 setApiQuery의 값과 changeItem즉 tab css를 초기화 합니다.
    */
