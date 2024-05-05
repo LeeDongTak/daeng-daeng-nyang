@@ -1,3 +1,4 @@
+import { I_AuthProps } from '@/types/auth/auth';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Fragment } from 'react';
 import { useForm } from 'react-hook-form';
@@ -8,7 +9,7 @@ import AuthTitle from '../auth-title/AuthTitle';
 import AccountManagement from './account-management/AccountManagement';
 import { SIGN_IN_INPUTS, SignInSchema, T_SignInSchema } from './validator/sign-in-validator';
 
-const SignIn = () => {
+const SignIn = ({ clickChangeCom }: I_AuthProps) => {
   const form = useForm<T_SignInSchema>({
     defaultValues: {
       email: '',
@@ -43,7 +44,7 @@ const SignIn = () => {
             >
               로그인
             </AuthForm.button>
-            <AccountManagement />
+            <AccountManagement clickChangeCom={clickChangeCom} />
           </AuthForm>
         </LayoutFormBody>
       </LayoutForm>

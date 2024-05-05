@@ -1,4 +1,5 @@
 import { Button } from '@/components/ui/button';
+import { I_AuthProps } from '@/types/auth/auth';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Fragment } from 'react';
 import { useForm } from 'react-hook-form';
@@ -8,7 +9,7 @@ import AuthForm from '../auth-form/AuthForm';
 import AuthTitle from '../auth-title/AuthTitle';
 import { SIGN_UP_INPUTS, T_SignUpSchema, signUpSchema } from './validator/sign-up-validator';
 
-const SignUp = () => {
+const SignUp = ({ clickChangeCom }: I_AuthProps) => {
   const form = useForm<T_SignUpSchema>({
     defaultValues: {
       email: '',
@@ -45,7 +46,7 @@ const SignUp = () => {
               회원가입
             </AuthForm.button>
             <div className="flex justify-end">
-              <Button variant={'auth'} className="text-xl" type="button">
+              <Button variant={'auth'} className="text-xl" type="button" onClick={() => clickChangeCom(false)}>
                 로그인으로 이동
               </Button>
             </div>
