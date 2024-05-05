@@ -12,13 +12,14 @@ interface I_ControlProps<
   rules?: Omit<RegisterOptions<TFieldValues, TName>, 'valueAsNumber' | 'valueAsDate' | 'setValueAs' | 'disabled'>;
   className?: string;
   label?: string;
+  labelCn?: string;
 }
 /**
  *
  * @param props :  Input의 className으로 CSS 바꾸고 싶으면 className='tailwind'로 내려주면 알아서 css 됩니다.
  * @returns
  */
-const CustomInput = <T extends FieldValues>({ control, name, label, ...props }: I_ControlProps<T>) => {
+const CustomInput = <T extends FieldValues>({ control, name, label, labelCn, ...props }: I_ControlProps<T>) => {
   const LABEL_NAME = label ? label : name;
   return (
     <FormField
@@ -26,7 +27,7 @@ const CustomInput = <T extends FieldValues>({ control, name, label, ...props }: 
       name={name}
       render={({ field }) => (
         <FormItem>
-          <FormLabel>{LABEL_NAME}</FormLabel>
+          <FormLabel className={labelCn}>{LABEL_NAME}</FormLabel>
           <FormControl>
             <Input {...field} {...props} />
           </FormControl>
