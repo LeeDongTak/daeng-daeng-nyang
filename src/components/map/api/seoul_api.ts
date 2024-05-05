@@ -58,11 +58,19 @@ const animalPharamcyAPI = axios.create({
 export const searchSeoulParkInfo = axios.create({
   baseURL: `http://openAPI.seoul.go.kr:8088/${process.env.NEXT_PUBLIC_SEOUL_PARK}/json/`,
 });
+
+/**
+ * fn은 react-query의 queryfn 함수이고 query_key는 각 동물병원, 동물약국으로 보낼 필요 query 입니다.
+ */
 const api_queries = [
   { api_name: 'animal-hospital', fn: animalHospitalAPI, query_key: 'LOCALDATA_020301_' },
   { api_name: 'animal-pharmacy', fn: animalPharamcyAPI, query_key: 'LOCALDATA_020302_' },
 ];
-
+/**
+ *
+ * @param api_query react-query에서 enabled와 지역구 query로 활용하는 인자 값입니다.
+ * @returns
+ */
 export const ParalledQueriesAnimalMedicineAPI = async (api_query: string | null) => {
   try {
     const results = await Promise.all(
