@@ -11,7 +11,9 @@ const useSeoulLocation = <T extends { [P in keyof T]: T[P] }>(props: I_UseTabPro
   const { api_query, isUsingInnerKakaoApi, category_type: api_type } = useSearchLocationStore();
 
   const { changeItem, currentIndex } = useTab({ initialValue, allTabs });
-
+  /**
+   * isUsingInnerKakaoAPi를 사용하고 있으면 setApiQuery의 값과 changeItem즉 tab css를 초기화 합니다.
+   */
   useEffect(() => {
     if (!isUsingInnerKakaoApi) return;
     setApiQuery(null);
@@ -19,10 +21,11 @@ const useSeoulLocation = <T extends { [P in keyof T]: T[P] }>(props: I_UseTabPro
   }, [isUsingInnerKakaoApi]);
 
   useLocationQuery({ api_query, isUsingInnerKakaoApi, api_type });
-  const clickGetSeoulLocation = async (idx: number, api_query: string) => {
+
+  const clickGetSeoulLocation = (idx: number, api_query: string) => {
     setApiQuery(api_query);
-    changeItem(idx);
-    if (isUsingInnerKakaoApi) setIsUsingInnerKakaoApi(false);
+    changeItem(idx); // tab CSS change
+    if (isUsingInnerKakaoApi) setIsUsingInnerKakaoApi(false); // kakao api 의 내장함수를 사용하지 않겠다는 state 입니다.
   };
   return {
     clickGetSeoulLocation,

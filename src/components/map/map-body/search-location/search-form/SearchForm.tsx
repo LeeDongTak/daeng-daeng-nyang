@@ -31,7 +31,7 @@ const SearchForm = () => {
 
   const submitHandler = async (values: T_Schema) => {
     setSearchValue(values.search_location);
-    setIsUsingInnerKakaoApi(true);
+    setIsUsingInnerKakaoApi(true); // 검색창 입력시 seoul api 사용하지 않겠다는 state 값 변경 입니다.
     const markers = await searchParallPlaces(
       kakaoMap,
       CATETGORY_CODE[category_type],

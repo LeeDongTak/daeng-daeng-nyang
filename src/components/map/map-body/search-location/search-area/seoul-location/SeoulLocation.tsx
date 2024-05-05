@@ -14,13 +14,14 @@ const SeoulLocation = () => {
     <div className={SCROLL_HORIZONTAL_WRAPPER}>
       {SEOUL_LOCATION.map(({ location, api_query }, idx) => (
         <Button
+          type="button"
           name={api_query}
           className={cn(
             'bg-transparent text-primary border border-primary rounded-full font-semibold text-lg  leading-relaxedpx-8 hover:text-white ',
             SCROLL_HORIZONTAL_ELEMENT,
             idx === currentIndex && FOCUS_ITEM,
           )}
-          onClick={async () => await clickGetSeoulLocation(idx, api_query)}
+          onClick={() => clickGetSeoulLocation(idx, api_query)}
         >
           {location}
         </Button>

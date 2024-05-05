@@ -15,7 +15,7 @@ const useKakaoMap = () => {
 
   const handleDragEndMap = async (map: kakao.maps.Map) => {
     setKakaoMap(map);
-    setIsUsingInnerKakaoApi(true);
+    setIsUsingInnerKakaoApi(true); // map에 드래그 하면 자동적으로 searchParallPlaces함수가 호출되는데 카카오 내장 api가 실행됩니다. 이때 seoul api와 충돌을 막기위한 상태 변경입니다.
     const markers = await searchParallPlaces(map, CATETGORY_CODE[category_type], category_type);
     if (!markers) return setMarkers(null);
     if (markers) setMarkers(markers as I_CustomMarkerProps[]);
