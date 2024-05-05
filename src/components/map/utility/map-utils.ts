@@ -1,5 +1,6 @@
+import { SEOUL_LOCATION } from '@/data/map/seoul-area';
 import { I_CustomMarkerProps } from '@/types/map/kakao';
-import { I_SeoulAnimalMedicineAPI } from '@/types/map/searchArea/seoul_api_type';
+import { I_SeoulAnimalMedicineAPI, I_SeoulParkAPI } from '@/types/map/searchArea/seoul_api_type';
 import { AxiosResponse } from 'axios';
 import proj4 from 'proj4';
 
@@ -66,7 +67,15 @@ export function refineSeoulApiData(
 
 export function replaceLocationToApiQuery<T extends { [key: string | number]: unknown }>(
   seoulParkInfo: Map<keyof T, T[]>,
-) {}
+) {
+  SEOUL_LOCATION.forEach(({ location, api_query }) => {
+    const values = seoulParkInfo.get(location);
+    seoulParkInfo.delete(location);
+    seoulParkInfo.set(api_query, values as T[]);
+  });
+
+  return seoulParkInfo;
+}
 
 /**
  *
@@ -80,5 +89,30 @@ export function removeEmptySeoulParkInfoHashMap<T extends { [key: string | numbe
     seoulParkInfoHashMap.get('노원구')?.push(...(seoulParkInfoHashMap?.get('') as T[]));
     seoulParkInfoHashMap.delete('');
   }
+
+  seoulParkInfoHashMap.delete('과천시');
   return seoulParkInfoHashMap;
+}
+
+export function refinedHashMap(hashMap: Map<keyof I_SeoulParkAPI, I_SeoulParkAPI[]>) {
+  const convertedMap = new Map<keyof I_SeoulParkAPI, I_CustomMarkerProps[]>();
+
+  hashMap.forEach((parkInfoArray, key) => {
+    const customMarkerPropsArray: I_CustomMarkerProps[] = parkInfoArray.map((parkInfo: I_SeoulParkAPI) => {
+      // 변환 작업: I_SeoulParkAPI 객체를 I_CustomMarkerProps 객체로 변환
+      const customMarkerProps: I_CustomMarkerProps = {
+        id: parkInfo.P_IDX,
+        position: { lng: parseFloat(parkInfo.LONGITUDE), lat: parseFloat(parkInfo.LATITUDE) },
+        place: parkInfo.P_PARK,
+        address: parkInfo.P_ADDR,
+        phone: parkInfo.P_ADMINTEL,
+        // 필요에 따라 다른 필드 추가 가능
+      };
+      return customMarkerProps;
+    });
+
+    convertedMap.set(key as keyof I_SeoulParkAPI, customMarkerPropsArray);
+  });
+
+  return convertedMap;
 }
