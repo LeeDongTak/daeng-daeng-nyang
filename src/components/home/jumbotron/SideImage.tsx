@@ -8,7 +8,7 @@ const SideImage = () => {
   return (
     <div
       className={cn(
-        'flex justify-between items-end absolute top-0 left-[50%] translate-x-[-50%] w-[100%] nax-w-[138rem] h-[80rem] px-[5rem]',
+        'flex justify-between items-end absolute top-0 left-[50%] translate-x-[-50%] w-[100%] max-w-[138rem] h-[80rem] px-[5rem]',
       )}
     >
       <Image src={personPNG} alt="사람 이미지" />
