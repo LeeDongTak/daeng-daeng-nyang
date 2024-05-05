@@ -12,9 +12,13 @@ import { GetStaticProps } from 'next';
 export const getStaticProps = (async () => {
   const results = await searchSeoulParkInfo('SearchParkInfoService/1/135/');
   const data: I_SearchParkInfoService = results.data;
+  // 데이터를 해시맵으로 정형화 함
   const formattedData = formattedGroupByKey<I_SeoulParkAPI>(data.SearchParkInfoService.row, 'P_ZONE');
+  // 서울 공원에서 location이 빈문자열이기에 빈문자열 데이터 처리
   const seoulParkInfoHashMap = removeEmptySeoulParkInfoHashMap(formattedData);
+  // 기존 api 호출과 통일성 같게 하기 위해 처리함수
   const refinedParkInfo = replaceLocationToApiQuery(seoulParkInfoHashMap);
+  // marker로 들어가는 배열로 변환 작업하는 함수
   const hashMap = refinedHashMap(refinedParkInfo);
   return { props: { seoulParkInfo: hashMap } };
 }) satisfies GetStaticProps<{
