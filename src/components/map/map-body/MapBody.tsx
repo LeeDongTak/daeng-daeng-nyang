@@ -1,12 +1,13 @@
+import { Fragment } from 'react';
 import KakaoMap from './kakao-map/KakaoMap';
 import SearchLocation from './search-location/SearchLocation';
 
 const MapBody = () => {
   return (
-    <div>
+    <Fragment>
       <SearchLocation />
       <KakaoMap />
-    </div>
+    </Fragment>
   );
 };
 

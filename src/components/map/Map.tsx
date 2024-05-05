@@ -3,9 +3,9 @@ import MapHeader from './map-header/MapHeader';
 
 const Map = () => {
   return (
-    <div>
+    <div className="w-[128rem] mx-auto py-[6rem]">
       <MapHeader />
-      <MapBody />;
+      <MapBody />
     </div>
   );
 };
