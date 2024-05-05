@@ -1,5 +1,5 @@
 import { querySearchPlaces } from '@/components/map/api/kakao_api';
-import { ParalledQueriesAnimalMedicineAPI, searchSeoulParkInfo } from '@/components/map/api/seoul_api';
+import { ParalledQueriesAnimalMedicineAPI } from '@/components/map/api/seoul_api';
 import { refineSeoulApiData } from '@/components/map/utility/map-utils';
 import {} from '@/lib/utils';
 import useKakaoMapStore from '@/store/map/kakako-map/kakaoMap-store';
@@ -35,13 +35,6 @@ const useLocationQuery = (props: I_QueryProps) => {
     refetchOnWindowFocus: false,
   });
 
-  const { data: park } = useQuery({
-    queryKey: [LOCATION_QUERY.PARK, api_query, api_type],
-    queryFn: () => searchSeoulParkInfo('SearchParkInfoService/1/135/'),
-    enabled: api_type === 'walk',
-    refetchOnWindowFocus: false,
-  });
-  console.log(park);
   querySearchPlaces(kakaoMap, medicine as I_CustomMarkerProps[]);
   return {
     medicine,
