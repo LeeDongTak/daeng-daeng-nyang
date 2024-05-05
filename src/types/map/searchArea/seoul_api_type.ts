@@ -92,3 +92,30 @@ export interface I_SeoulAnimalMedicineAPI {
   X: string; // x축
   Y: string; // y축
 }
+
+export type T_LocationType =
+  | 'JG'
+  | 'YC'
+  | 'GJ'
+  | 'GD'
+  | 'JN'
+  | 'SD'
+  | 'JR'
+  | 'GC'
+  | 'GS'
+  | 'YD'
+  | 'YS'
+  | 'DD'
+  | 'DJ'
+  | 'GB'
+  | 'NW'
+  | 'SP'
+  | 'SC'
+  | 'SM'
+  | 'MP'
+  | 'DB'
+  | 'EP'
+  | 'SB'
+  | 'GA'
+  | 'GR'
+  | 'GN';

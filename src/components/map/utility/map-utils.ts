@@ -1,6 +1,6 @@
 import { SEOUL_LOCATION } from '@/data/map/seoul-area';
 import { I_CustomMarkerProps } from '@/types/map/kakao';
-import { I_SeoulAnimalMedicineAPI, I_SeoulParkAPI } from '@/types/map/searchArea/seoul_api_type';
+import { I_SeoulAnimalMedicineAPI, I_SeoulParkAPI, T_LocationType } from '@/types/map/searchArea/seoul_api_type';
 import { AxiosResponse } from 'axios';
 import proj4 from 'proj4';
 
@@ -95,7 +95,7 @@ export function removeEmptySeoulParkInfoHashMap<T extends { [key: string | numbe
 }
 
 export function refinedHashMap(hashMap: Map<keyof I_SeoulParkAPI, I_SeoulParkAPI[]>) {
-  const convertedMap = new Map<keyof I_SeoulParkAPI, I_CustomMarkerProps[]>();
+  const convertedMap = new Map<T_LocationType, I_CustomMarkerProps[]>();
 
   hashMap.forEach((parkInfoArray, key) => {
     const customMarkerPropsArray: I_CustomMarkerProps[] = parkInfoArray.map((parkInfo: I_SeoulParkAPI) => {
@@ -111,7 +111,7 @@ export function refinedHashMap(hashMap: Map<keyof I_SeoulParkAPI, I_SeoulParkAPI
       return customMarkerProps;
     });
 
-    convertedMap.set(key as keyof I_SeoulParkAPI, customMarkerPropsArray);
+    convertedMap.set(key as T_LocationType, customMarkerPropsArray);
   });
 
   return convertedMap;

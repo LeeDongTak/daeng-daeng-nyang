@@ -6,8 +6,9 @@ import {
   replaceLocationToApiQuery,
 } from '@/components/map/utility/map-utils';
 import { formattedGroupByKey } from '@/lib/utils';
+import { setSeoulPark } from '@/store/map/seoul-park/seoulPark-store';
 import { I_CustomMarkerProps } from '@/types/map/kakao';
-import { I_SearchParkInfoService, I_SeoulParkAPI } from '@/types/map/searchArea/seoul_api_type';
+import { I_SearchParkInfoService, I_SeoulParkAPI, T_LocationType } from '@/types/map/searchArea/seoul_api_type';
 import { GetStaticProps } from 'next';
 export const getStaticProps = (async () => {
   const results = await searchSeoulParkInfo('SearchParkInfoService/1/135/');
@@ -22,9 +23,10 @@ export const getStaticProps = (async () => {
   const hashMap = refinedHashMap(refinedParkInfo);
   return { props: { seoulParkInfo: hashMap } };
 }) satisfies GetStaticProps<{
-  seoulParkInfo: Map<keyof I_SeoulParkAPI, I_CustomMarkerProps[]>;
+  seoulParkInfo: Map<T_LocationType, I_CustomMarkerProps[]>;
 }>;
-const MapPage = ({ seoulParkInfo }: { seoulParkInfo: Map<keyof I_SeoulParkAPI, I_CustomMarkerProps[]> }) => {
+const MapPage = ({ seoulParkInfo }: { seoulParkInfo: Map<T_LocationType, I_CustomMarkerProps[]> }) => {
+  setSeoulPark(seoulParkInfo);
   return <Map />;
 };
 

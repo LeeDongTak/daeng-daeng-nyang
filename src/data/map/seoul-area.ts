@@ -1,4 +1,6 @@
-export const SEOUL_LOCATION = [
+import { T_LocationType } from '@/types/map/searchArea/seoul_api_type';
+
+export const SEOUL_LOCATION: { location: string; api_query: T_LocationType }[] = [
   {
     location: '중구',
     api_query: 'JG',

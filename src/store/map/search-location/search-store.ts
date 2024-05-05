@@ -1,9 +1,10 @@
+import { T_LocationType } from '@/types/map/searchArea/seoul_api_type';
 import { create } from 'zustand';
 
 interface I_MapSearch {
   category_type: 'hospital' | 'walk'; // 병원&약국 , 산책
   searchValue: string;
-  api_query: null | string;
+  api_query: null | T_LocationType;
   isUsingInnerKakaoApi: boolean;
 }
 
@@ -25,7 +26,7 @@ export const setSearchType = (category_type: 'hospital' | 'walk') =>
 export const setSearchValue = (searchValue: string) =>
   useSearchLocationStore.setState(state => ({ ...state, searchValue }));
 
-export const setApiQuery = (api_query: string | null) =>
+export const setApiQuery = (api_query: T_LocationType | null) =>
   useSearchLocationStore.setState(state => ({ ...state, api_query }));
 
 export const setIsUsingInnerKakaoApi = (isUsingInnerKakaoApi: boolean) =>
