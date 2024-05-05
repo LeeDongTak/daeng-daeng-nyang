@@ -1,8 +1,5 @@
 import Auth from '@/components/auth/Auth';
-import React from 'react';
 
-const AuthPage = () => {
-  return <Auth />;
-};
+const AuthPage = () => <Auth />;
 
 export default AuthPage;

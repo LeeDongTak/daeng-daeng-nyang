@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import { Fragment, ReactNode } from 'react';
 import Footer from './footer/Footer';
 import Header from './header/Header';
 
@@ -6,7 +6,7 @@ const CommonLayout = ({ children }: { children: ReactNode }) => {
   return (
     <>
       <Header />
-      <div>{children}</div>
+      <Fragment>{children}</Fragment>
       <Footer />
     </>
   );
