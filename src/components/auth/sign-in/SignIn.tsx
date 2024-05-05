@@ -4,29 +4,23 @@ import { Label } from '@/components/ui/label';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Fragment } from 'react';
 import { useForm } from 'react-hook-form';
-import { z } from 'zod';
 import LayoutForm from '../../common/form/form-layout/LayoutForm';
 import LayoutFormBody from '../../common/form/form-layout/layout-form-body/LayoutFormBody';
 import LayoutFormHeader from '../../common/form/form-layout/layout-form-header/LayoutFormHeader';
 import AuthForm from '../auth-form/AuthForm';
 import AuthTitle from '../auth-title/AuthTitle';
+import { SignInSchema, T_SignInSchema } from './validator/sign-in-validator';
 
-const formSchema = z.object({
-  email: z.string().min(2),
-  password: z.string().min(2),
-});
-
-type T_schema = z.infer<typeof formSchema>;
 const SignIn = () => {
-  const form = useForm<T_schema>({
+  const form = useForm<T_SignInSchema>({
     defaultValues: {
       email: '',
       password: '',
     },
-    resolver: zodResolver(formSchema),
+    resolver: zodResolver(SignInSchema),
   });
 
-  const submitHandler = (values: z.infer<typeof formSchema>) => {
+  const submitHandler = (values: T_SignInSchema) => {
     console.log(values);
   };
   return (
