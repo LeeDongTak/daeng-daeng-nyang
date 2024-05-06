@@ -34,3 +34,16 @@ export const setAuthAccessToken = (accessToken: string | null) =>
 
 export const setAuthRefreshToken = (refreshToken: string | null) =>
   useAuthStore.setState(state => ({ ...state, refreshToken }));
+
+// 로그인시 호출하는 함수입니다.
+export const setAuthLogin = ({ accessToken, refreshToken, isLogin }: I_AuthStore) =>
+  useAuthStore.setState(state => ({ ...state, accessToken, refreshToken, isLogin }));
+
+// reset (= 로그아웃 함수)함수입니다.
+export const setAuthInfoReset = () =>
+  useAuthStore.setState(state => {
+    useAuthStore.persist.clearStorage(); // session storage 초기화
+
+    // 나중에 쿠키 초기화도 해야함 !!!
+    return { ...state, ...initialValues };
+  });

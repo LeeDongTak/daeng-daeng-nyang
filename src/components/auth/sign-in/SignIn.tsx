@@ -1,4 +1,4 @@
-import { setAuthAccessToken, setAuthIsLogin, setAuthRefreshToken } from '@/store/auth/auth-store';
+import { setAuthLogin } from '@/store/auth/auth-store';
 import { I_AuthProps } from '@/types/auth/auth';
 import { zodResolver } from '@hookform/resolvers/zod';
 import axios from 'axios';
@@ -33,10 +33,11 @@ const SignIn = ({ clickChangeCom }: I_AuthProps) => {
 
   const submitHandler = async (values: T_SignInSchema) => {
     try {
-      const { data } = await axiosApi.post('/auth/sign-in', values);
-      setAuthAccessToken(data.accessToken);
-      setAuthRefreshToken(data.refreshToken);
-      setAuthIsLogin(true);
+      const {
+        data: { accessToken, refreshToken },
+      } = await axiosApi.post('/auth/sign-in', values);
+      // 로그인성공시 zustand로 session에 등록합니다.
+      setAuthLogin({ accessToken, refreshToken, isLogin: true });
       router.push('/');
     } catch (err) {
       if (axios.isAxiosError(err) && err.response) {
