@@ -16,7 +16,7 @@ const enum QUERY_KEY {
 
 const enum ROUTER_PATH {
   HOME = '/',
-  AUTH = '/auth',
+  LOGIN = '/auth/login',
 }
 
 const useAuthQuery = <T extends FieldValues>({ form }: I_useAuthQueryProps<T>) => {
@@ -27,7 +27,7 @@ const useAuthQuery = <T extends FieldValues>({ form }: I_useAuthQueryProps<T>) =
     mutationFn: signUp,
     onSuccess: res => {
       queryClient.invalidateQueries({ queryKey: [QUERY_KEY.SIGNUP] });
-      router.push(ROUTER_PATH.AUTH);
+      router.push(ROUTER_PATH.LOGIN);
     },
     onError: error => {
       if (axios.isAxiosError(error) && error.response) {
