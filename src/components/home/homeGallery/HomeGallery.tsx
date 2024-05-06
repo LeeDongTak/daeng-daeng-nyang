@@ -1,12 +1,13 @@
 import Title from '@/components/common/Title';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
+import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { useInView } from 'react-intersection-observer';
-import { homeGalleryInfo } from './Home-gallery-info';
-import HomeGalleryItem from './HomeGalleryItem';
+import HomeGalleryList from './HomeGalleryList';
 
 const HomeGallery = () => {
+  const { push } = useRouter();
   const [animation, setAnimation] = useState('translate-y-[20%] opacity-0');
   const [listAnimation, setListAnimation] = useState('translate-y-[20%] opacity-0');
   const { ref } = useInView({
@@ -22,11 +23,15 @@ const HomeGallery = () => {
     },
   });
 
+  const clickRouteHandler = () => {
+    push('/gallery');
+  };
+
   return (
     <div className={cn('w-full h-auto my-[10rem]')} ref={ref}>
       <div
         className={cn(
-          'relative flex flex-col items-center justify-center w-[128rem] mx-auto transition-all duration-1000',
+          'relative flex flex-col items-center justify-center w-full max-w-[138rem] px-[5rem] mx-auto transition-all duration-1000',
         )}
       >
         <div
@@ -44,9 +49,7 @@ const HomeGallery = () => {
           </div>
           <p className={cn('font-[500] text-[2.4rem]')}>#겔러리 #반려동물 #자랑 #일상 #행복</p>
           <p className={cn('mt-[3.6rem] transition-all delay-300 duration-1000', animation)}>
-            <Button type="button" variant="more" size="more">
-              겔러리 보러 가기
-            </Button>
+            <Button type="button" variant="more" size="more" children="겔러리 보러 가기" onClick={clickRouteHandler} />
           </p>
         </div>
         <div
@@ -55,20 +58,8 @@ const HomeGallery = () => {
             listAnimation,
           )}
         >
-          <div
-            className={cn('flex gap-[2.4rem] justify-start items-start flex-shrink-0 w-[auto] h-[auto] animate-flow')}
-          >
-            {homeGalleryInfo?.map((item, index) => {
-              return <HomeGalleryItem key={item.id} item={item} />;
-            })}
-          </div>
-          <div
-            className={cn('flex gap-[2.4rem] justify-start items-start flex-shrink-0 w-[auto] h-[auto] animate-flow')}
-          >
-            {homeGalleryInfo?.map((item, index) => {
-              return <HomeGalleryItem key={item.id} item={item} />;
-            })}
-          </div>
+          <HomeGalleryList />
+          <HomeGalleryList />
         </div>
       </div>
     </div>
