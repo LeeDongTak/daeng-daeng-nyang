@@ -11,7 +11,7 @@ const axiosApi = axios.create({
   baseURL,
 });
 
-export const submitSignInHandler = async (values: T_SignInSchema) => {
+export const signIn = async (values: T_SignInSchema) => {
   try {
     const { data } = await axiosApi.post('/auth/sign-in', values);
     return data;
@@ -20,7 +20,7 @@ export const submitSignInHandler = async (values: T_SignInSchema) => {
   }
 };
 
-export const submitSignUpHandler = async (values: T_SignUpSchema) => {
+export const signUp = async (values: T_SignUpSchema) => {
   try {
     const { data } = await axiosApi.post('/auth/signup', values);
     return data;
