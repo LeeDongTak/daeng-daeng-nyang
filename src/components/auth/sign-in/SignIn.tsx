@@ -1,4 +1,4 @@
-import useAuthQuery from '@/hooks/server/auth/uesAuthQuery';
+import useAuth from '@/hooks/client/auth/useAuth';
 import { I_AuthProps } from '@/types/auth/auth';
 import { Fragment } from 'react';
 import LayoutForm from '../../common/form/form-layout/LayoutForm';
@@ -21,7 +21,7 @@ const DEFAULT_VALUES = {
 };
 
 const SignIn = ({ clickChangeCom }: I_AuthProps) => {
-  const { form, submitLoginHandler } = useAuthQuery<T_SignInSchema>({
+  const { form, submitLoginHandler } = useAuth<T_SignInSchema>({
     schema: SignInSchema,
     defaultValues: DEFAULT_VALUES,
   });

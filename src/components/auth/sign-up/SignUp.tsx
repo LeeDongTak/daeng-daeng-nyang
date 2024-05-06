@@ -1,5 +1,5 @@
 import { Button } from '@/components/ui/button';
-import useAuthQuery from '@/hooks/server/auth/uesAuthQuery';
+import useAuth from '@/hooks/client/auth/useAuth';
 import { I_AuthProps } from '@/types/auth/auth';
 import { Fragment } from 'react';
 import LayoutForm from '../../common/form/form-layout/LayoutForm';
@@ -22,7 +22,7 @@ const DEFAULT_VALUE = {
   name: '',
 };
 const SignUp = ({ clickChangeCom }: I_AuthProps) => {
-  const { form, submitSignUpHandler } = useAuthQuery<T_SignUpSchema>({
+  const { form, submitSignUpHandler } = useAuth<T_SignUpSchema>({
     schema: signUpSchema,
     defaultValues: DEFAULT_VALUE,
   });
