@@ -1,5 +1,8 @@
+import { setAuthAccessToken, setAuthIsLogin, setAuthRefreshToken } from '@/store/auth/auth-store';
 import { I_AuthProps } from '@/types/auth/auth';
 import { zodResolver } from '@hookform/resolvers/zod';
+import axios from 'axios';
+import { useRouter } from 'next/router';
 import { Fragment } from 'react';
 import { useForm } from 'react-hook-form';
 import LayoutForm from '../../common/form/form-layout/LayoutForm';
@@ -18,6 +21,7 @@ const STYLE_CSS = {
 };
 
 const SignIn = ({ clickChangeCom }: I_AuthProps) => {
+  const router = useRouter();
   const form = useForm<T_SignInSchema>({
     defaultValues: {
       email: '',
@@ -26,9 +30,21 @@ const SignIn = ({ clickChangeCom }: I_AuthProps) => {
     resolver: zodResolver(SignInSchema),
   });
 
-  const submitHandler = (values: T_SignInSchema) => {
-    console.log(values);
+  const url = 'http://43.202.51.189:4000/auth/sign-in';
+  const submitHandler = async (values: T_SignInSchema) => {
+    const { data } = await axios.post(url, values);
+
+    if (data.statusCode === 200) {
+      const { accessToken, refreshToken } = data;
+      setAuthIsLogin(true);
+      setAuthAccessToken(accessToken);
+      setAuthRefreshToken(refreshToken);
+      sessionStorage.setItem('authAccess', accessToken); //  5일
+      sessionStorage.setItem('authRefresh', refreshToken); //  7일
+      router.push('/');
+    }
   };
+
   return (
     <Fragment>
       <AuthTitle title="Login" subTitle="나의 반려동물을 자랑해보세요" />
