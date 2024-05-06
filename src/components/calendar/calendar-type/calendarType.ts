@@ -18,4 +18,4 @@ export const YEAR_FORMAT_TYPE = 'YYYY';
 export const MONTH_FORMAT_TYPE = 'MMMM';
 
 // Cell, CellITEM 에서 쓰이는 FORMAT TYPE 입니다.
-export const FORMAT_CELL_DATE_TYPE = 'YYYY. MM. DD';
+export const FORMAT_CELL_DATE_TYPE = 'YYYY-MM-DD';

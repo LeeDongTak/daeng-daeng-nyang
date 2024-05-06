@@ -26,16 +26,10 @@ interface CellItemProps {
   mode: CalendarModeType;
   page?: CalendarPageType;
   id: string;
+  schedulesData?: ScheduleDataType[];
 
   // 페이지마다 내려줄 props 추가해주시면 됩니다.
 }
-
-/*
-*   "holidayNumber": "2",
-"date": "01월 21일(토)",
-"name": "설날 연휴",
-"anniversary": ""
-*/
 
 /**
  *  달력에서 모달 닫기
@@ -46,13 +40,20 @@ export interface CloseModalType {
 }
 
 /**
- * 매출달력 일때
+ * 달력 데이타 바인딩 처리
  */
 export interface CalendarDataType {
-  // sales: number;
-  // date: string;
-  // min?: boolean;
-  // max?: boolean;
-  // to_go: IsTakeOutType[] | null;
-  // store: IsTakeOutType[] | null;
+  schedule: ScheduleDataType[];
+  id: number;
+  dogNm: string;
+}
+
+export interface ScheduleDataType {
+  date: string;
+  category: string;
+  content: string;
+  id: number;
+  petId: number;
+  title: string;
+  userId: number;
 }

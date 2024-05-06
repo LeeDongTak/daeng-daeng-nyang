@@ -4,6 +4,7 @@ import LayoutFormHeader from '@/components/common/form/form-layout/layout-form-h
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
+import { CALENDAR_CATEGORY } from '../reservation/reservation-type';
 import CalendarForm from './calendar-form/CalendarForm';
 
 const formSchema = z.object({
@@ -13,12 +14,6 @@ const formSchema = z.object({
   content: z.string(),
   category: z.enum(['병원', '산책', '예방접종']),
 });
-
-const CALENDAR_CATEGORY = [
-  { value: '병원', label: '병원예약' },
-  { value: '산책', label: '산책예약' },
-  { value: '예방접종', label: '예방접종' },
-];
 
 type T_Schema = z.infer<typeof formSchema>;
 
