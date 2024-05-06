@@ -1,6 +1,4 @@
 import { signIn, signUp } from '@/components/auth/api/server_api';
-import { T_SignInSchema } from '@/components/auth/sign-in/validator/sign-in-validator';
-import { T_SignUpSchema } from '@/components/auth/sign-up/validator/sign-up-validator';
 import { setAuthLogin } from '@/store/auth/auth-store';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
@@ -67,10 +65,6 @@ const useAuthQuery = <T extends FieldValues>({ form }: I_useAuthQueryProps<T>) =
       }
     },
   });
-
-  const submitLoginHandler = (values: T_SignInSchema) => signInMutaion.mutate(values);
-
-  const submitSignUpHandler = (values: T_SignUpSchema) => signUpMutation.mutate(values);
 
   return { signIn: signInMutaion.mutate, signUp: signUpMutation.mutate };
 };
