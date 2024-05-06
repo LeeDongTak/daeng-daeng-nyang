@@ -1,6 +1,6 @@
 import useMobile from '@/hooks/client/useMobile';
 import { cn } from '@/lib/utils';
-import HomeCalender from './homeCalender/HomeCalender';
+import HomeCalendar from './homeCalendar/HomeCalendar';
 import HomeGallery from './homeGallery/HomeGallery';
 import HomeMap from './homeMap/HomeMap';
 import Jumbotron from './jumbotron/Jumbotron';
@@ -14,7 +14,7 @@ const Home = () => {
       {!isMobileMax1024 && (
         <>
           <HomeMap />
-          <HomeCalender />
+          <HomeCalendar />
           <HomeGallery />
         </>
       )}

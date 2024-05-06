@@ -2,11 +2,13 @@ import Title from '@/components/common/Title';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 import MapImage from '../../../../public/image/map-page.png';
 
 const HomeMap = () => {
+  const { push } = useRouter();
   const [imageAnimation, setImageAnimation] = useState('translate-y-[20%] opacity-0');
   const [textAnimation, setTextAnimation] = useState('opacity-0');
   const { ref } = useInView({
@@ -21,6 +23,10 @@ const HomeMap = () => {
       }
     },
   });
+
+  const clickRouteHandler = () => {
+    push('/map');
+  };
 
   return (
     <div className={cn('w-full h-auto mt-[10rem]')} ref={ref}>
@@ -40,9 +46,7 @@ const HomeMap = () => {
               동물약까지 취급하는 약국도 지도를 통해 찾아볼 수 있습니다
             </p>
             <p className={cn('flex justify-center w-[100%] mt-[10%]')}>
-              <Button type="button" variant="more" size="more">
-                지도 보러 가기
-              </Button>
+              <Button type="button" variant="more" size="more" children="지도 보러 가기" onClick={clickRouteHandler} />
             </p>
           </div>
         </div>

@@ -3,12 +3,14 @@ import { Button } from '@/components/ui/button';
 import useMobile from '@/hooks/client/useMobile';
 import { cn } from '@/lib/utils';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 import CalenderDetail from '../../../../public/image/calender-detail.png';
 import Calender from '../../../../public/image/calender.png';
 
-const HomeCalender = () => {
+const HomeCalendar = () => {
+  const { push } = useRouter();
   const { isMobileQuery: isMobileMax1150 } = useMobile('(max-width:1150px)');
   const px1050 = {
     left: isMobileMax1150 ? 'w-[55%]' : 'w-[50%]',
@@ -27,6 +29,10 @@ const HomeCalender = () => {
     },
   });
 
+  const clickRouteHandler = () => {
+    push('/calendar');
+  };
+
   return (
     <div className={cn('w-full h-auto mt-[10rem]')} ref={ref}>
       <div className={cn('flex justify-between items-center w-full max-w-[138rem] px-[5rem] mx-auto')}>
@@ -42,9 +48,7 @@ const HomeCalender = () => {
             <p className={cn('flex justify-center w-[100%] text-[1.8rem]')}>캘린더에 일정을 등록해 보세요</p>
             <p className={cn('flex justify-center w-[100%] text-[1.8rem]')}>댕댕냥이와 함께하는 라이프 스타일!</p>
             <p className={cn('flex justify-center w-[100%] mt-[10%]')}>
-              <Button type="button" variant="more" size="more">
-                일정 등록하기
-              </Button>
+              <Button type="button" variant="more" size="more" children="일정 등록하기" onClick={clickRouteHandler} />
             </p>
           </div>
         </div>
@@ -61,4 +65,4 @@ const HomeCalender = () => {
   );
 };
 
-export default HomeCalender;
+export default HomeCalendar;
