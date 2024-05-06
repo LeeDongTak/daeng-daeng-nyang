@@ -35,7 +35,11 @@ export const setAuthAccessToken = (accessToken: string | null) =>
 export const setAuthRefreshToken = (refreshToken: string | null) =>
   useAuthStore.setState(state => ({ ...state, refreshToken }));
 
-// 로그인시 호출하는 함수입니다.
+/**
+ *
+ * @param { accessToken, refreshToken, isLogin }
+ * @returns
+ */
 export const setAuthLogin = ({ accessToken, refreshToken, isLogin }: I_AuthStore) =>
   useAuthStore.setState(state => ({ ...state, accessToken, refreshToken, isLogin }));
 

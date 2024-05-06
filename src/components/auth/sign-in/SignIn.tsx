@@ -1,13 +1,8 @@
-import { setAuthLogin } from '@/store/auth/auth-store';
+import useAuthQuery from '@/hooks/server/auth/uesAuthQuery';
 import { I_AuthProps } from '@/types/auth/auth';
-import { zodResolver } from '@hookform/resolvers/zod';
-import axios from 'axios';
-import { useRouter } from 'next/router';
 import { Fragment } from 'react';
-import { useForm } from 'react-hook-form';
 import LayoutForm from '../../common/form/form-layout/LayoutForm';
 import LayoutFormBody from '../../common/form/form-layout/layout-form-body/LayoutFormBody';
-import { axiosApi } from '../api/server_api';
 import AuthForm from '../auth-form/AuthForm';
 import AuthTitle from '../auth-title/AuthTitle';
 import AccountManagement from './account-management/AccountManagement';
@@ -20,47 +15,23 @@ const STYLE_CSS = {
     messageCn: 'text-lg',
   },
 };
+const DEFAULT_VALUES = {
+  email: '',
+  password: '',
+};
 
 const SignIn = ({ clickChangeCom }: I_AuthProps) => {
-  const router = useRouter();
-  const form = useForm<T_SignInSchema>({
-    defaultValues: {
-      email: '',
-      password: '',
-    },
-    resolver: zodResolver(SignInSchema),
+  const { form, submitLoginHandler } = useAuthQuery<T_SignInSchema>({
+    schema: SignInSchema,
+    defaultValues: DEFAULT_VALUES,
   });
-
-  const submitHandler = async (values: T_SignInSchema) => {
-    try {
-      const {
-        data: { accessToken, refreshToken },
-      } = await axiosApi.post('/auth/sign-in', values);
-      // 로그인성공시 zustand로 session에 등록합니다.
-      setAuthLogin({ accessToken, refreshToken, isLogin: true });
-      router.push('/');
-    } catch (err) {
-      if (axios.isAxiosError(err) && err.response) {
-        const { status } = err.response;
-
-        if (status === 400)
-          form.setError('email', {
-            message: '이메일을 다시 확인해 주세요',
-          });
-        if (status === 401)
-          form.setError('password', {
-            message: '비밀번호가 일치하지 않습니다.',
-          });
-      }
-    }
-  };
 
   return (
     <Fragment>
       <AuthTitle title="Login" subTitle="나의 반려동물을 자랑해보세요" />
       <LayoutForm form={form} className="w-[33.2rem] bg-transparent border-0 shadow-none">
         <LayoutFormBody>
-          <AuthForm onSubmit={form.handleSubmit(submitHandler)} className="flex flex-col gap-10">
+          <AuthForm onSubmit={form.handleSubmit(submitLoginHandler)} className="flex flex-col gap-10">
             {SIGN_IN_INPUTS.map(input => (
               <AuthForm.input {...STYLE_CSS.input} control={form.control} {...input} />
             ))}
