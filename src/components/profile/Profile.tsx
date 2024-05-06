@@ -1,3 +1,4 @@
+import useFetchProfileQuery from '@/hooks/server/profile/useFetchProfileQuery';
 import { cn } from '@/lib/utils';
 import MyGallery from './my-gallery/MyGallery';
 import PetList from './pet-list/PetList';
@@ -5,6 +6,10 @@ import ProfileTitle from './profile-title/ProfileTitle';
 import Schedule from './schedule/Schedule';
 
 const Profile = () => {
+  const { data } = useFetchProfileQuery();
+  console.log(data?.pets);
+
+  if (!data) return;
   return (
     <div className={cn('w-[100%] h-auto')}>
       <div
@@ -13,7 +18,7 @@ const Profile = () => {
         )}
       >
         <ProfileTitle />
-        <PetList />
+        <PetList pets={data.pets} />
         <Schedule />
         <MyGallery />
       </div>

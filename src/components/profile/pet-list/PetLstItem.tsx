@@ -2,21 +2,22 @@ import Title from '@/components/common/Title';
 import { Button } from '@/components/ui/button';
 import { useModal } from '@/hooks/client/ui/useModal';
 import { cn } from '@/lib/utils';
-import Avatar from '../../../../public/icons/avatar.svg';
+import { I_petType } from '@/types/profile/profile';
 import PetUpdateModal from '../pet-update-modal/PetUpdateModal';
 
-const PetLstItem = () => {
+const PetLstItem = ({ petInfo }: { petInfo: I_petType }) => {
+  const { sexNm, dogNm, kindNm, profileImage } = petInfo;
   const { DaengModal } = useModal();
   const PET_INFO_GROUP = {
-    name: ['이름', '모찌'],
+    name: ['이름', dogNm],
     birthDate: ['생년월일', '2020.02.16'],
-    gender: ['성별', '암컷'],
+    gender: ['성별', sexNm],
     weight: ['몸무게', '6kg'],
-    breed: ['종류', '강아지/코리안 숏헤어'],
+    breed: ['종류', kindNm],
   };
 
   const clickPetInfoUpdateHandler = () => {
-    DaengModal.fire(<PetUpdateModal petId={'1'} />);
+    DaengModal.fire(<PetUpdateModal petInfo={petInfo} />);
   };
 
   return (
@@ -37,7 +38,7 @@ const PetLstItem = () => {
       </div>
       <div className={cn('flex justify-start items-center w-[100%] gap-[2.4rem]')}>
         <div className={cn('w-[12rem] h-[12rem] rounded-[50%]')}>
-          <Avatar width={'100%'} height={'100%'} />
+          {/* <Image src={profileImage} alt="펫프로필 이미지" layout="fill" objectFit="cover" objectPosition="center" /> */}
         </div>
         <div className={cn('flex flex-wrap justify-start items-start w-[100%] text-[1.8rem] font-[400] gap-[0.8rem]')}>
           {Object.values(PET_INFO_GROUP).map(item => {

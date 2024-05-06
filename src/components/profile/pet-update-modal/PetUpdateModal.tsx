@@ -1,4 +1,5 @@
 import LayoutForm from '@/components/common/form/form-layout/LayoutForm';
+import { I_petType } from '@/types/profile/profile';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
@@ -16,14 +17,16 @@ const petInfoSchema = z.object({
   breed: z.string(),
 });
 
-const PetUpdateModal = ({ modalId, petId }: { modalId?: string; petId: string }) => {
+const PetUpdateModal = ({ modalId, petInfo }: { modalId?: string; petInfo: I_petType }) => {
+  const { sexNm, dogNm, kindNm, profileImage } = petInfo;
+
   const PET_INFO_VALUE_GROUP = {
     petFile: null,
-    petName: '모찌',
+    petName: dogNm,
     birthDate: '2020.02.16',
-    gender: '암컷',
+    gender: sexNm,
     weight: '6kg',
-    breed: '강아지/코리안 숏헤어',
+    breed: kindNm,
   };
   const form = useForm<PetInfoValuetype>({
     defaultValues: { ...PET_INFO_VALUE_GROUP },
