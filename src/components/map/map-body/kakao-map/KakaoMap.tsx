@@ -35,7 +35,7 @@ const KakaoMap = () => {
       >
         <Button
           className="absolute top-3 right-8 z-50  justify-around px-4 w-32 h-12 text-base tracking-wider hover:text-white"
-          variant={'modal'}
+          variant={'auth'}
           onClick={clickMoveToUserLocation}
         >
           내 위치

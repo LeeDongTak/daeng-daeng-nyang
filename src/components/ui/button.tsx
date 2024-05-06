@@ -17,8 +17,7 @@ const buttonVariants = cva(
         link: 'text-primary underline-offset-4 hover:underline',
         update: 'text-primary text-[1.4rem] font-[700] bg-[#E1E6EC] hover:bg-destructive/50',
         delete: 'text-primary text-[1.4rem] font-[700] bg-[#FF583D] hover:bg-destructive/50',
-        modal:
-          'text-secondary text-[1.4rem] font-[700] bg-[#191919] rounded-full hover:bg-destructive/30 hover:text-[#555]',
+        auth: 'text-secondary text-[1.4rem] font-[700] bg-[#191919] rounded-full hover:bg-destructive/30 hover:text-[#555]',
         chat: 'text-secondary text-[1.4rem] font-[600] bg-[#191919] rounded-full hover:bg-destructive/30 hover:text-[#555] disabled:pointer-events-none disabled:text-[#191919] disabled:bg-[#E1E6EC] disabled:opacity-100',
         more: 'text-secondary text-[1.2rem] font-[600] bg-[#191919] rounded-full hover:bg-destructive/30 hover:text-[#555] disabled:pointer-events-none disabled:text-[#191919] disabled:bg-[#E1E6EC] disabled:opacity-100',
         jumbotron:
