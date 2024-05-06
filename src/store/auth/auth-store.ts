@@ -15,14 +15,12 @@ const initialValues = {
 const useAuthStore = create<I_AuthStore>()(
   persist(
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    (get, set) => ({
-      // get은 말 그대로
+    get => ({
       ...initialValues,
     }),
     {
       name: 'auth-storage',
       storage: createJSONStorage(() => sessionStorage),
-      partialize: state => ({ accessToken: state.accessToken, refreshToken: state.refreshToken }),
     },
   ),
 );

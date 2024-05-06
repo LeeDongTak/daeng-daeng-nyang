@@ -7,6 +7,7 @@ import { Fragment } from 'react';
 import { useForm } from 'react-hook-form';
 import LayoutForm from '../../common/form/form-layout/LayoutForm';
 import LayoutFormBody from '../../common/form/form-layout/layout-form-body/LayoutFormBody';
+import { axiosApi } from '../api/server_api';
 import AuthForm from '../auth-form/AuthForm';
 import AuthTitle from '../auth-title/AuthTitle';
 import AccountManagement from './account-management/AccountManagement';
@@ -30,18 +31,26 @@ const SignIn = ({ clickChangeCom }: I_AuthProps) => {
     resolver: zodResolver(SignInSchema),
   });
 
-  const url = 'http://43.202.51.189:4000/auth/sign-in';
   const submitHandler = async (values: T_SignInSchema) => {
-    const { data } = await axios.post(url, values);
-
-    if (data.statusCode === 200) {
-      const { accessToken, refreshToken } = data;
+    try {
+      const { data } = await axiosApi.post('/auth/sign-in', values);
+      setAuthAccessToken(data.accessToken);
+      setAuthRefreshToken(data.refreshToken);
       setAuthIsLogin(true);
-      setAuthAccessToken(accessToken);
-      setAuthRefreshToken(refreshToken);
-      sessionStorage.setItem('authAccess', accessToken); //  5일
-      sessionStorage.setItem('authRefresh', refreshToken); //  7일
       router.push('/');
+    } catch (err) {
+      if (axios.isAxiosError(err) && err.response) {
+        const { status } = err.response;
+
+        if (status === 400)
+          form.setError('email', {
+            message: '이메일을 다시 확인해 주세요',
+          });
+        if (status === 401)
+          form.setError('password', {
+            message: '비밀번호가 일치하지 않습니다.',
+          });
+      }
     }
   };
 
