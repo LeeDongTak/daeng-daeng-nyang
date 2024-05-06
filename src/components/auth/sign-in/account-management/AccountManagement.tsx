@@ -13,7 +13,7 @@ const AccountManagement = () => {
         </Label>
       </div>
       <Button variant={'link'} className="text-xl " type="button">
-        <Link href={'/auth/signup'}>회원가입하기</Link>
+        <Link href={'/auth/sign-up'}>회원가입하기</Link>
       </Button>
     </div>
   );
