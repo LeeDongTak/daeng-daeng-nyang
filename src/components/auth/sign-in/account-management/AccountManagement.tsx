@@ -1,9 +1,9 @@
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Label } from '@/components/ui/label';
-import { I_AuthProps } from '@/types/auth/auth';
+import Link from 'next/link';
 
-const AccountManagement = ({ clickChangeCom }: I_AuthProps) => {
+const AccountManagement = () => {
   return (
     <div className="flex justify-between items-center">
       <div className="flex item-center gap-5">
@@ -12,8 +12,8 @@ const AccountManagement = ({ clickChangeCom }: I_AuthProps) => {
           로그인 상태 유지
         </Label>
       </div>
-      <Button variant={'link'} className="text-xl " type="button" onClick={() => clickChangeCom(true)}>
-        회원가입하기
+      <Button variant={'link'} className="text-xl " type="button">
+        <Link href={'/auth/signup'}>회원가입하기</Link>
       </Button>
     </div>
   );

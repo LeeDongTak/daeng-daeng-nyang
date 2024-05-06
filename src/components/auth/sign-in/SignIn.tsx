@@ -1,5 +1,4 @@
 import useAuth from '@/hooks/client/auth/useAuth';
-import { I_AuthProps } from '@/types/auth/auth';
 import { Fragment } from 'react';
 import LayoutForm from '../../common/form/form-layout/LayoutForm';
 import LayoutFormBody from '../../common/form/form-layout/layout-form-body/LayoutFormBody';
@@ -20,7 +19,7 @@ const DEFAULT_VALUES = {
   password: '',
 };
 
-const SignIn = ({ clickChangeCom }: I_AuthProps) => {
+const SignIn = () => {
   const { form, submitLoginHandler } = useAuth<T_SignInSchema>({
     schema: SignInSchema,
     defaultValues: DEFAULT_VALUES,
@@ -38,7 +37,7 @@ const SignIn = ({ clickChangeCom }: I_AuthProps) => {
             <AuthForm.button type="submit" {...STYLE_CSS.button} variant={'auth'}>
               로그인
             </AuthForm.button>
-            <AccountManagement clickChangeCom={clickChangeCom} />
+            <AccountManagement />
           </AuthForm>
         </LayoutFormBody>
       </LayoutForm>

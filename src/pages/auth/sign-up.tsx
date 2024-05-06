@@ -1,11 +1,12 @@
-import SignIn from '@/components/auth/sign-in/SignIn';
+import SignUp from '@/components/auth/sign-up/SignUp';
+
 const CONTAINER_CSS = 'w-full h-[calc(100vh-36rem)] grid place-content-center items-center gap-14';
-const LoginPage = () => {
+const SignUpPage = () => {
   return (
     <div className={CONTAINER_CSS}>
-      <SignIn />
+      <SignUp />
     </div>
   );
 };
 
-export default LoginPage;
+export default SignUpPage;

@@ -1,12 +1,13 @@
 import { Button } from '@/components/ui/button';
 import useAuth from '@/hooks/client/auth/useAuth';
-import { I_AuthProps } from '@/types/auth/auth';
+import Link from 'next/link';
 import { Fragment } from 'react';
 import LayoutForm from '../../common/form/form-layout/LayoutForm';
 import LayoutFormBody from '../../common/form/form-layout/layout-form-body/LayoutFormBody';
 import AuthForm from '../auth-form/AuthForm';
 import AuthTitle from '../auth-title/AuthTitle';
 import { SIGN_UP_INPUTS, T_SignUpSchema, signUpSchema } from './validator/sign-up-validator';
+
 const STYLE_CSS = {
   button: { className: 'rounded-full py-8 text-2xl tracking-widest hover:bg-destructive/30 bg-[#E1E6EC] ' },
   input: {
@@ -21,7 +22,7 @@ const DEFAULT_VALUE = {
   confirmPassword: '',
   name: '',
 };
-const SignUp = ({ clickChangeCom }: I_AuthProps) => {
+const SignUp = () => {
   const { form, submitSignUpHandler } = useAuth<T_SignUpSchema>({
     schema: signUpSchema,
     defaultValues: DEFAULT_VALUE,
@@ -40,8 +41,8 @@ const SignUp = ({ clickChangeCom }: I_AuthProps) => {
               회원가입
             </AuthForm.button>
             <div className="flex justify-end">
-              <Button variant={'auth'} className="text-xl" type="button" onClick={() => clickChangeCom(false)}>
-                로그인으로 이동
+              <Button variant={'link'} className="text-xl" type="button">
+                <Link href={'/auth/login'}> 로그인으로 이동</Link>
               </Button>
             </div>
           </AuthForm>
