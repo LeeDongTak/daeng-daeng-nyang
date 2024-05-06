@@ -1,6 +1,8 @@
 import { Button } from '@/components/ui/button';
 import { I_AuthProps } from '@/types/auth/auth';
 import { zodResolver } from '@hookform/resolvers/zod';
+import axios from 'axios';
+import { useRouter } from 'next/router';
 import { Fragment } from 'react';
 import { useForm } from 'react-hook-form';
 import LayoutForm from '../../common/form/form-layout/LayoutForm';
@@ -18,6 +20,7 @@ const STYLE_CSS = {
   },
 };
 const SignUp = ({ clickChangeCom }: I_AuthProps) => {
+  const router = useRouter();
   const form = useForm<T_SignUpSchema>({
     defaultValues: {
       email: '',
@@ -28,9 +31,20 @@ const SignUp = ({ clickChangeCom }: I_AuthProps) => {
     resolver: zodResolver(signUpSchema),
   });
   const submitHandler = async (values: T_SignUpSchema) => {
-    const { data } = await axiosApi.post('/auth/signup', values);
-    console.log('🚀 ~ submitHandler ~ data:', data);
-    console.log(values);
+    try {
+      const { data } = await axiosApi.post('/auth/signup', values);
+      router.push('/');
+    } catch (err) {
+      if (axios.isAxiosError(err) && err.response) {
+        if (err.response.status === 400) {
+          //400 status는 존재하는 이메일이라는 의미
+          form.setError('email', {
+            message: '이미 존재하는 아이디 입니다.',
+          });
+          form.resetField('email');
+        }
+      }
+    }
   };
   return (
     <Fragment>
