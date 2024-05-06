@@ -26,7 +26,7 @@ const HomeGallery = () => {
     <div className={cn('w-full h-auto my-[10rem]')} ref={ref}>
       <div
         className={cn(
-          'relative flex flex-col items-center justify-center w-[128rem] mx-auto transition-all duration-1000',
+          'relative flex flex-col items-center justify-center w-full max-w-[138rem] px-[5rem] mx-auto transition-all duration-1000',
         )}
       >
         <div

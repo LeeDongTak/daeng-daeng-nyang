@@ -1,5 +1,6 @@
 import { cn } from '@/lib/utils';
 
+import useMobile from '@/hooks/client/useMobile';
 import { useRouter } from 'next/router';
 import { useEffect, useRef, useState } from 'react';
 import Logo from '../common/Logo';
@@ -10,6 +11,12 @@ const Header = () => {
   const [isNotAuthPathName, setIsNotAuthPathName] = useState(pathname === '/auth' ? false : true);
   const [position, setPosition] = useState('');
   const headerRef = useRef<HTMLElement | null>(null);
+  const { isMobileQuery: isMobileMax1680 } = useMobile('(max-width:1680px)');
+  const { isMobileQuery: isMobileMax920 } = useMobile('(max-width:920px)');
+  const { isMobileQuery: isMobileMax740 } = useMobile('(max-width:740px)');
+  const px1680 = isMobileMax1680 ? 'w-[80%]' : 'w-full';
+  const px920 = isMobileMax920 && 'w-[70%]';
+  const px740 = isMobileMax740 && 'w-[calc(100%-6rem)]';
 
   const onScroll = () => {
     const scrollY = typeof window !== 'undefined' ? window.scrollY : 0;
@@ -38,9 +45,11 @@ const Header = () => {
     <header className={cn('w-[100%] bg-[#fffdf9] h-[8rem]', position)} ref={headerRef}>
       <div
         className={cn(
-          `flex items-center w-[100%] max-w-[128rem] h-[100%] mx-auto ${
-            isNotAuthPathName ? 'justify-between' : 'justify-center'
-          }`,
+          'flex items-center w-[100%] max-w-[128rem] h-[100%] mx-auto',
+          isNotAuthPathName ? 'justify-between' : 'justify-center',
+          px1680,
+          px920,
+          px740,
         )}
       >
         <Logo />

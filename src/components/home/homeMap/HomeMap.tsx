@@ -24,7 +24,7 @@ const HomeMap = () => {
 
   return (
     <div className={cn('w-full h-auto mt-[10rem]')} ref={ref}>
-      <div className={cn('flex justify-between items-center w-[128rem] mx-auto')}>
+      <div className={cn('flex justify-between items-center w-full max-w-[138rem] px-[5rem] mx-auto')}>
         <div className={cn('flex justify-start items-center w-[50%] transition-all duration-1000', imageAnimation)}>
           <p className={cn('w-[70%] p-[2rem] rounded-[3rem] bg-white shadow-[0_0_1rem_0_rgba(0,0,0,0.2)]')}>
             <Image src={MapImage} alt="지도 이미지" />
