@@ -2,39 +2,34 @@ import { signIn, signUp } from '@/components/auth/api/server_api';
 import { T_SignInSchema } from '@/components/auth/sign-in/validator/sign-in-validator';
 import { T_SignUpSchema } from '@/components/auth/sign-up/validator/sign-up-validator';
 import { setAuthLogin } from '@/store/auth/auth-store';
-import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
 import { useRouter } from 'next/router';
-import { DefaultValues, FieldValues, Path, useForm } from 'react-hook-form';
-import { z } from 'zod';
+import { FieldValues, Path, UseFormReturn } from 'react-hook-form';
 
 interface I_useAuthQueryProps<T extends FieldValues> {
-  schema: z.ZodType<T>;
-  defaultValues: DefaultValues<T>;
+  form: UseFormReturn<T>;
 }
 
 const enum QUERY_KEY {
   LOGIN = 'signin',
   SIGNUP = 'signup',
-  LOGOUT = 'logout',
 }
 
-const HOME = '/';
-const AUTH = '/auth';
+const enum ROUTER_PATH {
+  HOME = '/',
+  AUTH = '/auth',
+}
 
-const useAuthQuery = <T extends FieldValues>({ schema, defaultValues }: I_useAuthQueryProps<T>) => {
+const useAuthQuery = <T extends FieldValues>({ form }: I_useAuthQueryProps<T>) => {
   const queryClient = useQueryClient();
   const router = useRouter();
-  const form = useForm<T>({
-    defaultValues,
-    resolver: zodResolver(schema),
-  });
+
   const signUpMutation = useMutation({
     mutationFn: signUp,
     onSuccess: res => {
       queryClient.invalidateQueries({ queryKey: [QUERY_KEY.SIGNUP] });
-      router.push(AUTH);
+      router.push(ROUTER_PATH.AUTH);
     },
     onError: error => {
       if (axios.isAxiosError(error) && error.response) {
@@ -55,7 +50,7 @@ const useAuthQuery = <T extends FieldValues>({ schema, defaultValues }: I_useAut
       queryClient.invalidateQueries({ queryKey: [QUERY_KEY.LOGIN] });
       const { accessToken, refreshToken } = res;
       setAuthLogin({ accessToken, refreshToken, isLogin: true });
-      router.push(HOME);
+      router.push(ROUTER_PATH.HOME);
     },
     onError: error => {
       if (axios.isAxiosError(error) && error.response) {
@@ -77,7 +72,7 @@ const useAuthQuery = <T extends FieldValues>({ schema, defaultValues }: I_useAut
 
   const submitSignUpHandler = (values: T_SignUpSchema) => signUpMutation.mutate(values);
 
-  return { form, submitLoginHandler, submitSignUpHandler };
+  return { signIn: signInMutaion.mutate, signUp: signUpMutation.mutate };
 };
 
 export default useAuthQuery;
