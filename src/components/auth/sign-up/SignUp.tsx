@@ -5,6 +5,7 @@ import { Fragment } from 'react';
 import { useForm } from 'react-hook-form';
 import LayoutForm from '../../common/form/form-layout/LayoutForm';
 import LayoutFormBody from '../../common/form/form-layout/layout-form-body/LayoutFormBody';
+import { axiosApi } from '../api/server_api';
 import AuthForm from '../auth-form/AuthForm';
 import AuthTitle from '../auth-title/AuthTitle';
 import { SIGN_UP_INPUTS, T_SignUpSchema, signUpSchema } from './validator/sign-up-validator';
@@ -21,12 +22,14 @@ const SignUp = ({ clickChangeCom }: I_AuthProps) => {
     defaultValues: {
       email: '',
       password: '',
-      passwordCheck: '',
-      nickName: '',
+      confirmPassword: '',
+      name: '',
     },
     resolver: zodResolver(signUpSchema),
   });
-  const submitHandler = (values: T_SignUpSchema) => {
+  const submitHandler = async (values: T_SignUpSchema) => {
+    const { data } = await axiosApi.post('/auth/signup', values);
+    console.log('🚀 ~ submitHandler ~ data:', data);
     console.log(values);
   };
   return (
