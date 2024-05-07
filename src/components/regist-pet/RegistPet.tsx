@@ -1,30 +1,21 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Fragment } from 'react';
 import { useForm } from 'react-hook-form';
-import { z } from 'zod';
 import LayoutForm from '../common/form/form-layout/LayoutForm';
 import LayoutFormBody from '../common/form/form-layout/layout-form-body/LayoutFormBody';
 import LayoutFormFooter from '../common/form/form-layout/layout-form-footer/LayoutFormFooter';
 import LayoutFormHeader from '../common/form/form-layout/layout-form-header/LayoutFormHeader';
 import FileController from '../common/form/input-file/FileController';
 import PetForm from './pet-form/PetForm';
+import { T_PetRegistSchema, formSchema } from './validator/pet-regist-validator';
 
-const formSchema = z.object({
-  file: z.instanceof(File).nullable(), // 반려동물 이미지
-  name: z.string(), // 반려동물 이름
-  age: z.string(), // 반려동물 나이
-  breed: z.string(), // 종류
-  gender: z.enum(['수컷', '암컷', '중성']), //수컷 암컷, 중성 // radio로 하기
-  date: z.date(),
-});
 const PET_GENDER_GROUP = [
   { value: '수컷', label: '수컷' },
   { value: '암컷', label: '암컷' },
   { value: '중성', label: '중성화' },
 ];
-type T_Schema = z.infer<typeof formSchema>;
 const RegistPet = () => {
-  const form = useForm<T_Schema>({
+  const form = useForm<T_PetRegistSchema>({
     defaultValues: {
       file: null,
       name: '',
@@ -33,7 +24,7 @@ const RegistPet = () => {
     },
     resolver: zodResolver(formSchema),
   });
-  const submitHandler = (value: T_Schema) => {
+  const submitHandler = (value: T_PetRegistSchema) => {
     console.log(value);
   };
   return (
