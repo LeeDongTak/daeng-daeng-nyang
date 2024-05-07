@@ -1,7 +1,7 @@
 import { z } from 'zod';
-export type T_PetRegistSchema = z.infer<typeof formSchema>;
+export type T_PetRegistSchema = z.infer<typeof petRegistFormSchema>;
 
-export const formSchema = z.object({
+export const petRegistFormSchema = z.object({
   file: z.instanceof(File).nullable(), // 반려동물 이미지
   name: z.string(), // 반려동물 이름
   age: z.string(), // 반려동물 나이
