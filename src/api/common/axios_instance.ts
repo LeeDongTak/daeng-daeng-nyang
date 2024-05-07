@@ -25,7 +25,7 @@ const getAuthorizationToken = () => {
 /**
  * @explain 서버에 요청을 보내기전에 세션 토큰을 헤더에 집어넣는 instance 입니다.
  */
-export const axiosValidInstance = axios
+export const valid_AxiosAPI = axios
   .create({
     baseURL,
   })
@@ -42,6 +42,6 @@ export const axiosValidInstance = axios
     },
   );
 
-export const axiosInstance = axios.create({
+export const axiosAPI = axios.create({
   baseURL,
 });
