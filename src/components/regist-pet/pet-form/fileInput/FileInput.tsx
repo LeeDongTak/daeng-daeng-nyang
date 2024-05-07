@@ -30,7 +30,7 @@ const FileInput = <
   return (
     <FormItem className="w-64">
       {!hasPreviewImage && (
-        <FormLabel className="w-64 h-64 block">
+        <FormLabel className="w-64 h-64 block cursor-pointer">
           <NonImage className="h-64 rounded-full" />
         </FormLabel>
       )}
