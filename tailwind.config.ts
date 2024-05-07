@@ -80,6 +80,7 @@ const config = {
       nocompatible: true,
       preferredStrategy: 'pseudoelements',
     }),
+    require('tailwind-scrollbar-hide'),
   ],
 } satisfies Config;
 

@@ -1,25 +1,27 @@
 import LayoutForm from '@/components/common/form/form-layout/LayoutForm';
 import LayoutFormBody from '@/components/common/form/form-layout/layout-form-body/LayoutFormBody';
+import { CATETGORY_CODE, searchParallPlaces } from '@/components/map/api/kakao_api';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import useKakaoMap from '@/hooks/client/map/kakao-map/useKakaoMap';
 import { cn } from '@/lib/utils';
 import useKakaoMapStore, { setMarkers } from '@/store/map/kakako-map/kakaoMap-store';
-import { setSearchValue } from '@/store/map/search-location/search-store';
+import useSearchLocationStore, {
+  setIsUsingInnerKakaoApi,
+  setSearchValue,
+} from '@/store/map/search-location/search-store';
+import { I_CustomMarkerProps } from '@/types/map/kakao';
 import { zodResolver } from '@hookform/resolvers/zod';
-import axios from 'axios';
-import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
-import SearchIcon from '../../../../../public/icons/search.svg';
+import SearchIcon from '../../../../../../public/icons/search.svg';
 const formSchema = z.object({
   search_location: z.string().min(2),
 });
+
 type T_Schema = z.infer<typeof formSchema>;
 const SearchForm = () => {
-  const { searchPlaces } = useKakaoMap();
   const kakaoMap = useKakaoMapStore(state => state.map);
-
+  const category_type = useSearchLocationStore(state => state.category_type);
   const form = useForm<T_Schema>({
     defaultValues: {
       search_location: '',
@@ -27,27 +29,20 @@ const SearchForm = () => {
     resolver: zodResolver(formSchema),
   });
 
-  //http://openapi.seoul.go.kr:8088/process.env.NEXT_PUBLIC_ANIMAL_PHARAMCY/json/LOCALDATA_020302/1/5/
   const submitHandler = async (values: T_Schema) => {
     setSearchValue(values.search_location);
-    const markers = await searchPlaces(kakaoMap, values.search_location);
+    setIsUsingInnerKakaoApi(true); // 검색창 입력시 seoul api 사용하지 않겠다는 state 값 변경 입니다.
+    const markers = await searchParallPlaces(
+      kakaoMap,
+      CATETGORY_CODE[category_type],
+      category_type,
+      values.search_location,
+    );
     if (!markers) return setMarkers(null);
-    if (markers) setMarkers(markers);
+    if (markers) setMarkers(markers as I_CustomMarkerProps[]);
     form.resetField('search_location');
   };
-  const pharamcyAPI = axios.create({
-    baseURL: `http://openapi.seoul.go.kr:8088/${process.env.NEXT_PUBLIC_ANIMAL_PHARAMCY}/json/LOCALDATA_020302_GA/1/100/01`,
-  });
 
-  const handle = async () => {
-    const { data } = await pharamcyAPI.get('/');
-    console.log(data);
-    const result = data.LOCALDATA_020302_GA.row.filter(store => store.TRDSTATEGBN !== '03');
-    // console.log(result);
-  };
-  useEffect(() => {
-    handle();
-  }, []);
   return (
     <LayoutForm form={form} className={cn('m-3 w-[28rem] overflow-hidden bg-transparent  border-none ')}>
       <LayoutFormBody className="p-3 bg-white">

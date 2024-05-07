@@ -1,42 +1,54 @@
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm } from 'react-hook-form';
-import { z } from 'zod';
+import { Button } from '@/components/ui/button';
+import useAuth from '@/hooks/client/auth/useAuth';
+import Link from 'next/link';
+import { Fragment } from 'react';
 import LayoutForm from '../../common/form/form-layout/LayoutForm';
 import LayoutFormBody from '../../common/form/form-layout/layout-form-body/LayoutFormBody';
-import LayoutFormHeader from '../../common/form/form-layout/layout-form-header/LayoutFormHeader';
 import AuthForm from '../auth-form/AuthForm';
+import AuthTitle from '../auth-title/AuthTitle';
+import { SIGN_UP_INPUTS, T_SignUpSchema, signUpSchema } from './validator/sign-up-validator';
 
-const formSchema = z.object({
-  email: z.string().min(2),
-  password: z.string().min(2),
-  passwordCheck: z.string().min(2),
-});
-
-type T_Schema = z.infer<typeof formSchema>;
+const STYLE_CSS = {
+  button: { className: 'rounded-full py-8 text-2xl tracking-widest hover:bg-destructive/30 bg-[#E1E6EC] ' },
+  input: {
+    labelCn: 'text-xl font-bold',
+    className: 'h-[4.8rem] text-xl rounded-2xl pl-7',
+    messageCn: 'text-lg',
+  },
+};
+const DEFAULT_VALUE = {
+  email: '',
+  password: '',
+  confirmPassword: '',
+  name: '',
+};
 const SignUp = () => {
-  const form = useForm<T_Schema>({
-    defaultValues: {
-      email: '',
-      password: '',
-      passwordCheck: '',
-    },
-    resolver: zodResolver(formSchema),
+  const { form, submitSignUpHandler } = useAuth<T_SignUpSchema>({
+    schema: signUpSchema,
+    defaultValues: DEFAULT_VALUE,
   });
-  const submitHandler = (values: z.infer<typeof formSchema>) => {
-    console.log(values);
-  };
+
   return (
-    <LayoutForm form={form}>
-      <LayoutFormHeader title="회원가입" />
-      <LayoutFormBody>
-        <AuthForm onSubmit={form.handleSubmit(submitHandler)}>
-          <AuthForm.input control={form.control} name="email" label="이메일" />
-          <AuthForm.input control={form.control} name="password" label="비밀번호" />
-          <AuthForm.input control={form.control} name="passwordCheck" label="비밀번호 확인" />
-          <AuthForm.button type="submit">회원가입</AuthForm.button>
-        </AuthForm>
-      </LayoutFormBody>
-    </LayoutForm>
+    <Fragment>
+      <AuthTitle title="Sign up" subTitle="회원 가입으로 더 많은 혜택을 누려보세요" />
+      <LayoutForm form={form} className="w-[33.2rem] bg-transparent border-0 shadow-none">
+        <LayoutFormBody>
+          <AuthForm onSubmit={form.handleSubmit(submitSignUpHandler)} className="flex flex-col gap-10">
+            {SIGN_UP_INPUTS.map(input => (
+              <AuthForm.input {...STYLE_CSS.input} control={form.control} {...input} />
+            ))}
+            <AuthForm.button type="submit" {...STYLE_CSS.button} variant={'jumbotron'}>
+              회원가입
+            </AuthForm.button>
+            <div className="flex justify-end">
+              <Button variant={'link'} className="text-xl" type="button">
+                <Link href={'/auth/login'}> 로그인으로 이동</Link>
+              </Button>
+            </div>
+          </AuthForm>
+        </LayoutFormBody>
+      </LayoutForm>
+    </Fragment>
   );
 };
 
