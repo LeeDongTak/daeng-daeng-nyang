@@ -17,8 +17,9 @@ const GalleryUploadImage = <T extends FieldValues>({
 }: I_GalleryUploadImage<T>) => {
   const [uploadedImages, setUploadedImages] = useState<File[]>([]);
   const [previewImages, setPreviewImages] = useState<string[]>([]);
-  const { field } = useController({ control, name });
-
+  const { field, fieldState } = useController({ control, name });
+  const { error } = fieldState;
+  console.log(error);
   const handleImageUpload = (e: ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
     if (!files) return;
@@ -89,6 +90,7 @@ const GalleryUploadImage = <T extends FieldValues>({
               accept="image/*"
               onChange={handleImageUpload}
               className="hidden"
+              ref={field.ref}
             />
             <label
               htmlFor="imageUpload"
@@ -100,6 +102,7 @@ const GalleryUploadImage = <T extends FieldValues>({
             </label>
           </div>
         )}
+        {error?.message && <div className="text-destructive">{error.message}</div>}
       </div>
     </div>
   );

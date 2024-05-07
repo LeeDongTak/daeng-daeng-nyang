@@ -11,15 +11,17 @@ import {
 interface GalleryCategoryMenuProps {
   selectedCategory: string;
   onCategorySelect: (category: string) => void;
+  onAddTags: () => void;
+  tags: string[];
 }
 
-const GalleryCategoryMenu = ({ selectedCategory, onCategorySelect }: GalleryCategoryMenuProps) => {
+const GalleryCategoryMenu = ({ selectedCategory, onCategorySelect, onAddTags }: GalleryCategoryMenuProps) => {
   const categories = ['산책', '접종', '간식', '병원', '약국', '자랑', '정보', '미용'];
 
   const radioItemClassName = 'py-2 justify-center text-[1.8rem] text-[#191919]';
 
   return (
-    <div>
+    <div className="flex">
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button
@@ -40,6 +42,13 @@ const GalleryCategoryMenu = ({ selectedCategory, onCategorySelect }: GalleryCate
           </DropdownMenuRadioGroup>
         </DropdownMenuContent>
       </DropdownMenu>
+      <button
+        type="button"
+        onClick={() => onAddTags()}
+        className="w-[4.8rem] h-[4.8rem] border-[#C5C9CF] border-1 text-[2.4rem] leading-8"
+      >
+        +
+      </button>
     </div>
   );
 };

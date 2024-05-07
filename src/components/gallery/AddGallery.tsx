@@ -11,16 +11,16 @@ import GalleryForm from './gallery-form/GalleryForm';
 import GalleryTags from './gallery-form/GalleryTags';
 import GalleryUploadImage from './gallery-form/GalleryUploadImage';
 import { I_GalleryData } from './type/gallery';
+const isFile = (value: unknown): value is File => value instanceof File;
 const galleryFormSchema = z.object({
   title: z.string().min(1, { message: '제목을 입력해주세요.' }),
   description: z.string().min(1, { message: '내용을 입력해주세요.' }),
-  images: z.array(z.instanceof(File)),
+  images: z.array(z.custom(isFile)).min(1, { message: '사진은 반드시 하나 이상 등록해야 합니다.' }),
   tags: z
     .array(z.string())
-    .min(1, { message: '카테고리를 1개 이상 등록해주세요.' })
+    .min(1, { message: '카테고리를 최소 1개 이상 등록해주세요.' })
     .max(4, { message: '카테고리는 최대 4개까지만 추가 가능합니다.' }),
 });
-
 type T_gallerySchema = z.infer<typeof galleryFormSchema>;
 const AddGallery = ({ onAddGallery }: { onAddGallery: (newGallery: I_GalleryData) => void }) => {
   const form = useForm<T_gallerySchema>({
@@ -46,21 +46,24 @@ const AddGallery = ({ onAddGallery }: { onAddGallery: (newGallery: I_GalleryData
       }
     }
   };
-
   const handleThumbnailChange = (file: File | null) => {
     setSelectedThumbnail(file);
   };
   const tags = form.getValues('tags');
   const submitGalleryHandler = async (values: T_gallerySchema) => {
+    if (form.formState.errors.images) {
+      console.log(form.formState.errors.images.message);
+      return;
+    }
     try {
       const formData = new FormData();
       if (selectedThumbnail) {
-        formData.append('thumbnail', selectedThumbnail);
+        formData.append('thumbnail', selectedThumbnail as Blob);
       }
       formData.append('title', values.title);
       formData.append('content', values.description);
       formData.append('tags', JSON.stringify(values.tags));
-      values.images.forEach((image, index) => formData.append(`images[${index}]`, image));
+      values.images.forEach((image, index) => formData.append(`images[${index}]`, image as Blob));
       console.log(values.title);
       console.log(values.description);
       console.log(values.tags);
@@ -80,6 +83,35 @@ const AddGallery = ({ onAddGallery }: { onAddGallery: (newGallery: I_GalleryData
       console.error('갤러리 등록 실패:', error);
     }
   };
+  const { errors } = form.formState;
+  const TEST = [
+    {
+      component: GalleryForm.input({
+        name: 'title',
+        label: '제목',
+        labelCn: 'text-2xl',
+        className: `w-full  h-[4.8rem] text-2xl ${errors['title'] && 'border-red-500'}`,
+        control: form.control,
+      }),
+    },
+    {
+      component: GalleryForm.textarea({
+        name: 'description',
+        label: '내용',
+        labelCn: 'text-2xl',
+        className: `w-full resize-none h-[24rem] text-2xl ${errors['description'] && 'border-red-500'}`,
+        control: form.control,
+      }),
+    },
+    {
+      component: GalleryUploadImage({
+        name: 'images',
+        className: `w-full ${errors['images'] && 'border-red-500'}`,
+        onThumbnailChange: handleThumbnailChange,
+        control: form.control,
+      }),
+    },
+  ];
 
   return (
     <LayoutForm form={form} className="mx-auto my-0 bg-FFFDF9 border-none flex justify-center">
@@ -87,35 +119,17 @@ const AddGallery = ({ onAddGallery }: { onAddGallery: (newGallery: I_GalleryData
         <LayoutFormHeader title="Gallery 등록" />
         <LayoutFormBody>
           <GalleryForm onSubmit={form.handleSubmit(submitGalleryHandler)}>
-            <GalleryForm.input
-              control={form.control}
-              name="title"
-              label="제목"
-              className="w-full h-[4.8rem] text-2xl "
-            />
-
-            <GalleryForm.textarea
-              control={form.control}
-              name="description"
-              label="내용"
-              className="w-full h-[24rem] text-2xl"
-            />
-            <GalleryUploadImage
-              className="w-full "
-              onThumbnailChange={handleThumbnailChange}
-              control={form.control}
-              name="images"
-            />
+            {TEST.map(Field => {
+              return Field.component;
+            })}
             <div>
               <div className="flex items-center space-x-4">
-                <GalleryCategoryMenu selectedCategory={selectedCategory} onCategorySelect={handleCategorySelect} />
-                <button
-                  type="button"
-                  onClick={handleAddTag}
-                  className="w-[4.8rem] h-[4.8rem] border-[#C5C9CF] border-1 text-[2.4rem] leading-8"
-                >
-                  +
-                </button>
+                <GalleryCategoryMenu
+                  selectedCategory={selectedCategory}
+                  onCategorySelect={handleCategorySelect}
+                  onAddTags={handleAddTag}
+                  tags={tags}
+                />
               </div>
               <GalleryTags control={form.control} name={'tags' as never} tags={tags} />
             </div>

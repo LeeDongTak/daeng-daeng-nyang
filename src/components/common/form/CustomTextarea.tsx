@@ -11,9 +11,10 @@ interface I_TextareaProps<
   name: TName;
   className?: string;
   label?: string;
+  labelCn?: string;
 }
 
-const CustomTextarea = <T extends FieldValues>({ control, name, label, ...props }: I_TextareaProps<T>) => {
+const CustomTextarea = <T extends FieldValues>({ control, name, label, labelCn, ...props }: I_TextareaProps<T>) => {
   const LABEL_NAME = label ? label : name;
 
   return (
@@ -22,7 +23,7 @@ const CustomTextarea = <T extends FieldValues>({ control, name, label, ...props 
       name={name}
       render={({ field }) => (
         <FormItem>
-          <FormLabel>{LABEL_NAME}</FormLabel>
+          <FormLabel className={labelCn}>{LABEL_NAME}</FormLabel>
           <FormControl>
             <Textarea {...field} {...props} />
           </FormControl>
