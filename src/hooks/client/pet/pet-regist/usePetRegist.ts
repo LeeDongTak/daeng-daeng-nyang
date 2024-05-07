@@ -1,6 +1,14 @@
 import { I_CustomUseHookFormProps } from '@/types/form/form';
-import { FieldValues } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { FieldValues, useForm } from 'react-hook-form';
 
-const usePetRegist = <T extends FieldValues>({ schema, defaultValues }: I_CustomUseHookFormProps<T>) => {};
+const usePetRegistForm = <T extends FieldValues>({ schema, defaultValues }: I_CustomUseHookFormProps<T>) => {
+  const form = useForm<T>({
+    defaultValues,
+    resolver: zodResolver(schema),
+  });
 
-export default usePetRegist;
+  return { form };
+};
+
+export default usePetRegistForm;
