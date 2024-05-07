@@ -44,7 +44,7 @@ export const setAuthLogin = ({ accessToken, refreshToken, isLogin }: I_AuthStore
   useAuthStore.setState(state => ({ ...state, accessToken, refreshToken, isLogin }));
 
 // reset (= 로그아웃 함수)함수입니다.
-export const setAuthInfoReset = () =>
+export const setAuthLogOut = () =>
   useAuthStore.setState(state => {
     useAuthStore.persist.clearStorage(); // session storage 초기화
 
