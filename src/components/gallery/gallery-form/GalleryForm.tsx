@@ -18,6 +18,7 @@ const GalleryForm = (props: I_FormProps) => {
     </form>
   );
 };
+
 GalleryForm.input = CustomInput;
 GalleryForm.textarea = CustomTextarea;
 GalleryForm.button = Button;
