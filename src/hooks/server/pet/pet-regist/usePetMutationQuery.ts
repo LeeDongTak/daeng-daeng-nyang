@@ -17,7 +17,6 @@ const usePetMutationQuery = <T extends FieldValues>({ form }: I_UsePetMutationQu
     onMutate: () => {},
     onSuccess: data => {
       queryClient.invalidateQueries({ queryKey: [MUTATION_QUERY_KEY.ADD] });
-      console.log(data, 'petMutation');
       router.push('/profile');
     },
     onError: error => {
