@@ -2,18 +2,21 @@ import Title from '@/components/common/Title';
 import { Button } from '@/components/ui/button';
 import { useModal } from '@/hooks/client/ui/useModal';
 import { cn } from '@/lib/utils';
-import { I_petType } from '@/types/profile/profile';
+import { I_PetType } from '@/types/profile/profile';
+import dayjs from 'dayjs';
+import Image from 'next/image';
+import Avatar from '../../../../public/icons/avatar.svg';
 import PetUpdateModal from '../pet-update-modal/PetUpdateModal';
 
-const PetLstItem = ({ petInfo }: { petInfo: I_petType }) => {
-  const { sexNm, dogNm, kindNm, profileImage } = petInfo;
+const PetLstItem = ({ petInfo }: { petInfo: I_PetType }) => {
+  const { birth, age, breed, gender, name, profileImage } = petInfo;
   const { DaengModal } = useModal();
   const PET_INFO_GROUP = {
-    name: ['이름', dogNm],
-    birthDate: ['생년월일', '2020.02.16'],
-    gender: ['성별', sexNm],
-    weight: ['몸무게', '6kg'],
-    breed: ['종류', kindNm],
+    name: ['이름', name],
+    birthDate: ['생년월일', dayjs(birth).format('YYYY-MM-DD')],
+    gender: ['성별', gender],
+    age: ['나이', age],
+    breed: ['종류', breed],
   };
 
   const clickPetInfoUpdateHandler = () => {
@@ -37,10 +40,20 @@ const PetLstItem = ({ petInfo }: { petInfo: I_petType }) => {
         </Button>
       </div>
       <div className={cn('flex justify-start items-center w-[100%] gap-[2.4rem]')}>
-        <div className={cn('w-[12rem] h-[12rem] rounded-[50%]')}>
-          {/* <Image src={profileImage} alt="펫프로필 이미지" layout="fill" objectFit="cover" objectPosition="center" /> */}
+        <div className={cn('relative w-[12rem] h-[12rem] rounded-full overflow-hidden')}>
+          {profileImage ? (
+            <Image
+              src={`${profileImage}`}
+              alt="펫프로필 이미지"
+              layout="fill"
+              objectFit="cover"
+              objectPosition="center"
+            />
+          ) : (
+            <Avatar width={'100%'} height={'100%'} />
+          )}
         </div>
-        <div className={cn('flex flex-wrap justify-start items-start w-[100%] text-[1.8rem] font-[400] gap-[0.8rem]')}>
+        <div className={cn('flex flex-wrap justify-start items-start w-[50%] text-[1.8rem] font-[400] gap-[0.8rem]')}>
           {Object.values(PET_INFO_GROUP).map(item => {
             return (
               <div className={cn('w-[calc(50%-0.4rem)]')} key={item[0]}>

@@ -7,7 +7,7 @@ import Schedule from './schedule/Schedule';
 
 const Profile = () => {
   const { data } = useFetchProfileQuery();
-  console.log(data?.pets);
+  console.log(data?.posts);
 
   if (!data) return;
   return (
@@ -19,8 +19,8 @@ const Profile = () => {
       >
         <ProfileTitle />
         <PetList pets={data.pets} />
-        <Schedule />
-        <MyGallery />
+        <Schedule schedules={data.schedule} />
+        <MyGallery posts={data.posts} />
       </div>
     </div>
   );

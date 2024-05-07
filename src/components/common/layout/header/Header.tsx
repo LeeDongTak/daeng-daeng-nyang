@@ -1,6 +1,7 @@
 import { cn } from '@/lib/utils';
 
 import useMobile from '@/hooks/client/useMobile';
+import useAuthStore from '@/store/auth/auth-store';
 import { useRouter } from 'next/router';
 import { useEffect, useRef, useState } from 'react';
 import Logo from '../common/Logo';
@@ -19,6 +20,7 @@ const Header = () => {
   const px1680 = isMobileMax1680 ? 'w-[80%]' : 'w-full';
   const px920 = isMobileMax920 && 'w-[70%]';
   const px740 = isMobileMax740 && 'w-[calc(100%-6rem)]';
+  const { isLogin } = useAuthStore();
 
   // 스크롤 시 해더 고정
   const onScroll = () => {
@@ -61,7 +63,7 @@ const Header = () => {
           {isNotAuthPathName && <MenuBox />}
         </div>
       </header>
-      {isScrollBox && <div className="h-[8rem] transition-all duration-300" />}
+      {/* {isScrollBox && <div className="h-[8rem] transition-all duration-300" />} */}
     </>
   );
 };

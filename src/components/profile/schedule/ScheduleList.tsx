@@ -1,7 +1,8 @@
 import { cn } from '@/lib/utils';
+import { I_ScheduleType } from '@/types/profile/profile';
 import ScheduleListItem from './ScheduleListItem';
 
-const ScheduleList = () => {
+const ScheduleList = ({ Schedules }: { Schedules: I_ScheduleType[] }) => {
   return (
     <div
       className={cn(
@@ -11,14 +12,9 @@ const ScheduleList = () => {
          scrollbar-track-white scrollbar-thumb-[#191919] scroll-[100rem]`,
       )}
     >
-      <ScheduleListItem />
-      <ScheduleListItem />
-      <ScheduleListItem />
-      <ScheduleListItem />
-      <ScheduleListItem />
-      <ScheduleListItem />
-      <ScheduleListItem />
-      <ScheduleListItem />
+      {Schedules.map(item => (
+        <ScheduleListItem key={item.id} SchedulesItem={item} />
+      ))}
     </div>
   );
 };
