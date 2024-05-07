@@ -1,4 +1,6 @@
-import { useQueryClient } from '@tanstack/react-query';
+import { addPetInfo } from '@/components/regist-pet/api/server_api';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useRouter } from 'next/router';
 import { FieldValues, UseFormReturn } from 'react-hook-form';
 
 enum MUTATION_QUERY_KEY {
@@ -9,22 +11,23 @@ interface I_UsePetMutationQueryProps<T extends FieldValues> {
 }
 const usePetMutationQuery = <T extends FieldValues>({ form }: I_UsePetMutationQueryProps<T>) => {
   const queryClient = useQueryClient();
+  const router = useRouter();
+  const addPetInfoMutation = useMutation({
+    mutationFn: addPetInfo,
+    onMutate: () => {},
+    onSuccess: data => {
+      queryClient.invalidateQueries({ queryKey: [MUTATION_QUERY_KEY.ADD] });
+      console.log(data, 'petMutation');
+      router.push('/profile');
+    },
+    onError: error => {
+      console.log(error, 'petMutaion Erro');
+    },
+  });
 
-  // const addPetInfoMutation = useMutation({
-  //   mutationFn: addPetInfo,
-  //   onMutate: () => {},
-  //   onSuccess: data => {
-  //     queryClient.invalidateQueries({ queryKey: [MUTATION_QUERY_KEY.ADD] });
-  //     console.log(data, 'petMutation');
-  //   },
-  //   onError: error => {
-  //     console.log(error, 'petMutaion Erro');
-  //   },
-  // });
-
-  // return {
-  //   addPet: addPetInfoMutation.mutate,
-  // };
+  return {
+    addPet: addPetInfoMutation.mutate,
+  };
 };
 
 export default usePetMutationQuery;
