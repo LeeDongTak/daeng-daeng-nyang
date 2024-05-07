@@ -1,30 +1,24 @@
 import { ArrayPath, Control, FieldValues, useFieldArray } from 'react-hook-form';
-interface GalleryTagsProps<T extends FieldValues> {
+
+interface I_GalleryTagsProps<T extends FieldValues> {
   control: Control<T>;
   name: ArrayPath<T>;
-  tags: { id: string; value: string }[];
+  tags: string[];
 }
-const GalleryTags = <T extends FieldValues>({ control, name, tags }: GalleryTagsProps<T>) => {
-  const { remove } = useFieldArray({ control, name: name });
-  // const arr = [1, 1, 2, 3, 4];
-  // const hashSet = new Set(arr);
-  // console.log('hashSet:', hashSet);
-  // const arr2 = [...hashSet];
-  // console.log(arr2);
-  // console.log(tags);
+
+const GalleryTags = <T extends FieldValues>({ control, name, tags }: I_GalleryTagsProps<T>) => {
+  const { remove } = useFieldArray({ control, name });
+
   return (
-    <div className="flex gap-\[5.3rem\] ">
-      {tags.map((field, index) => (
-        <div
-          key={field.id}
-          className=" flex w-\[7.3rem\] h-\[3.6rem\] bg-\[#E1E6EC\] justify-center items-center rounded-\[3rem\] "
-        >
+    <div className="flex space-x-2 mt-4">
+      {tags.map((tag, index) => (
+        <div key={index} className="bg-[#E1E6EC] px-2 py-1 rounded-full text-sm flex items-center space-x-1">
           <div className="flex mx-auto my-0 justify-center items-center gap-4 text-2xl">
-            <span>{field.value}</span>
+            <span>{tag}</span>
             <button
               type="button"
               onClick={() => remove(index)}
-              className="bg-[#FFFFFF] w-[2rem] h-[2rem] rounded-full "
+              className="bg-[#FFFFFF] w-[2rem] h-[2rem] hover:bg-red-500 hover:text-[#FFFFFF] focus:outline-none rounded-full"
             >
               X
             </button>
@@ -34,4 +28,5 @@ const GalleryTags = <T extends FieldValues>({ control, name, tags }: GalleryTags
     </div>
   );
 };
+
 export default GalleryTags;

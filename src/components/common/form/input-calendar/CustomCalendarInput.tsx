@@ -3,7 +3,7 @@ import { Calendar } from '@/components/ui/calendar';
 import { FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { cn } from '@/lib/utils';
-import { DateValues, format } from 'date-fns';
+import { format } from 'date-fns';
 import { ko } from 'date-fns/locale';
 import { CalendarIcon } from 'lucide-react';
 import { HTMLAttributes } from 'react';
@@ -61,7 +61,7 @@ const CustomCalendarInput = <T extends FieldValues>({
                 mode="single"
                 selected={field.value}
                 onSelect={field.onChange}
-                disabled={(date: DateValues) => date > new Date() || date < new Date('1900-01-01')}
+                disabled={date => date > new Date() || date < new Date('1900-01-01')}
                 initialFocus
               />
             </PopoverContent>

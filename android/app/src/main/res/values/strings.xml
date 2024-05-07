@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">daeng-daeng-nyang</string>
+    <string name="title_activity_main">daeng-daeng-nyang</string>
+    <string name="package_name">com.daeng_daeng_myang.app</string>
+    <string name="custom_url_scheme">com.daeng_daeng_myang.app</string>
+</resources>
