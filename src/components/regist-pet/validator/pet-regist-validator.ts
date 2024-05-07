@@ -7,5 +7,5 @@ export const petRegistFormSchema = z.object({
   age: z.string(), // 반려동물 나이
   breed: z.string(), // 종류
   gender: z.enum(['수컷', '암컷', '중성']), //수컷 암컷, 중성 // radio로 하기
-  date: z.date(),
+  birth: z.date(),
 });

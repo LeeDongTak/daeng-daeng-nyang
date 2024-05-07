@@ -13,6 +13,7 @@ const PET_GENDER_GROUP = [
   { value: '암컷', label: '암컷' },
   { value: '중성', label: '중성화' },
 ];
+
 const DEFAULT_VALUES = {
   file: null,
   name: '',
@@ -41,7 +42,7 @@ const RegistPet = () => {
             )}
           />
           <div>
-            <PetForm.calendar label="생일" control={form.control} name="date" calendarLabel="선택해주세요" />
+            <PetForm.calendar label="생일" control={form.control} name="birth" calendarLabel="선택해주세요" />
             <PetForm.radio control={form.control} name="gender" title="성별" radioItem={PET_GENDER_GROUP} />
             <PetForm.input control={form.control} name="name" label="이름" />
             <PetForm.input control={form.control} name="age" label="나이" />
