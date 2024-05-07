@@ -41,6 +41,9 @@ axiosValid_API.interceptors.request.use(
   },
 );
 
+/**
+ * @explain 토큰요청이 필요없는 axios instance 입니다.
+ */
 export const axiosAPI = axios.create({
   baseURL,
 });
