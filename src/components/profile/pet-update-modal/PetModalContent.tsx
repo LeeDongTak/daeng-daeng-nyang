@@ -9,7 +9,7 @@ import { PetInfoValuetype } from './PetUpdateModal';
 
 interface I_ModalType {
   modalId?: string;
-  petId: string;
+  petId: string | number;
   form: UseFormReturn<PetInfoValuetype, any, undefined>;
   PET_INFO_VALUE_GROUP: PetInfoValuetype;
 }

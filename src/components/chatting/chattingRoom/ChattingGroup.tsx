@@ -23,9 +23,8 @@ const ChattingGroup = () => {
       crollbar-track-white scrollbar-thumb-[#191919] scroll-[100rem]`)}
       ref={chatRoomRef}
     >
-      <MessageItem isMyMessage={true} key={1} />
+      <MessageItem isMyMessage={false} key={1} />
       <MessageItem isMyMessage={true} key={2} />
-      <MessageItem isMyMessage={true} key={3} />
     </div>
   );
 };
