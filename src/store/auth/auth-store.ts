@@ -1,10 +1,6 @@
+import { I_AuthStore } from '@/types/auth/auth';
 import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
-interface I_AuthStore {
-  isLogin: boolean;
-  accessToken: string | null;
-  refreshToken: string | null;
-}
 
 const initialValues = {
   isLogin: false,

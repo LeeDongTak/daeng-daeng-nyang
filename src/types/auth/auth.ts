@@ -1,3 +1,5 @@
-export interface I_AuthProps {
-  clickChangeCom: (param: boolean) => void;
+export interface I_AuthStore {
+  isLogin: boolean;
+  accessToken: string | null;
+  refreshToken: string | null;
 }
