@@ -41,3 +41,7 @@ export const axiosValidInstance = axios
       return Promise.reject(error);
     },
   );
+
+export const axiosInstance = axios.create({
+  baseURL,
+});
