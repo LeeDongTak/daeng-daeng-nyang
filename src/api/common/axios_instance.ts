@@ -25,22 +25,21 @@ const getAuthorizationToken = () => {
 /**
  * @explain 서버에 요청을 보내기전에 세션 토큰을 헤더에 집어넣는 instance 입니다.
  */
-export const valid_AxiosAPI = axios
-  .create({
-    baseURL,
-  })
-  .interceptors.request.use(
-    (config: InternalAxiosRequestConfig) => {
-      const { accessToken, refreshToken } = getAuthorizationToken();
-      if (!accessToken || !refreshToken) return config;
-      config.headers.Authorization = `Bearer ${accessToken}`;
-      config.headers.refreshToken = refreshToken;
-      return config;
-    },
-    error => {
-      return Promise.reject(error);
-    },
-  );
+export const axiosValid_API = axios.create({
+  baseURL,
+});
+axiosValid_API.interceptors.request.use(
+  (config: InternalAxiosRequestConfig) => {
+    const { accessToken, refreshToken } = getAuthorizationToken();
+    if (!accessToken || !refreshToken) return config;
+    config.headers.Authorization = `Bearer ${accessToken}`;
+    config.headers.refreshToken = refreshToken;
+    return config;
+  },
+  error => {
+    return Promise.reject(error);
+  },
+);
 
 export const axiosAPI = axios.create({
   baseURL,
