@@ -1,4 +1,5 @@
 import { I_CustomMarkerProps } from '@/types/map/kakao';
+import { MapMarkerProps } from 'react-kakao-maps-sdk';
 import { create } from 'zustand';
 /**
  * @example currentPosition은 맵의 중심좌표
@@ -13,6 +14,7 @@ interface I_KakaoMap {
   markers: I_CustomMarkerProps[] | null;
   currentPosition: { lat: number; lng: number };
   currentLocation: { lat: number; lng: number };
+  selectedMarker: MapMarkerProps | null;
 }
 
 const initialValues = {
@@ -20,6 +22,7 @@ const initialValues = {
   markers: [],
   currentPosition: { lat: 37.5616381543437, lng: 126.996862574927 },
   currentLocation: { lat: 37.5616381543437, lng: 126.996862574927 },
+  selectedMarker: null,
 };
 const useKakaoMapStore = create<I_KakaoMap>()(() => ({
   ...initialValues,
@@ -52,4 +55,10 @@ export const setCurrentLocation = (currentLocation: I_KakaoMap['currentLocation'
   useKakaoMapStore.setState(state => ({
     ...state,
     currentLocation: currentLocation ?? initialValues.currentLocation,
+  }));
+
+export const setSelectedMarker = (selectedMarker: null | I_CustomMarkerProps) =>
+  useKakaoMapStore.setState(state => ({
+    ...state,
+    selectedMarker,
   }));
