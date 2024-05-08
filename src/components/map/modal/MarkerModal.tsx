@@ -36,8 +36,9 @@ const MarkerModal = ({ marker }: I_MarkerModalProps) => {
   const select_item = refinePetInfo(pets);
   const isLogin = useAuthStore(state => state.isLogin);
   const submitHandler = (value: T_ScheduleSchema) => console.log(value);
+  const customSelectDisableDate = (param: Date) => param < new Date();
   return (
-    <LayoutForm form={form} className="z-[500] absolute right-[30rem] top-[3rem]">
+    <LayoutForm form={form} className=" w-[30rem] absolute right-[30rem] top-[3rem] z-[1]">
       <LayoutFormHeader title="" descript="" />
       <LayoutFormBody>
         <ScheduleForm onSubmit={form.handleSubmit(submitHandler)} className="flex flex-col gap-10">
@@ -48,30 +49,40 @@ const MarkerModal = ({ marker }: I_MarkerModalProps) => {
               {marker.address}
             </CardContent>
           </div>
-          <ScheduleForm.selectBox
-            control={form.control}
-            name="petId"
-            title="나의 펫"
-            placeholder="펫을 선택해주세요"
-            optionCn="z-[501]"
-            labelCn="text-xl"
-            selectItem={select_item}
-          />
-          <div className="flex">
+          <div className="flex justify-around">
+            <ScheduleForm.selectBox
+              control={form.control}
+              name="petId"
+              title="나의 펫"
+              placeholder="펫을 선택해주세요"
+              optionCn="z-[501]"
+              labelCn="text-2xl font-semibold"
+              itemCn="w-[10rem]"
+              selectItem={select_item}
+            />
             <ScheduleForm.calendar
               control={form.control}
               name="date"
               calendarLabel="일정을 선택해주세요"
               inputCn="w-[12rem]"
+              className="self-end"
+              itemCn="self-end"
+              customDisable={customSelectDisableDate}
             />
+          </div>
+          <div className="pl-4">
             <ScheduleForm.radioBox
               control={form.control}
               name="category"
               title="카테고리"
+              labelCn="text-2xl mb-3 inline-block font-semibold"
               radioItem={CALENDAR_CATEGORY}
+              className="text-lg"
             />
           </div>
-          <ScheduleForm.button>일정 등록하기</ScheduleForm.button>
+          <ScheduleForm.button variant={'more'} className="rounded-xl font-normal py-8">
+            일정 등록하기
+          </ScheduleForm.button>
         </ScheduleForm>
       </LayoutFormBody>
     </LayoutForm>
