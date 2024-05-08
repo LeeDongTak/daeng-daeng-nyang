@@ -37,8 +37,9 @@ const useKakaoMap = () => {
    *
    * @param marker marker클릭시 map의 중심좌표 이동
    */
-  const moveMapCenterLatLng = (marker: kakao.maps.Marker) => {
+  const clickShowLocationInfo = (marker: kakao.maps.Marker) => {
     if (!kakaoMap) return;
+
     const newLatLng = new kakao.maps.LatLng(marker.getPosition().getLat(), marker.getPosition().getLng());
     kakaoMap.panTo(newLatLng);
   };
@@ -69,7 +70,7 @@ const useKakaoMap = () => {
     handleDragEndMap,
     currentLocation,
     clickMoveToUserLocation,
-    moveMapCenterLatLng,
+    clickShowLocationInfo,
   };
 };
 

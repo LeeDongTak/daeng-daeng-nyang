@@ -1,18 +1,6 @@
+import { I_PetInfo } from '@/types/map/pet-info/pet-info';
 import { create } from 'zustand';
 
-interface I_PetInfo {
-  age: string;
-  birth: Date;
-  breed: string;
-  createdAt: Date;
-  deleteAt: null | Date;
-  gender: string;
-  id: string;
-  name: string;
-  profileImage: string;
-  updateAt: Date;
-  userId: number;
-}
 interface I_Map_PetInfoStore {
   pets: I_PetInfo[] | null;
 }

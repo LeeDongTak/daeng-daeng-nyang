@@ -2,9 +2,14 @@ import { Button } from '@/components/ui/button';
 import Skeleton from '@/components/ui/skeleton';
 import useKakaoLoader from '@/hooks/client/map/kakao-map/useKakaoLoader';
 import useKakaoMap from '@/hooks/client/map/kakao-map/useKakaoMap';
+import { useModal } from '@/hooks/client/ui/useModal';
+import useAuthStore from '@/store/auth/auth-store';
+import useMap_PetStore from '@/store/map/user-info/userInfo-store';
+import { I_PetInfo } from '@/types/map/pet-info/pet-info';
 import { LocateFixed, MapPin } from 'lucide-react';
-import { CSSProperties } from 'react';
+import { CSSProperties, Fragment } from 'react';
 import { CustomOverlayMap, Map } from 'react-kakao-maps-sdk';
+import { refinePetInfo } from '../../utility/form-utils';
 import CustomMarker from './custom-marker/CustomMarker';
 
 const MAP_STYLE: CSSProperties = { width: '1264px', height: '640px', position: 'relative', overflow: 'hidden' };
@@ -18,10 +23,13 @@ const KakaoMap = () => {
     currentPosition,
     currentLocation,
     clickMoveToUserLocation,
-    moveMapCenterLatLng,
+    clickShowLocationInfo,
   } = useKakaoMap();
   const [loading, error] = useKakaoLoader();
-
+  const { DaengModal } = useModal();
+  const pets = useMap_PetStore(state => state.pets) as I_PetInfo[];
+  const select_item = refinePetInfo(pets);
+  const isLogin = useAuthStore(state => state.isLogin);
   // error || loading시 Skeleton
   if (loading || error) return <Skeleton type="map" />;
   return (
@@ -51,11 +59,13 @@ const KakaoMap = () => {
         {/* location Marker */}
         {markers?.map(marker => {
           return (
-            <CustomMarker
-              onClick={moveMapCenterLatLng}
-              key={`marker-${marker.id}-${marker.position.lat - marker.position.lng}-${marker.address}`}
-              position={marker.position}
-            ></CustomMarker>
+            <Fragment>
+              <CustomMarker
+                onClick={clickShowLocationInfo}
+                key={`marker-${marker.id}-${marker.position.lat - marker.position.lng}-${marker.address}`}
+                position={marker.position}
+              ></CustomMarker>
+            </Fragment>
           );
         })}
       </Map>
