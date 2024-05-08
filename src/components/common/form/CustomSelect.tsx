@@ -13,6 +13,8 @@ interface I_SelectProps<
   selectItem: { value: string; label: string }[];
   optionCn?: string; // 모달창에선 안보일땐 원하는 z-index 넣어주면 됨
   customOnchagne?: (value: string) => void;
+  labelCn?: string;
+  itemCn?: string;
 }
 const CustomSelect = <T extends FieldValues>({
   control,
@@ -21,6 +23,8 @@ const CustomSelect = <T extends FieldValues>({
   selectItem,
   placeholder,
   optionCn,
+  labelCn,
+  itemCn,
   customOnchagne,
 }: I_SelectProps<T>) => {
   return (
@@ -28,8 +32,8 @@ const CustomSelect = <T extends FieldValues>({
       control={control}
       name={name}
       render={({ field }) => (
-        <FormItem className="space-y-3">
-          <FormLabel>{title}</FormLabel>
+        <FormItem className={`space-y-3 ${itemCn}`}>
+          <FormLabel className={labelCn}>{title}</FormLabel>
           <Select onValueChange={customOnchagne ? customOnchagne : field.onChange} defaultValue={field.value}>
             <FormControl>
               <SelectTrigger>

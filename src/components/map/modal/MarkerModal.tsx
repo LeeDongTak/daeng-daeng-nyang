@@ -2,11 +2,20 @@ import { CALENDAR_CATEGORY, CATEGORY } from '@/components/calendar/reservation/r
 import LayoutForm from '@/components/common/form/form-layout/LayoutForm';
 import LayoutFormBody from '@/components/common/form/form-layout/layout-form-body/LayoutFormBody';
 import LayoutFormHeader from '@/components/common/form/form-layout/layout-form-header/LayoutFormHeader';
+import { CardContent } from '@/components/ui/card';
+import useAuthStore from '@/store/auth/auth-store';
+import useMap_PetStore from '@/store/map/user-info/userInfo-store';
+import { I_CustomMarkerProps } from '@/types/map/kakao';
+import { I_PetInfo } from '@/types/map/pet-info/pet-info';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
+import Search from '../../../../public/icons/search.svg';
 import ScheduleForm from '../form/ScheduleForm';
-
+import { refinePetInfo } from '../utility/form-utils';
+interface I_MarkerModalProps {
+  marker: I_CustomMarkerProps;
+}
 const scheduleSchema = z.object({
   place: z.string(),
   location: z.string(),
@@ -15,34 +24,53 @@ const scheduleSchema = z.object({
   petId: z.string(), // select<user의 펫정보>
 });
 type T_ScheduleSchema = z.infer<typeof scheduleSchema>;
-const MarkerModal = ({ item }: { item: { value: string; label: string }[] }) => {
+const MarkerModal = ({ marker }: I_MarkerModalProps) => {
   const form = useForm<T_ScheduleSchema>({
+    defaultValues: {
+      place: marker.place,
+      location: marker.address,
+    },
     resolver: zodResolver(scheduleSchema),
   });
-
+  const pets = useMap_PetStore(state => state.pets) as I_PetInfo[];
+  const select_item = refinePetInfo(pets);
+  const isLogin = useAuthStore(state => state.isLogin);
   const submitHandler = (value: T_ScheduleSchema) => console.log(value);
   return (
-    <LayoutForm form={form}>
+    <LayoutForm form={form} className="z-[500] absolute right-[30rem] top-[3rem]">
       <LayoutFormHeader title="" descript="" />
       <LayoutFormBody>
-        <ScheduleForm onSubmit={form.handleSubmit(submitHandler)}>
+        <ScheduleForm onSubmit={form.handleSubmit(submitHandler)} className="flex flex-col gap-10">
+          <div>
+            <CardContent className="p-0 mb-6 text-3xl font-bold">{marker.place}</CardContent>
+            <CardContent className="flex items-center text-2xl gap-3 font-semibold p-0">
+              <Search width={18} height={23} />
+              {marker.address}
+            </CardContent>
+          </div>
           <ScheduleForm.selectBox
             control={form.control}
             name="petId"
             title="나의 펫"
             placeholder="펫을 선택해주세요"
-            // optionCn="z-[501]"
-            selectItem={item}
+            optionCn="z-[501]"
+            labelCn="text-xl"
+            selectItem={select_item}
           />
-          <ScheduleForm.input control={form.control} name="place" />
-          <ScheduleForm.input control={form.control} name="location" />
-          <ScheduleForm.calendar control={form.control} name="date" calendarLabel="일정을 선택해주세요" />
-          <ScheduleForm.radioBox
-            control={form.control}
-            name="category"
-            title="카테고리"
-            radioItem={CALENDAR_CATEGORY}
-          />
+          <div className="flex">
+            <ScheduleForm.calendar
+              control={form.control}
+              name="date"
+              calendarLabel="일정을 선택해주세요"
+              inputCn="w-[12rem]"
+            />
+            <ScheduleForm.radioBox
+              control={form.control}
+              name="category"
+              title="카테고리"
+              radioItem={CALENDAR_CATEGORY}
+            />
+          </div>
           <ScheduleForm.button>일정 등록하기</ScheduleForm.button>
         </ScheduleForm>
       </LayoutFormBody>

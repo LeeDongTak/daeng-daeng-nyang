@@ -36,7 +36,7 @@ const CustomInput = <T extends FieldValues>({
         <FormItem>
           <FormLabel className={labelCn}>{LABEL_NAME}</FormLabel>
           <FormControl>
-            <Input {...field} {...props} />
+            <Input {...field} {...props} style={{ cursor: 'default !important' }} />
           </FormControl>
           <FormMessage className={messageCn} />
         </FormItem>

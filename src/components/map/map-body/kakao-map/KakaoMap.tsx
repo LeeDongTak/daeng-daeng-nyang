@@ -2,14 +2,10 @@ import { Button } from '@/components/ui/button';
 import Skeleton from '@/components/ui/skeleton';
 import useKakaoLoader from '@/hooks/client/map/kakao-map/useKakaoLoader';
 import useKakaoMap from '@/hooks/client/map/kakao-map/useKakaoMap';
-import { useModal } from '@/hooks/client/ui/useModal';
-import useAuthStore from '@/store/auth/auth-store';
-import useMap_PetStore from '@/store/map/user-info/userInfo-store';
-import { I_PetInfo } from '@/types/map/pet-info/pet-info';
 import { LocateFixed, MapPin } from 'lucide-react';
-import { CSSProperties, Fragment } from 'react';
+import { CSSProperties } from 'react';
 import { CustomOverlayMap, Map } from 'react-kakao-maps-sdk';
-import { refinePetInfo } from '../../utility/form-utils';
+import MarkerModal from '../../modal/MarkerModal';
 import CustomMarker from './custom-marker/CustomMarker';
 
 const MAP_STYLE: CSSProperties = { width: '1264px', height: '640px', position: 'relative', overflow: 'hidden' };
@@ -24,12 +20,11 @@ const KakaoMap = () => {
     currentLocation,
     clickMoveToUserLocation,
     clickShowLocationInfo,
+    selectedMarker,
+    removeSelectedMarker,
   } = useKakaoMap();
   const [loading, error] = useKakaoLoader();
-  const { DaengModal } = useModal();
-  const pets = useMap_PetStore(state => state.pets) as I_PetInfo[];
-  const select_item = refinePetInfo(pets);
-  const isLogin = useAuthStore(state => state.isLogin);
+
   // error || loading시 Skeleton
   if (loading || error) return <Skeleton type="map" />;
   return (
@@ -40,6 +35,7 @@ const KakaoMap = () => {
         level={INITIAL_ZOOM}
         onCreate={kakaoMapHandler}
         onDragEnd={handleDragEndMap}
+        onClick={removeSelectedMarker}
       >
         <Button
           className="absolute top-3 right-8 z-50  justify-around px-4 w-32 h-12 text-base tracking-wider hover:text-white"
@@ -59,15 +55,14 @@ const KakaoMap = () => {
         {/* location Marker */}
         {markers?.map(marker => {
           return (
-            <Fragment>
-              <CustomMarker
-                onClick={clickShowLocationInfo}
-                key={`marker-${marker.id}-${marker.position.lat - marker.position.lng}-${marker.address}`}
-                position={marker.position}
-              ></CustomMarker>
-            </Fragment>
+            <CustomMarker
+              onClick={clickShowLocationInfo(marker)}
+              key={`marker-${marker.id}-${marker.position.lat - marker.position.lng}-${marker.address}`}
+              position={marker.position}
+            ></CustomMarker>
           );
         })}
+        {selectedMarker && <MarkerModal marker={selectedMarker} />}
       </Map>
     </div>
   );

@@ -4,13 +4,15 @@ import useKakaoMapStore, {
   setCurrentPosition,
   setKakaoMap,
   setMarkers,
+  setSelectedMarker,
 } from '@/store/map/kakako-map/kakaoMap-store';
 import useSearchLocationStore, { setIsUsingInnerKakaoApi } from '@/store/map/search-location/search-store';
 import { I_CustomMarkerProps } from '@/types/map/kakao';
 import { useEffect } from 'react';
 
 const useKakaoMap = () => {
-  const { map: kakaoMap, currentPosition, currentLocation, markers } = useKakaoMapStore();
+  const { map: kakaoMap, currentPosition, currentLocation, markers, selectedMarker } = useKakaoMapStore();
+  const removeSelectedMarker = () => selectedMarker && setSelectedMarker(null);
   const category_type = useSearchLocationStore(state => state.category_type);
   const handleDragEndMap = async (map: kakao.maps.Map) => {
     setKakaoMap(map);
@@ -18,6 +20,7 @@ const useKakaoMap = () => {
     const markers = await searchParallPlaces(map, CATETGORY_CODE[category_type], category_type);
     if (!markers) return setMarkers(null);
     if (markers) setMarkers(markers as I_CustomMarkerProps[]);
+    removeSelectedMarker();
   };
 
   const kakaoMapHandler = (map: kakao.maps.Map) => {
@@ -32,16 +35,20 @@ const useKakaoMap = () => {
     if (!kakaoMap) return;
     const userLocationLatLng = new kakao.maps.LatLng(currentLocation.lat, currentLocation.lng);
     kakaoMap.setCenter(userLocationLatLng);
+    removeSelectedMarker();
   };
   /**
    *
    * @param marker marker클릭시 map의 중심좌표 이동
    */
-  const clickShowLocationInfo = (marker: kakao.maps.Marker) => {
+  const clickShowLocationInfo = (customMarker: I_CustomMarkerProps) => (origin: kakao.maps.Marker) => {
     if (!kakaoMap) return;
+    setSelectedMarker(customMarker as I_CustomMarkerProps);
 
-    const newLatLng = new kakao.maps.LatLng(marker.getPosition().getLat(), marker.getPosition().getLng());
+    const newLatLng = new kakao.maps.LatLng(origin.getPosition().getLat(), origin.getPosition().getLng());
+    kakaoMap.getLevel() > 3 && kakaoMap.setLevel(3);
     kakaoMap.panTo(newLatLng);
+    removeSelectedMarker;
   };
 
   /**
@@ -71,6 +78,8 @@ const useKakaoMap = () => {
     currentLocation,
     clickMoveToUserLocation,
     clickShowLocationInfo,
+    selectedMarker,
+    removeSelectedMarker,
   };
 };
 
