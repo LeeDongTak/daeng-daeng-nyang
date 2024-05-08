@@ -1,11 +1,16 @@
 import useMobile from '@/hooks/client/useMobile';
 import { cn } from '@/lib/utils';
+import useAuthStore from '@/store/auth/auth-store';
 import { useRouter } from 'next/router';
-import Avatar from '../../../../../public/icons/avatar.svg';
-import BellRing from '../../../../../public/icons/bell-ring.svg';
-import Search from '../../../../../public/icons/search.svg';
+import AuthButton from './AuthButton';
+import UserMenuBox from './userMenuBox/UserMenuBox';
+
+// 나중을 위한 주석
+// import BellRing from '../../../../../public/icons/bell-ring.svg';
+// import Search from '../../../../../public/icons/search.svg';
 
 const MenuBox = () => {
+  const { isLogin } = useAuthStore();
   const { isMobileQuery: isMobileMax1024 } = useMobile('(max-width:1024px)');
   const { push } = useRouter();
   const MENU_ITEM = {
@@ -43,8 +48,7 @@ const MenuBox = () => {
           <span className={cn('w-1 h-[2.4rem] bg-[#aaa]')}></span>
         </>
       )}
-      <div className={cn('flex items-center w-auto h-[100%] gap-[2.4rem] [&>span]:cursor-pointer')}>
-        <span>
+      <div className={cn('flex items-center w-auto h-[100%] gap-[2.4rem]')}>
         {/* 
           나중을 위한 주석
           <Search width={'2.4rem'} height={'2.4rem'} />

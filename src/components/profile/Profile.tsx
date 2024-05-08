@@ -7,7 +7,6 @@ import Schedule from './schedule/Schedule';
 
 const Profile = () => {
   const { data } = useFetchProfileQuery();
-  console.log(data?.posts);
 
   if (!data) return;
   return (
