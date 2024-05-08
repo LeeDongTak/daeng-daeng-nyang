@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 
-interface I_Map_PetInfoStore {
+interface I_PetInfo {
   age: string;
   birth: Date;
   breed: string;
@@ -13,14 +13,21 @@ interface I_Map_PetInfoStore {
   updateAt: Date;
   userId: number;
 }
-[];
+interface I_Map_PetInfoStore {
+  pets: I_PetInfo[] | null;
+}
 
-const initialValue = null;
-const useMap_PetStore = create<I_Map_PetInfoStore | null>()(state => initialValue);
+const initialValue = {
+  pets: null,
+};
+const useMap_PetStore = create<I_Map_PetInfoStore>()(() => ({
+  ...initialValue,
+}));
 
 export default useMap_PetStore;
 
-export const setUseMap_PetInfo = (user_pet: I_Map_PetInfoStore | null) =>
-  useMap_PetStore.setState(() => ({
-    ...user_pet,
+export const setUseMap_PetInfo = (pets: I_PetInfo[]) =>
+  useMap_PetStore.setState(state => ({
+    ...state,
+    pets: pets,
   }));
