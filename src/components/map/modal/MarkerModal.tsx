@@ -14,6 +14,7 @@ import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import Search from '../../../../public/icons/search.svg';
 import ScheduleForm from '../form/ScheduleForm';
+import { T_ScheduleSchema } from '../form/validator/schedule-validator';
 import { refinePetInfo } from '../utility/form-utils';
 interface I_MarkerModalProps {
   marker: I_CustomMarkerProps;
@@ -25,7 +26,6 @@ const scheduleSchema = z.object({
   category: z.enum(CATEGORY), // radioGroup<병원, 예방, 산책>
   petId: z.string(), // select<user의 펫정보>
 });
-type T_ScheduleSchema = z.infer<typeof scheduleSchema>;
 const MarkerModal = ({ marker }: I_MarkerModalProps) => {
   const form = useForm<T_ScheduleSchema>({
     defaultValues: {
