@@ -7,5 +7,6 @@ export const getUserInfo = async () => {
   } catch (err) {
     // error 처리 명세서가지고 해야함!!
     console.log(err);
+    return null;
   }
 };
