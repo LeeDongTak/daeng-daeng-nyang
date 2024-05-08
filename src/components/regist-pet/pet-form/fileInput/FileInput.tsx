@@ -16,6 +16,7 @@ interface I_FileInputProps<
     onChange: (...event: any[]) => void;
   };
   labelCn?: string;
+  itemCn?: string;
 }
 const FileInput = <
   TFieldValues extends FieldValues = FieldValues,
@@ -23,14 +24,15 @@ const FileInput = <
 >({
   register,
   labelCn,
+  itemCn,
   ...props
 }: I_FileInputProps<TFieldValues, TName>) => {
   const form = useFormContext();
   const hasPreviewImage = form.getValues(register.name);
   return (
-    <FormItem className="w-64">
+    <FormItem className={`w-64 ${itemCn}`}>
       {!hasPreviewImage && (
-        <FormLabel className="w-64 h-64 block cursor-pointer">
+        <FormLabel className={`w-64 h-64 block cursor-pointer${labelCn}`}>
           <NonImage className="h-64 rounded-full" />
         </FormLabel>
       )}
