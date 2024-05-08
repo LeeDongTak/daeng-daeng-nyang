@@ -1,3 +1,4 @@
+import { useCalendar } from '@/hooks/client/calendar/useCalendar';
 import useSelectDay from '@/hooks/client/calendar/useSelectDay';
 import { useModal } from '@/hooks/client/ui/useModal';
 import useCalendarState from '@/store/calendar/calendar-store';
@@ -31,6 +32,7 @@ const Cell = ({ mode, page }: CalendarCellType) => {
   const calendarBindingData = useScheduleStore(state => state.calendarBindingData);
 
   const { DaengModal } = useModal();
+  const { clickShowScheduleModal } = useCalendar();
 
   /**
    * Sales Page에서 사용하는 state
@@ -46,6 +48,9 @@ const Cell = ({ mode, page }: CalendarCellType) => {
   while (day <= endDay) {
     for (let i = 0; i < 7; i++) {
       const itemKey = day.format(FORMAT_CELL_DATE_TYPE);
+      const schedulesData = calendarBindingData?.map(item =>
+        item.schedule.filter(target => target.date.split('T')[0] === itemKey),
+      );
 
       days.push(
         <CellItem
@@ -54,6 +59,7 @@ const Cell = ({ mode, page }: CalendarCellType) => {
           page={page}
           mode={mode}
           day={day}
+          schedulesData={schedulesData[0] ? schedulesData[0] : undefined}
           {...(mode === MINI_MODE && { selectDayHandler: selectDayHandler })}
           // ... spreadOperator
           // 아래 조건부 함수는 Sales page에서 사용하는 props 입니다.
@@ -89,10 +95,8 @@ const Cell = ({ mode, page }: CalendarCellType) => {
       })}
       {...{
         onClick: e => {
-          // const data = clickShowSalesModal?.(e);
-          // if (!data) return;
-          // DaengModal.fire(<CalendarModal specificData={data} />);
-          DaengModal.fire(<CalendarModal />);
+          const data = clickShowScheduleModal?.(e);
+          DaengModal.fire(<CalendarModal scheduleData={data} />);
         },
       }}
     >
