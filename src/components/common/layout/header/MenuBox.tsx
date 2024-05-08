@@ -45,14 +45,12 @@ const MenuBox = () => {
       )}
       <div className={cn('flex items-center w-auto h-[100%] gap-[2.4rem] [&>span]:cursor-pointer')}>
         <span>
+        {/* 
+          나중을 위한 주석
           <Search width={'2.4rem'} height={'2.4rem'} />
-        </span>
-        <span>
           <BellRing width={'2.4rem'} height={'2.4rem'} />
-        </span>
-        <span>
-          <Avatar width={'3.2rem'} height={'3.2rem'} />
-        </span>
+         */}
+        {isLogin ? <UserMenuBox /> : <AuthButton />}
       </div>
     </div>
   );
