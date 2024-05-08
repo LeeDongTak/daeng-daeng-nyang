@@ -1,17 +1,17 @@
 import { cn } from '@/lib/utils';
+import { I_PetType } from '@/types/profile/profile';
 import { useState } from 'react';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import { Pagination } from 'swiper/modules';
-
 import { Swiper, SwiperClass, SwiperSlide } from 'swiper/react';
 import PageArrowPrev from '../../../../public/icons/page-arrow-left.svg';
 import PageArrowNext from '../../../../public/icons/page-arrow-right.svg';
 import PageArrow from './PageArrow';
 import PetLstItem from './PetLstItem';
 
-const PetList = () => {
+const PetList = ({ pets }: { pets: I_PetType[] }) => {
   const [swiper, setSwiper] = useState<SwiperClass | null>(null);
 
   return (
@@ -27,9 +27,13 @@ const PetList = () => {
               setSwiper(e);
             }}
           >
-            <SwiperSlide>
-              <PetLstItem />
-            </SwiperSlide>
+            {pets.map(petInfo => {
+              return (
+                <SwiperSlide>
+                  <PetLstItem petInfo={petInfo} />
+                </SwiperSlide>
+              );
+            })}
           </Swiper>
         </div>
         <PageArrow arrowSVG={<PageArrowNext wight={'4rem'} height={'3.7rem'} />} swiper={swiper} arrowType="next" />

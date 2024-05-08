@@ -1,7 +1,5 @@
-import { I_AuthProps } from '@/types/auth/auth';
-import { zodResolver } from '@hookform/resolvers/zod';
+import useAuth from '@/hooks/client/auth/useAuth';
 import { Fragment } from 'react';
-import { useForm } from 'react-hook-form';
 import LayoutForm from '../../common/form/form-layout/LayoutForm';
 import LayoutFormBody from '../../common/form/form-layout/layout-form-body/LayoutFormBody';
 import AuthForm from '../auth-form/AuthForm';
@@ -16,32 +14,30 @@ const STYLE_CSS = {
     messageCn: 'text-lg',
   },
 };
+const DEFAULT_VALUES = {
+  email: '',
+  password: '',
+};
 
-const SignIn = ({ clickChangeCom }: I_AuthProps) => {
-  const form = useForm<T_SignInSchema>({
-    defaultValues: {
-      email: '',
-      password: '',
-    },
-    resolver: zodResolver(SignInSchema),
+const SignIn = () => {
+  const { form, submitLoginHandler } = useAuth<T_SignInSchema>({
+    schema: SignInSchema,
+    defaultValues: DEFAULT_VALUES,
   });
 
-  const submitHandler = (values: T_SignInSchema) => {
-    console.log(values);
-  };
   return (
     <Fragment>
       <AuthTitle title="Login" subTitle="나의 반려동물을 자랑해보세요" />
       <LayoutForm form={form} className="w-[33.2rem] bg-transparent border-0 shadow-none">
         <LayoutFormBody>
-          <AuthForm onSubmit={form.handleSubmit(submitHandler)} className="flex flex-col gap-10">
+          <AuthForm onSubmit={form.handleSubmit(submitLoginHandler)} className="flex flex-col gap-10">
             {SIGN_IN_INPUTS.map(input => (
               <AuthForm.input {...STYLE_CSS.input} control={form.control} {...input} />
             ))}
             <AuthForm.button type="submit" {...STYLE_CSS.button} variant={'auth'}>
               로그인
             </AuthForm.button>
-            <AccountManagement clickChangeCom={clickChangeCom} />
+            <AccountManagement />
           </AuthForm>
         </LayoutFormBody>
       </LayoutForm>

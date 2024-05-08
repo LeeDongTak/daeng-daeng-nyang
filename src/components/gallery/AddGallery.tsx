@@ -1,24 +1,143 @@
-const AddGallery = () => {
+import { zodResolver } from '@hookform/resolvers/zod';
+import axios from 'axios';
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { z } from 'zod';
+import LayoutForm from '../common/form/form-layout/LayoutForm';
+import LayoutFormBody from '../common/form/form-layout/layout-form-body/LayoutFormBody';
+import LayoutFormHeader from '../common/form/form-layout/layout-form-header/LayoutFormHeader';
+import GalleryCategoryMenu from './GalleryCategoryMenu';
+import GalleryForm from './gallery-form/GalleryForm';
+import GalleryTags from './gallery-form/GalleryTags';
+import GalleryUploadImage from './gallery-form/GalleryUploadImage';
+import { I_GalleryData } from './type/gallery';
+const isFile = (value: unknown): value is File => value instanceof File;
+const galleryFormSchema = z.object({
+  title: z.string().min(1, { message: '제목을 입력해주세요.' }),
+  description: z.string().min(1, { message: '내용을 입력해주세요.' }),
+  images: z.array(z.custom(isFile)).min(1, { message: '사진은 반드시 하나 이상 등록해야 합니다.' }),
+  tags: z
+    .array(z.string())
+    .min(1, { message: '카테고리를 최소 1개 이상 등록해주세요.' })
+    .max(4, { message: '카테고리는 최대 4개까지만 추가 가능합니다.' }),
+});
+type T_gallerySchema = z.infer<typeof galleryFormSchema>;
+const AddGallery = ({ onAddGallery }: { onAddGallery: (newGallery: I_GalleryData) => void }) => {
+  const form = useForm<T_gallerySchema>({
+    defaultValues: { title: '', description: '', tags: [], images: [] },
+    resolver: zodResolver(galleryFormSchema),
+  });
+  const [selectedCategory, setSelectedCategory] = useState<string>('');
+  const [selectedThumbnail, setSelectedThumbnail] = useState<File | null>(null);
+  const handleCategorySelect = (category: string) => {
+    setSelectedCategory(category);
+  };
+  const handleAddTag = () => {
+    const currentTags = form.getValues('tags');
+
+    if (selectedCategory) {
+      if (currentTags.length >= 4) {
+        alert('카테고리는 최대 4개까지만 등록 가능합니다.');
+      } else if (currentTags.includes(selectedCategory)) {
+        alert('이미 선택된 카테고리입니다. 다른 카테고리를 선택해주세요.');
+      } else {
+        form.setValue('tags', [...currentTags, selectedCategory]);
+        setSelectedCategory('');
+      }
+    }
+  };
+  const handleThumbnailChange = (file: File | null) => {
+    setSelectedThumbnail(file);
+  };
+  const tags = form.getValues('tags');
+  const submitGalleryHandler = async (values: T_gallerySchema) => {
+    if (form.formState.errors.images) {
+      console.log(form.formState.errors.images.message);
+      return;
+    }
+    try {
+      const formData = new FormData();
+      if (selectedThumbnail) {
+        formData.append('thumbnail', selectedThumbnail as Blob);
+      }
+      formData.append('title', values.title);
+      formData.append('content', values.description);
+      formData.append('tags', JSON.stringify(values.tags));
+      values.images.forEach((image, index) => formData.append(`images[${index}]`, image as Blob));
+      console.log(values.title);
+      console.log(values.description);
+      console.log(values.tags);
+      console.log(values.images);
+      console.log(selectedThumbnail);
+      const response = await axios.post(`${process.env.NEXT_PUBLIC_SERVER_BASE_URL}post`, formData);
+
+      if (response.status === 200) {
+        // 성공적으로 등록
+        onAddGallery(response.data);
+        // 추가적인 동작
+      } else {
+        // 등록 실패 시의 처리
+        console.error('갤러리 등록 실패:', response.data);
+      }
+    } catch (error) {
+      console.error('갤러리 등록 실패:', error);
+    }
+  };
+  const { errors } = form.formState;
+  const TEST = [
+    {
+      component: GalleryForm.input({
+        name: 'title',
+        label: '제목',
+        labelCn: 'text-2xl',
+        className: `w-full  h-[4.8rem] text-2xl ${errors['title'] && 'border-red-500'}`,
+        control: form.control,
+      }),
+    },
+    {
+      component: GalleryForm.textarea({
+        name: 'description',
+        label: '내용',
+        labelCn: 'text-2xl',
+        className: `w-full resize-none h-[24rem] text-2xl ${errors['description'] && 'border-red-500'}`,
+        control: form.control,
+      }),
+    },
+    {
+      component: GalleryUploadImage({
+        name: 'images',
+        className: `w-full ${errors['images'] && 'border-red-500'}`,
+        onThumbnailChange: handleThumbnailChange,
+        control: form.control,
+      }),
+    },
+  ];
+
   return (
-    <div>
-      <div>
-        <div>
-          <h1>Gallery 등록</h1>
-          <span>나의 반려동물을 자랑해보세요!</span>
-        </div>
-        <form action="">
-          <div>
-            <div>제목</div>
-            <input type="text" />
-          </div>
-          <div>
-            <div>내용</div>
-            <textarea></textarea>
-          </div>
-        </form>
+    <LayoutForm form={form} className="mx-auto my-0 bg-FFFDF9 border-none flex justify-center">
+      <div className="w-[84.6rem]">
+        <LayoutFormHeader title="Gallery 등록" />
+        <LayoutFormBody>
+          <GalleryForm onSubmit={form.handleSubmit(submitGalleryHandler)}>
+            {TEST.map(Field => {
+              return Field.component;
+            })}
+            <div>
+              <div className="flex items-center space-x-4">
+                <GalleryCategoryMenu
+                  selectedCategory={selectedCategory}
+                  onCategorySelect={handleCategorySelect}
+                  onAddTags={handleAddTag}
+                  tags={tags}
+                />
+              </div>
+              <GalleryTags control={form.control} name={'tags' as never} tags={tags} />
+            </div>
+            <GalleryForm.button type="submit">등록</GalleryForm.button>
+          </GalleryForm>
+        </LayoutFormBody>
       </div>
-    </div>
+    </LayoutForm>
   );
 };
-
 export default AddGallery;
