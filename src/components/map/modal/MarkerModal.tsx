@@ -8,6 +8,8 @@ import useMap_PetStore from '@/store/map/user-info/userInfo-store';
 import { I_CustomMarkerProps } from '@/types/map/kakao';
 import { I_PetInfo } from '@/types/map/pet-info/pet-info';
 import { zodResolver } from '@hookform/resolvers/zod';
+import clsx from 'clsx';
+import { Fragment } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import Search from '../../../../public/icons/search.svg';
@@ -37,52 +39,76 @@ const MarkerModal = ({ marker }: I_MarkerModalProps) => {
   const isLogin = useAuthStore(state => state.isLogin);
   const submitHandler = (value: T_ScheduleSchema) => console.log(value);
   const customSelectDisableDate = (param: Date) => param < new Date();
+  //
   return (
-    <LayoutForm form={form} className=" w-[30rem] absolute right-[30rem] top-[3rem] z-[1]">
-      <LayoutFormHeader title="" descript="" />
+    <LayoutForm
+      form={form}
+      className={clsx('z-[1]', {
+        'absolute right-[46.5rem] top-[16rem]': !isLogin,
+        'w-[30rem] absolute right-[30rem] top-[3rem]': isLogin,
+      })}
+    >
+      <LayoutFormHeader title="" descript="" headerCn={{ layoutCn: 'p-5' }} />
       <LayoutFormBody>
         <ScheduleForm onSubmit={form.handleSubmit(submitHandler)} className="flex flex-col gap-10">
           <div>
-            <CardContent className="p-0 mb-6 text-3xl font-bold">{marker.place}</CardContent>
-            <CardContent className="flex items-center text-2xl gap-3 font-semibold p-0">
+            <CardContent
+              className={clsx('p-0  font-bold', {
+                'text-3xl mb-6': isLogin,
+                'text-2xl mb-4': !isLogin,
+              })}
+            >
+              {marker.place}
+            </CardContent>
+            <CardContent
+              className={clsx('flex items-center gap-3 font-semibold p-0', {
+                'text-2xl': isLogin,
+                'text-lg': !isLogin,
+              })}
+            >
               <Search width={18} height={23} />
               {marker.address}
             </CardContent>
           </div>
-          <div className="flex justify-around">
-            <ScheduleForm.selectBox
-              control={form.control}
-              name="petId"
-              title="나의 펫"
-              placeholder="펫을 선택해주세요"
-              optionCn="z-[501]"
-              labelCn="text-2xl font-semibold"
-              itemCn="w-[10rem]"
-              selectItem={select_item}
-            />
-            <ScheduleForm.calendar
-              control={form.control}
-              name="date"
-              calendarLabel="일정을 선택해주세요"
-              inputCn="w-[12rem]"
-              className="self-end"
-              itemCn="self-end"
-              customDisable={customSelectDisableDate}
-            />
-          </div>
-          <div className="pl-4">
-            <ScheduleForm.radioBox
-              control={form.control}
-              name="category"
-              title="카테고리"
-              labelCn="text-2xl mb-3 inline-block font-semibold"
-              radioItem={CALENDAR_CATEGORY}
-              className="text-lg"
-            />
-          </div>
-          <ScheduleForm.button variant={'more'} className="rounded-xl font-normal py-8">
-            일정 등록하기
-          </ScheduleForm.button>
+          {isLogin && (
+            <Fragment>
+              <div className="flex justify-around">
+                <ScheduleForm.selectBox
+                  control={form.control}
+                  name="petId"
+                  title="나의 펫"
+                  placeholder="펫을 선택해주세요"
+                  optionCn="z-[501]"
+                  labelCn="text-2xl font-semibold"
+                  itemCn="w-[10rem]"
+                  selectItem={select_item}
+                />
+                <ScheduleForm.calendar
+                  control={form.control}
+                  name="date"
+                  calendarLabel="일정을 선택해주세요"
+                  inputCn="w-[12rem]"
+                  className="self-end"
+                  itemCn="self-end"
+                  customDisable={customSelectDisableDate}
+                />
+              </div>
+              <div className="pl-4">
+                <ScheduleForm.radioBox
+                  control={form.control}
+                  name="category"
+                  title="카테고리"
+                  labelCn="text-2xl mb-3 inline-block font-semibold"
+                  radioItem={CALENDAR_CATEGORY}
+                  className="text-lg"
+                />
+              </div>
+
+              <ScheduleForm.button variant={'more'} className="rounded-xl font-normal py-8">
+                일정 등록하기
+              </ScheduleForm.button>
+            </Fragment>
+          )}
         </ScheduleForm>
       </LayoutFormBody>
     </LayoutForm>
