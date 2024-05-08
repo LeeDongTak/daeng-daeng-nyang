@@ -24,7 +24,7 @@ const CellItem: Cell = ({ day, selectDayHandler, mode, page, id, schedulesData }
   const findSchedule =
     schedulesData &&
     schedulesData.map(schedule => {
-      return CALENDAR_CATEGORY.find(item => item.value === schedule.Category);
+      return CALENDAR_CATEGORY.find(item => item.value === schedule.category);
     });
   const uniqueSchedules = new Set(findSchedule);
 
@@ -127,6 +127,7 @@ const CellItem: Cell = ({ day, selectDayHandler, mode, page, id, schedulesData }
           {Array.from(uniqueSchedules).map(schedule => {
             return (
               <p
+                key={schedule?.value}
                 className={`bg-[#ccc] bg-[${schedule?.color}] text-white text-[1.4rem] w-full p-1 rounded-full text-center`}
               >
                 {schedule?.label}

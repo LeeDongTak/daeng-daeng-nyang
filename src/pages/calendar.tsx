@@ -7,9 +7,9 @@ import { GetServerSideProps } from 'next';
 export const getServerSideProps: GetServerSideProps = async context => {
   const { data: schedule } = await axios.get(`${process.env.NEXT_PUBLIC_DB_HOST}/schedule`, {
     headers: {
-      Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNzE0OTI3NjU4LCJleHAiOjE3MTQ5Mjc5NTh9.n2WbwEJTz80uOBXmVZ3lzVAZNSQxZ_glEUj6Yg2Kmvs`,
+      Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNzE1MDA4NDM0LCJleHAiOjE3MTUwMDg3MzR9.kVC6jNctz4bG2rxlhl5HBH5uCFiLJ-fvYBlNkqQAvXA`,
       refreshtoken:
-        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3MTQ5Mjc2NTgsImV4cCI6MTcxNTUzMjQ1OH0.KP2pUSNwbKAyCJppsWUVnZ_QHHM5EQqqf5x8w6eP_Xs',
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3MTUwMDg0MzQsImV4cCI6MTcxNTYxMzIzNH0.lKZRDQ0_KB_2l_sK3BltsUdHaDYjdOVtDRUwtH18N7E',
     },
   });
 

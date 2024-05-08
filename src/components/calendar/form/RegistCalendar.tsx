@@ -13,6 +13,8 @@ const formSchema = z.object({
   title: z.string().min(2),
   content: z.string(),
   category: z.enum(['병원', '산책', '예방접종']),
+  hour: z.number(),
+  time: z.number(),
 });
 
 type T_Schema = z.infer<typeof formSchema>;
@@ -22,6 +24,8 @@ const RegistCalendar = () => {
     defaultValues: {
       title: '',
       content: '',
+      hour: 0,
+      time: 0,
     },
     resolver: zodResolver(formSchema),
   });
@@ -35,6 +39,8 @@ const RegistCalendar = () => {
       <LayoutFormHeader title="스케줄 추가" />
       <LayoutFormBody>
         <CalendarForm onSubmit={form.handleSubmit(submitHandler)}>
+          <CalendarForm.input control={form.control} name="hour" label="시간" />
+          <CalendarForm.input control={form.control} name="time" label="" />
           <CalendarForm.radio control={form.control} name="category" title="카테고리" radioItem={CALENDAR_CATEGORY} />
           <CalendarForm.input control={form.control} name="title" label="제목" />
           <CalendarForm.input control={form.control} name="content" label="세부내용" />
