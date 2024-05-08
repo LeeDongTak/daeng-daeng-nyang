@@ -2,7 +2,6 @@ import usePetRegistForm from '@/hooks/client/pet/pet-regist/usePetRegist';
 import { Fragment } from 'react';
 import LayoutForm from '../common/form/form-layout/LayoutForm';
 import LayoutFormBody from '../common/form/form-layout/layout-form-body/LayoutFormBody';
-import LayoutFormFooter from '../common/form/form-layout/layout-form-footer/LayoutFormFooter';
 import LayoutFormHeader from '../common/form/form-layout/layout-form-header/LayoutFormHeader';
 import FileController from '../common/form/input-file/FileController';
 import PetForm from './pet-form/PetForm';
@@ -20,6 +19,7 @@ const DEFAULT_VALUES = {
   age: '',
   breed: '',
 };
+
 const RegistPet = () => {
   const { form, submitPetRegistHandler } = usePetRegistForm<T_PetRegistSchema>({
     schema: petRegistFormSchema,
@@ -28,32 +28,65 @@ const RegistPet = () => {
 
   return (
     <LayoutForm form={form}>
-      <LayoutFormHeader title="반려동물 등록" />
-      <LayoutFormBody>
-        <PetForm onSubmit={form.handleSubmit(submitPetRegistHandler)} className="flex">
-          <FileController
-            name="file"
-            control={form.control}
-            render={({ base64, register, remove, select, ...props }) => (
-              <Fragment>
-                <PetForm.previewImage remove={remove} base64={base64} />
-                <PetForm.file register={register} />
-              </Fragment>
-            )}
-          />
-          <div>
-            <PetForm.calendar label="생일" control={form.control} name="birth" calendarLabel="선택해주세요" />
-            <PetForm.radio control={form.control} name="gender" title="성별" radioItem={PET_GENDER_GROUP} />
-            <PetForm.input control={form.control} name="name" label="이름" />
-            <PetForm.input control={form.control} name="age" label="나이" />
-            <PetForm.input control={form.control} name="breed" label="종류" />
+      <LayoutFormHeader
+        title="반려동물 등록"
+        titleCn={{ layoutCn: 'text-center' }}
+        headerCn={{ layoutCn: 'py-[2rem]' }}
+      />
+      <LayoutFormBody className="relative">
+        <PetForm onSubmit={form.handleSubmit(submitPetRegistHandler)}>
+          <div className="flex gap-14">
+            <FileController
+              name="file"
+              control={form.control}
+              render={({ base64, register, remove, select, ...props }) => (
+                <Fragment>
+                  <PetForm.previewImage remove={remove} base64={base64} imgClassName="" />
+                  <PetForm.file register={register} />
+                </Fragment>
+              )}
+            />
+            <div className="flex flex-col gap-6">
+              <PetForm.input control={form.control} name="name" label="이름" labelCn="text-lg" className="w-[12rem]" />
+              <div className="flex items-center gap-6">
+                <PetForm.input control={form.control} name="age" label="나이" labelCn="text-lg" />
+                <PetForm.calendar
+                  label="생일"
+                  control={form.control}
+                  name="birth"
+                  calendarLabel="선택해주세요"
+                  labelCn="text-lg"
+                  inputCn="w-[12rem] "
+                />
+              </div>
+              <div className="flex justify-between">
+                <PetForm.radio
+                  control={form.control}
+                  name="gender"
+                  title="성별"
+                  radioItem={PET_GENDER_GROUP}
+                  labelCn="text-lg"
+                  itemCn="space-y-6"
+                />
+                <PetForm.input
+                  control={form.control}
+                  name="breed"
+                  label="종류"
+                  labelCn="text-lg"
+                  className="w-[12rem]"
+                />
+              </div>
+            </div>
           </div>
-          <div>
-            <PetForm.button type="submit">버튼</PetForm.button>
-          </div>
+
+          <PetForm.button
+            type="submit"
+            className="absolute -top-5  right-[-2rem] h-[8rem] py-2 w-[3rem] px-3 [writing-mode:vertical-rl]"
+          >
+            등록하기
+          </PetForm.button>
         </PetForm>
       </LayoutFormBody>
-      <LayoutFormFooter></LayoutFormFooter>
     </LayoutForm>
   );
 };
