@@ -3,12 +3,14 @@ import { useModal } from '@/hooks/client/ui/useModal';
 import useScheduleMutationQuery from '@/hooks/server/calendar/useScheduleMutationQuery';
 import useScheduleFormStore from '@/store/calendar/form-store';
 import useSchedulePetStore from '@/store/calendar/pet-store';
-import { ScheduleDataType } from '@/types/calendar/calendar';
+import useScheduleListStore from '@/store/calendar/schedule-store';
 import dayjs from 'dayjs';
 
-const ModalSchedule = ({ scheduleData }: { scheduleData: ScheduleDataType[] | null }) => {
+const ModalSchedule = () => {
   const scheduleFormDateStore = useScheduleFormStore(state => state.date);
   const schedulePetData = useSchedulePetStore(state => state.schedulePetData);
+  const scheduleListData = useScheduleListStore(state => state.scheduleListData);
+
   const { deleteSchedule } = useScheduleMutationQuery({});
   const { DaengModal } = useModal();
 
@@ -25,8 +27,8 @@ const ModalSchedule = ({ scheduleData }: { scheduleData: ScheduleDataType[] | nu
 
   return (
     <div>
-      {scheduleData && scheduleData.length > 0 ? (
-        scheduleData.map(item => (
+      {scheduleListData && scheduleListData.length > 0 ? (
+        scheduleListData.map(item => (
           <div key={item.id}>
             <p>펫 이름: {schedulePetData?.find(map => map.value === item.petId.toString())?.label}</p>
             <p>카테고리: {item.category}</p>

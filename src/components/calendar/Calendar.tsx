@@ -1,3 +1,4 @@
+import { useCalendar } from '@/hooks/client/calendar/useCalendar';
 import useFetchCalendarQuery from '@/hooks/server/calendar/useFetchCalendarQuery';
 import { setCalendarBindingData } from '@/store/calendar/data-store';
 import { setSchedulePetData } from '@/store/calendar/pet-store';
@@ -8,11 +9,13 @@ import { BIG_MODE, MINI_MODE } from './calendar-type/calendarType';
 
 const Calendar = () => {
   const { data: schedule } = useFetchCalendarQuery();
+  const { updateScheduleModal } = useCalendar();
 
   useEffect(() => {
     if (!schedule) return;
     setCalendarBindingData(schedule);
     setSchedulePetData(schedule);
+    updateScheduleModal(schedule);
   }, [schedule]);
 
   return (

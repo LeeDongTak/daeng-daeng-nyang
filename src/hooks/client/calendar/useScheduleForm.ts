@@ -23,7 +23,6 @@ const useScheduleForm = <T extends FieldValues>({ schema, defaultValues }: I_Cus
       place: value.place,
       location: '',
     };
-    // console.log(changeValueTarget);
     addSchedule(changeValueTarget);
   };
 
