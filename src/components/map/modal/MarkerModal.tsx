@@ -3,35 +3,23 @@ import LayoutForm from '@/components/common/form/form-layout/LayoutForm';
 import LayoutFormBody from '@/components/common/form/form-layout/layout-form-body/LayoutFormBody';
 import LayoutFormHeader from '@/components/common/form/form-layout/layout-form-header/LayoutFormHeader';
 import { CardContent } from '@/components/ui/card';
-import useAuthStore from '@/store/auth/auth-store';
-import useMap_PetStore from '@/store/map/user-info/userInfo-store';
+import useModalForm from '@/hooks/client/map/modal-form/useModalFom';
 import { I_CustomMarkerProps } from '@/types/map/kakao';
-import { I_PetInfo } from '@/types/map/pet-info/pet-info';
-import { zodResolver } from '@hookform/resolvers/zod';
 import clsx from 'clsx';
 import { Fragment } from 'react';
-import { useForm } from 'react-hook-form';
 import Search from '../../../../public/icons/search.svg';
 import ScheduleForm from '../form/ScheduleForm';
 import { T_ScheduleSchema, scheduleSchema } from '../form/validator/schedule-validator';
-import { refinePetInfo } from '../utility/form-utils';
 interface I_MarkerModalProps {
   marker: I_CustomMarkerProps;
+  isLogin: boolean;
 }
 
-const MarkerModal = ({ marker }: I_MarkerModalProps) => {
-  const form = useForm<T_ScheduleSchema>({
-    defaultValues: {
-      place: marker.place,
-      location: marker.address,
-    },
-    resolver: zodResolver(scheduleSchema),
+const MarkerModal = ({ marker, isLogin }: I_MarkerModalProps) => {
+  const { form, customSelectDisableDate, select_item, submitHandler } = useModalForm<T_ScheduleSchema>({
+    schema: scheduleSchema,
+    defaultValues: { place: marker.place, location: marker.address },
   });
-  const pets = useMap_PetStore(state => state.pets) as I_PetInfo[];
-  const select_item = refinePetInfo(pets);
-  const isLogin = useAuthStore(state => state.isLogin);
-  const submitHandler = (value: T_ScheduleSchema) => console.log(value);
-  const customSelectDisableDate = (param: Date) => param < new Date();
 
   return (
     <LayoutForm

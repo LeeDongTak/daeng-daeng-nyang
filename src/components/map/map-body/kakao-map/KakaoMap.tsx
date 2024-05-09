@@ -7,11 +7,13 @@ import { CSSProperties } from 'react';
 import { CustomOverlayMap, Map } from 'react-kakao-maps-sdk';
 import MarkerModal from '../../modal/MarkerModal';
 import CustomMarker from './custom-marker/CustomMarker';
-
+interface I_KakakoMapProps {
+  isLogin: boolean;
+}
 const MAP_STYLE: CSSProperties = { width: '1264px', height: '640px', position: 'relative', overflow: 'hidden' };
 const INITIAL_ZOOM = 3;
 
-const KakaoMap = () => {
+const KakaoMap = ({ isLogin }: I_KakakoMapProps) => {
   const {
     handleDragEndMap,
     kakaoMapHandler,
@@ -62,7 +64,7 @@ const KakaoMap = () => {
             ></CustomMarker>
           );
         })}
-        {selectedMarker && <MarkerModal marker={selectedMarker} />}
+        {selectedMarker && <MarkerModal marker={selectedMarker} isLogin={isLogin} />}
       </Map>
     </div>
   );
