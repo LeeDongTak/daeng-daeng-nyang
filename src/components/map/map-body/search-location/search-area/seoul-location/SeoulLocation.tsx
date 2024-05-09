@@ -14,6 +14,7 @@ const SeoulLocation = () => {
     <div className={SCROLL_HORIZONTAL_WRAPPER}>
       {SEOUL_LOCATION.map(({ location, api_query }, idx) => (
         <Button
+          key={location}
           type="button"
           name={api_query}
           className={cn(
