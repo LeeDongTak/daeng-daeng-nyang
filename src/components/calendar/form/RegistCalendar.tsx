@@ -7,7 +7,7 @@ import { CALENDAR_CATEGORY, CALENDAR_HOUR, CALENDAR_MINUTES } from '../reservati
 import { T_ScheduleSchemaBaic, scheduleFormSchema } from '../validator/schedule-validator';
 import CalendarForm from './calendar-form/CalendarForm';
 
-const RegistCalendar = () => {
+const RegistCalendar = ({ modalId }: { modalId?: string }) => {
   const schedulePetData = useSchedulePetStore(state => state.schedulePetData);
 
   const DEFAULT_VALUES = {
@@ -20,6 +20,7 @@ const RegistCalendar = () => {
   const { form, submitHandler } = useScheduleForm<T_ScheduleSchemaBaic>({
     schema: scheduleFormSchema,
     defaultValues: DEFAULT_VALUES,
+    modalId: modalId ?? '',
   });
 
   return (
