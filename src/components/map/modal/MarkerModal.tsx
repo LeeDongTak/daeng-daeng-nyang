@@ -2,23 +2,23 @@ import { CALENDAR_CATEGORY } from '@/components/calendar/reservation/reservation
 import LayoutForm from '@/components/common/form/form-layout/LayoutForm';
 import LayoutFormBody from '@/components/common/form/form-layout/layout-form-body/LayoutFormBody';
 import LayoutFormHeader from '@/components/common/form/form-layout/layout-form-header/LayoutFormHeader';
-import { CardContent } from '@/components/ui/card';
 import useModalForm from '@/hooks/client/map/modal-form/useModalFom';
 import { I_CustomMarkerProps } from '@/types/map/kakao';
 import clsx from 'clsx';
 import { Fragment } from 'react';
-import Search from '../../../../public/icons/search.svg';
 import ScheduleForm from '../form/ScheduleForm';
 import { T_ScheduleSchema, scheduleSchema } from '../form/validator/schedule-validator';
+import DefaultValue from './DefaultValue/DefaultValue';
 interface I_MarkerModalProps {
   marker: I_CustomMarkerProps;
   isLogin: boolean;
 }
 
 const MarkerModal = ({ marker, isLogin }: I_MarkerModalProps) => {
+  const DEFAULT_VALUE = { place: marker.place, location: marker.address };
   const { form, customSelectDisableDate, select_item, submitHandler } = useModalForm<T_ScheduleSchema>({
     schema: scheduleSchema,
-    defaultValues: { place: marker.place, location: marker.address },
+    defaultValues: DEFAULT_VALUE,
   });
 
   return (
@@ -32,25 +32,7 @@ const MarkerModal = ({ marker, isLogin }: I_MarkerModalProps) => {
       <LayoutFormHeader title="" descript="" headerCn={{ layoutCn: 'p-5' }} />
       <LayoutFormBody>
         <ScheduleForm onSubmit={form.handleSubmit(submitHandler)} className="flex flex-col gap-10">
-          <div>
-            <CardContent
-              className={clsx('p-0  font-bold', {
-                'text-3xl mb-6': isLogin,
-                'text-2xl mb-4': !isLogin,
-              })}
-            >
-              {marker.place}
-            </CardContent>
-            <CardContent
-              className={clsx('flex items-center gap-3 font-semibold p-0', {
-                'text-2xl': isLogin,
-                'text-lg': !isLogin,
-              })}
-            >
-              <Search width={18} height={23} />
-              {marker.address}
-            </CardContent>
-          </div>
+          <DefaultValue isLogin={isLogin} place={marker.place} location={marker.address} />
           {isLogin && (
             <Fragment>
               <div className="flex justify-around">
