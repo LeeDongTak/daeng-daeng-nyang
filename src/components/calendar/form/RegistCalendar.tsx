@@ -5,7 +5,7 @@ import useScheduleFormStore from '@/store/calendar/form-store';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
-import { CALENDAR_CATEGORY, CALENDAR_HOUR, CALENDAR_MINUTES } from '../reservation/reservation-type';
+import { CALENDAR_CATEGORY, CALENDAR_HOUR, CALENDAR_MINUTES, CATEGORY } from '../reservation/reservation-type';
 import CalendarForm from './calendar-form/CalendarForm';
 
 const dummyUserInfo = [
@@ -37,7 +37,7 @@ const formSchema = z.object({
   id: z.number(),
   title: z.string().min(2),
   content: z.string(),
-  category: z.enum(['병원', '산책', '예방접종']),
+  category: z.enum(CATEGORY),
   petId: z.number(),
   hour: z.string().regex(/^([01][0-9]|2[0-3])$/),
   minutes: z.string().regex(/^(00|10|20|30|40|50)$/),

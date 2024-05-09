@@ -5,12 +5,15 @@ import useKakaoMap from '@/hooks/client/map/kakao-map/useKakaoMap';
 import { LocateFixed, MapPin } from 'lucide-react';
 import { CSSProperties } from 'react';
 import { CustomOverlayMap, Map } from 'react-kakao-maps-sdk';
+import MarkerModal from '../../modal/MarkerModal';
 import CustomMarker from './custom-marker/CustomMarker';
-
+interface I_KakakoMapProps {
+  isLogin: boolean;
+}
 const MAP_STYLE: CSSProperties = { width: '1264px', height: '640px', position: 'relative', overflow: 'hidden' };
 const INITIAL_ZOOM = 3;
 
-const KakaoMap = () => {
+const KakaoMap = ({ isLogin }: I_KakakoMapProps) => {
   const {
     handleDragEndMap,
     kakaoMapHandler,
@@ -18,7 +21,9 @@ const KakaoMap = () => {
     currentPosition,
     currentLocation,
     clickMoveToUserLocation,
-    moveMapCenterLatLng,
+    clickShowLocationInfo,
+    selectedMarker,
+    removeSelectedMarker,
   } = useKakaoMap();
   const [loading, error] = useKakaoLoader();
 
@@ -32,6 +37,7 @@ const KakaoMap = () => {
         level={INITIAL_ZOOM}
         onCreate={kakaoMapHandler}
         onDragEnd={handleDragEndMap}
+        onClick={removeSelectedMarker}
       >
         <Button
           className="absolute top-3 right-8 z-50  justify-around px-4 w-32 h-12 text-base tracking-wider hover:text-white"
@@ -52,12 +58,15 @@ const KakaoMap = () => {
         {markers?.map(marker => {
           return (
             <CustomMarker
-              onClick={moveMapCenterLatLng}
+              onClick={clickShowLocationInfo(marker)}
               key={`marker-${marker.id}-${marker.position.lat - marker.position.lng}-${marker.address}`}
               position={marker.position}
             ></CustomMarker>
           );
         })}
+        {selectedMarker && (
+          <MarkerModal marker={selectedMarker} isLogin={isLogin} removeSelectedMarker={removeSelectedMarker} />
+        )}
       </Map>
     </div>
   );
