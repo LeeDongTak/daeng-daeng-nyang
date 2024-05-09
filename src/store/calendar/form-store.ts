@@ -12,6 +12,8 @@ const initialValues = {
   petId: 0,
   title: '',
   userId: 0,
+  place: '',
+  location: '',
 };
 
 /**

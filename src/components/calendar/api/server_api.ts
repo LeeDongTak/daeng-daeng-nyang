@@ -9,3 +9,12 @@ export const addScheduleAPI = async (values: T_ScheduleSchema) => {
     throw error;
   }
 };
+
+export const deleteScheduleAPI = async (id: number) => {
+  try {
+    const { data } = await axiosValid_API.delete(`schedule/${id}`);
+    return data;
+  } catch (error) {
+    throw error;
+  }
+};

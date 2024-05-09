@@ -1,15 +1,19 @@
 import useFetchCalendarQuery from '@/hooks/server/calendar/useFetchCalendarQuery';
 import { setCalendarBindingData } from '@/store/calendar/data-store';
 import { setSchedulePetData } from '@/store/calendar/pet-store';
+import { useEffect } from 'react';
 import CalendarBody from './calendar-body/CalendarBody';
 import CalendarTitle from './calendar-title/CalendarTitle';
 import { BIG_MODE, MINI_MODE } from './calendar-type/calendarType';
 
 const Calendar = () => {
   const { data: schedule } = useFetchCalendarQuery();
-  if (!schedule) return;
-  setCalendarBindingData(schedule);
-  setSchedulePetData(schedule);
+
+  useEffect(() => {
+    if (!schedule) return;
+    setCalendarBindingData(schedule);
+    setSchedulePetData(schedule);
+  }, [schedule]);
 
   return (
     <div className="w-[100%] max-w-[128rem] py-[8rem] mx-auto">
