@@ -2,8 +2,10 @@ import Title from '@/components/common/Title';
 import { Button } from '@/components/ui/button';
 import useMobile from '@/hooks/client/useMobile';
 import { cn } from '@/lib/utils';
+import { useRouter } from 'next/router';
 
 const JumbotronTitle = () => {
+  const { push } = useRouter();
   const { isMobileQuery: isMobileMax1024 } = useMobile('(max-width:1024px)');
   const { isMobileQuery: isMobileMax920 } = useMobile('(max-width:920px)');
   const { isMobileQuery: isMobileMax740 } = useMobile('(max-width:740px)');
@@ -17,6 +19,9 @@ const JumbotronTitle = () => {
   const px420 = isMobileMax420 && '[&>button]:text-[1.2rem]';
   const px640H = isMobileMax640H && 'h-[50%]';
 
+  const clickRouteHandler = (route: string) => {
+    push(route);
+  };
   return (
     <div
       className={cn(
@@ -44,9 +49,33 @@ const JumbotronTitle = () => {
           px640H,
         )}
       >
-        <Button type="button" variant="jumbotron" size="jumbotron" children="지도 보러 가기" />
-        <Button type="button" variant="jumbotron" size="jumbotron" children="일정 등록 하기" />
-        <Button type="button" variant="jumbotron" size="jumbotron100" children="겔러리 보러 가기" />
+        <Button
+          type="button"
+          variant="jumbotron"
+          size="jumbotron"
+          children="지도 보러 가기"
+          onClick={() => {
+            clickRouteHandler('/map');
+          }}
+        />
+        <Button
+          type="button"
+          variant="jumbotron"
+          size="jumbotron"
+          children="일정 등록 하기"
+          onClick={() => {
+            clickRouteHandler('/schedule');
+          }}
+        />
+        <Button
+          type="button"
+          variant="jumbotron"
+          size="jumbotron100"
+          children="겔러리 보러 가기"
+          onClick={() => {
+            clickRouteHandler('/gallery');
+          }}
+        />
       </div>
     </div>
   );

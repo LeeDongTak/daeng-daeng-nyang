@@ -7,7 +7,7 @@ import Schedule from './schedule/Schedule';
 
 const Profile = () => {
   const { data } = useFetchProfileQuery();
-
+  console.log(data);
   if (!data) return;
   return (
     <div className={cn('w-[100%] h-auto')}>
