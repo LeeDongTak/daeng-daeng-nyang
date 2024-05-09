@@ -1,5 +1,6 @@
 import { T_ScheduleSchema } from '@/components/map/form/validator/schedule-validator';
 import { refinePetInfo } from '@/components/map/utility/form-utils';
+import useAddScheduleMutation from '@/hooks/server/map/useAddScheduleMutation';
 import useMap_PetStore from '@/store/map/user-info/userInfo-store';
 import { I_PetInfo } from '@/types/map/pet-info/pet-info';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -15,9 +16,12 @@ const useModalForm = <T extends FieldValues>({ schema, defaultValues }: I_MapMod
     defaultValues,
     resolver: zodResolver(schema),
   });
+  const { addSchedule } = useAddScheduleMutation();
   const pets = useMap_PetStore(state => state.pets) as I_PetInfo[];
   const select_item = refinePetInfo(pets);
-  const submitHandler = (value: T_ScheduleSchema) => console.log(value);
+  const submitHandler = (value: T_ScheduleSchema) => {
+    addSchedule(value);
+  };
   const customSelectDisableDate = (param: Date) => param < new Date();
   return {
     select_item,
