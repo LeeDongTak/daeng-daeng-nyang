@@ -12,6 +12,7 @@ interface I_RadioProps<
   labelCn?: string;
   radioItem: { value: string; label: string }[];
   itemCn?: string;
+  radioCn?: { radio?: string; label?: string };
 }
 const CustomRadioInput = <T extends FieldValues>({
   control,
@@ -20,6 +21,7 @@ const CustomRadioInput = <T extends FieldValues>({
   radioItem,
   labelCn,
   itemCn,
+  radioCn,
 }: I_RadioProps<T>) => {
   return (
     <FormField
@@ -33,9 +35,11 @@ const CustomRadioInput = <T extends FieldValues>({
               {radioItem.map(item => (
                 <FormItem key={item.label} className="flex item-center space-x-3 space-y-0">
                   <FormControl>
-                    <RadioGroupItem value={item.value} />
+                    <RadioGroupItem className={radioCn?.radio} value={item.value} />
                   </FormControl>
-                  <FormLabel className="font-normal leading-tight cursor-pointer">{item.label}</FormLabel>
+                  <FormLabel className={`font-normal leading-tight cursor-pointer ${radioCn?.label}`}>
+                    {item.label}
+                  </FormLabel>
                 </FormItem>
               ))}
             </RadioGroup>

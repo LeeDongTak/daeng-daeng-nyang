@@ -18,3 +18,7 @@ export const CALENDAR_MINUTES = Array.from({ length: 6 }, (_, index) => ({
   value: `${index * 10}`.padStart(2, '0'),
   label: `${index * 10}`.padStart(2, '0'),
 }));
+/**
+ * @constant 예약 카테고리 - schema에 들어갈 배열
+ */
+export const CATEGORY = ['병원', '산책', '예방접종'] as const;

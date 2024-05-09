@@ -20,6 +20,8 @@ interface I_CustomCalendarProps<
   formatType?: string;
   calendarLabel: string;
   inputCn?: string;
+  itemCn?: string;
+  customDisable?: (param: Date) => boolean;
 }
 const CustomCalendarInput = <T extends FieldValues>({
   control,
@@ -30,6 +32,8 @@ const CustomCalendarInput = <T extends FieldValues>({
   formatType = 'PPP',
   calendarLabel,
   inputCn,
+  itemCn,
+  customDisable,
   ...props
 }: I_CustomCalendarProps<T>) => {
   return (
@@ -37,7 +41,7 @@ const CustomCalendarInput = <T extends FieldValues>({
       control={control}
       name={name}
       render={({ field }) => (
-        <FormItem className="flex flex-col">
+        <FormItem className={`flex flex-col ${itemCn}`}>
           {label && <FormLabel className={labelCn}>{label}</FormLabel>}
           <Popover>
             <PopoverTrigger asChild>
@@ -61,7 +65,7 @@ const CustomCalendarInput = <T extends FieldValues>({
                 mode="single"
                 selected={field.value}
                 onSelect={field.onChange}
-                disabled={date => date > new Date() || date < new Date('1900-01-01')}
+                disabled={customDisable ? customDisable : date => date > new Date() || date < new Date('1900-01-01')}
                 initialFocus
               />
             </PopoverContent>
