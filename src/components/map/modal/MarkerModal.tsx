@@ -11,13 +11,15 @@ import DynamicChangeValue from './DynamicInputValue/DynamicInputValue';
 interface I_MarkerModalProps {
   marker: I_CustomMarkerProps;
   isLogin: boolean;
+  removeSelectedMarker: () => void;
 }
 
-const MarkerModal = ({ marker, isLogin }: I_MarkerModalProps) => {
+const MarkerModal = ({ marker, isLogin, removeSelectedMarker }: I_MarkerModalProps) => {
   const DEFAULT_VALUE = { title: '', content: '', place: marker.place, location: marker.address };
   const { form, customSelectDisableDate, select_item, submitHandler } = useModalForm<T_ScheduleSchema>({
     schema: scheduleSchema,
     defaultValues: DEFAULT_VALUE,
+    removeSelectedMarker,
   });
 
   return (

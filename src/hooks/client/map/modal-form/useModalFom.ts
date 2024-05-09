@@ -10,13 +10,18 @@ import { ZodType } from 'zod';
 interface I_MapModalFormProps<T extends FieldValues> {
   schema: ZodType<T>;
   defaultValues: DefaultValues<T>;
+  removeSelectedMarker: () => void | null;
 }
-const useModalForm = <T extends FieldValues>({ schema, defaultValues }: I_MapModalFormProps<T>) => {
+const useModalForm = <T extends FieldValues>({
+  schema,
+  defaultValues,
+  removeSelectedMarker,
+}: I_MapModalFormProps<T>) => {
   const form = useForm<T>({
     defaultValues,
     resolver: zodResolver(schema),
   });
-  const { addSchedule } = useAddScheduleMutation();
+  const { addSchedule } = useAddScheduleMutation({ removeSelectedMarker });
   const pets = useMap_PetStore(state => state.pets) as I_PetInfo[];
   const select_item = refinePetInfo(pets);
   const submitHandler = (value: T_ScheduleSchema) => {

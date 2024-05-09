@@ -64,7 +64,9 @@ const KakaoMap = ({ isLogin }: I_KakakoMapProps) => {
             ></CustomMarker>
           );
         })}
-        {selectedMarker && <MarkerModal marker={selectedMarker} isLogin={isLogin} />}
+        {selectedMarker && (
+          <MarkerModal marker={selectedMarker} isLogin={isLogin} removeSelectedMarker={removeSelectedMarker} />
+        )}
       </Map>
     </div>
   );

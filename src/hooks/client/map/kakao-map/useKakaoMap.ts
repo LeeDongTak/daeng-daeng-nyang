@@ -12,7 +12,9 @@ import { useEffect } from 'react';
 
 const useKakaoMap = () => {
   const { map: kakaoMap, currentPosition, currentLocation, markers, selectedMarker } = useKakaoMapStore();
-  const removeSelectedMarker = () => selectedMarker && setSelectedMarker(null);
+  const removeSelectedMarker = () => {
+    selectedMarker && setSelectedMarker(null);
+  };
   const category_type = useSearchLocationStore(state => state.category_type);
   const handleDragEndMap = async (map: kakao.maps.Map) => {
     setKakaoMap(map);

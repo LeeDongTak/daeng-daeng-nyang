@@ -3,12 +3,15 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 enum QUERY_KEY {
   SCHEDULE_QUERY_ADD = 'SCHEDULE_QUERY_ADD',
 }
-const useAddScheduleMutation = () => {
+interface I_useAddScheduleMutation {
+  removeSelectedMarker: () => void;
+}
+const useAddScheduleMutation = ({ removeSelectedMarker }: I_useAddScheduleMutation) => {
   const queryClient = useQueryClient();
   const addScheduleMutation = useMutation({
     mutationFn: addScheduleAxios,
     onSuccess: data => {
-      console.log(data);
+      removeSelectedMarker();
       queryClient.invalidateQueries({ queryKey: [QUERY_KEY.SCHEDULE_QUERY_ADD] });
     },
     onError: error => {
