@@ -3,6 +3,8 @@ import { z } from 'zod';
 
 export type T_ScheduleSchema = z.infer<typeof scheduleSchema>;
 export const scheduleSchema = z.object({
+  title: z.string(),
+  content: z.string(),
   place: z.string(),
   location: z.string(),
   date: z.date({

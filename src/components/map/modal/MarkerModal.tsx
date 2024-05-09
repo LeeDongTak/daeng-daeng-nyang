@@ -14,7 +14,7 @@ interface I_MarkerModalProps {
 }
 
 const MarkerModal = ({ marker, isLogin }: I_MarkerModalProps) => {
-  const DEFAULT_VALUE = { place: marker.place, location: marker.address };
+  const DEFAULT_VALUE = { title: '', content: '', place: marker.place, location: marker.address };
   const { form, customSelectDisableDate, select_item, submitHandler } = useModalForm<T_ScheduleSchema>({
     schema: scheduleSchema,
     defaultValues: DEFAULT_VALUE,
