@@ -25,9 +25,4 @@ const useScheduleFormStore = create<ScheduleDataType>()(() => ({
 export const setScheduleFormData = (item: ScheduleDataType) =>
   useScheduleFormStore.setState(prev => ({ ...prev, ...item }));
 
-// export const resetScheduleFormData = () =>
-//   useScheduleFormStore.setState({
-//     scheduleFormData: initialValues,
-//   });
-
 export default useScheduleFormStore;

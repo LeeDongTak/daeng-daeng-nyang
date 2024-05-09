@@ -28,8 +28,9 @@ export const useCalendar = () => {
     const scheduleData = calendarBindingData?.map(item =>
       item.schedule.filter(target => target.date.split('T')[0] === targeDate),
     );
-    if (!scheduleData) return null;
-    return scheduleData[0];
+    const schedulesDataFlat = scheduleData.flat();
+    if (!schedulesDataFlat) return null;
+    return schedulesDataFlat;
   };
 
   return {
