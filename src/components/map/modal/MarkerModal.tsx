@@ -1,4 +1,4 @@
-import { CALENDAR_CATEGORY, CATEGORY } from '@/components/calendar/reservation/reservation-type';
+import { CALENDAR_CATEGORY } from '@/components/calendar/reservation/reservation-type';
 import LayoutForm from '@/components/common/form/form-layout/LayoutForm';
 import LayoutFormBody from '@/components/common/form/form-layout/layout-form-body/LayoutFormBody';
 import LayoutFormHeader from '@/components/common/form/form-layout/layout-form-header/LayoutFormHeader';
@@ -11,21 +11,14 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import clsx from 'clsx';
 import { Fragment } from 'react';
 import { useForm } from 'react-hook-form';
-import { z } from 'zod';
 import Search from '../../../../public/icons/search.svg';
 import ScheduleForm from '../form/ScheduleForm';
-import { T_ScheduleSchema } from '../form/validator/schedule-validator';
+import { T_ScheduleSchema, scheduleSchema } from '../form/validator/schedule-validator';
 import { refinePetInfo } from '../utility/form-utils';
 interface I_MarkerModalProps {
   marker: I_CustomMarkerProps;
 }
-const scheduleSchema = z.object({
-  place: z.string(),
-  location: z.string(),
-  date: z.date(), // calendar
-  category: z.enum(CATEGORY), // radioGroup<병원, 예방, 산책>
-  petId: z.string(), // select<user의 펫정보>
-});
+
 const MarkerModal = ({ marker }: I_MarkerModalProps) => {
   const form = useForm<T_ScheduleSchema>({
     defaultValues: {
@@ -39,7 +32,7 @@ const MarkerModal = ({ marker }: I_MarkerModalProps) => {
   const isLogin = useAuthStore(state => state.isLogin);
   const submitHandler = (value: T_ScheduleSchema) => console.log(value);
   const customSelectDisableDate = (param: Date) => param < new Date();
-  //
+
   return (
     <LayoutForm
       form={form}
