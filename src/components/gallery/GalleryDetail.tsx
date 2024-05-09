@@ -5,12 +5,12 @@ interface I_GalleryDetailProps {
   gallery: I_GalleryData;
 }
 
-const GalleryDetail: React.FC<I_GalleryDetailProps> = ({ gallery }) => {
+const GalleryDetail = ({ gallery }: I_GalleryDetailProps) => {
   return (
     <div>
       <Carousel className="w-full h-[400px]">
         <CarouselContent>
-          {gallery.images.map((image, index) => (
+          {gallery.images?.map((image, index) => (
             <CarouselItem key={index}>
               <img src={image} alt={`Slide ${index}`} className="w-full h-full object-cover" />
             </CarouselItem>
@@ -21,9 +21,9 @@ const GalleryDetail: React.FC<I_GalleryDetailProps> = ({ gallery }) => {
       </Carousel>
       <div className="mt-4">
         <h2 className="text-2xl font-bold">{gallery.title}</h2>
-        <p className="mt-2">{gallery.description}</p>
+        <p className="mt-2">{gallery.content}</p>
         <div className="mt-4 flex space-x-2">
-          {gallery.tags.map(tag => (
+          {gallery.tags?.map(tag => (
             <span key={tag} className="bg-gray-200 px-2 py-1 rounded-full text-sm">
               {tag}
             </span>

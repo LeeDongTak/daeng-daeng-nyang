@@ -1,16 +1,16 @@
+import { axiosValid_API } from '@/api/common/axios_instance';
 import { zodResolver } from '@hookform/resolvers/zod';
-import axios from 'axios';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
-import LayoutForm from '../common/form/form-layout/LayoutForm';
-import LayoutFormBody from '../common/form/form-layout/layout-form-body/LayoutFormBody';
-import LayoutFormHeader from '../common/form/form-layout/layout-form-header/LayoutFormHeader';
+import LayoutForm from '../../common/form/form-layout/LayoutForm';
+import LayoutFormBody from '../../common/form/form-layout/layout-form-body/LayoutFormBody';
+import LayoutFormHeader from '../../common/form/form-layout/layout-form-header/LayoutFormHeader';
+import { I_GalleryData } from '../type/gallery';
 import GalleryCategoryMenu from './GalleryCategoryMenu';
-import GalleryForm from './gallery-form/GalleryForm';
-import GalleryTags from './gallery-form/GalleryTags';
-import GalleryUploadImage from './gallery-form/GalleryUploadImage';
-import { I_GalleryData } from './type/gallery';
+import GalleryForm from './GalleryForm';
+import GalleryTags from './GalleryTags';
+import GalleryUploadImage from './GalleryUploadImage';
 const isFile = (value: unknown): value is File => value instanceof File;
 const galleryFormSchema = z.object({
   title: z.string().min(1, { message: '제목을 입력해주세요.' }),
@@ -22,7 +22,7 @@ const galleryFormSchema = z.object({
     .max(4, { message: '카테고리는 최대 4개까지만 추가 가능합니다.' }),
 });
 type T_gallerySchema = z.infer<typeof galleryFormSchema>;
-const AddGallery = ({ onAddGallery }: { onAddGallery: (newGallery: I_GalleryData) => void }) => {
+const GalleryRegist = ({ onAddGallery }: { onAddGallery: (newGallery: I_GalleryData) => void }) => {
   const form = useForm<T_gallerySchema>({
     defaultValues: { title: '', description: '', tags: [], images: [] },
     resolver: zodResolver(galleryFormSchema),
@@ -57,30 +57,32 @@ const AddGallery = ({ onAddGallery }: { onAddGallery: (newGallery: I_GalleryData
     }
     try {
       const formData = new FormData();
-      if (selectedThumbnail) {
-        formData.append('thumbnail', selectedThumbnail as Blob);
-      }
+      formData.append('thumbnail', selectedThumbnail as Blob);
       formData.append('title', values.title);
       formData.append('content', values.description);
-      formData.append('tags', JSON.stringify(values.tags));
+      values.tags.forEach((tag, index) => {
+        formData.append(`tags[${index}]`, tag);
+      });
       values.images.forEach((image, index) => formData.append(`images[${index}]`, image as Blob));
-      console.log(values.title);
-      console.log(values.description);
-      console.log(values.tags);
-      console.log(values.images);
-      console.log(selectedThumbnail);
-      const response = await axios.post(`${process.env.NEXT_PUBLIC_SERVER_BASE_URL}post`, formData);
-
-      if (response.status === 200) {
+      // console.log(values.title);
+      // console.log(values.description);
+      // console.log(JSON.stringify(values.tags));
+      // console.log(values.images);
+      // console.log(selectedThumbnail);
+      const response = await axiosValid_API.post('post', formData);
+      console.log(response);
+      if (response.status >= 200 && response.status < 300) {
         // 성공적으로 등록
         onAddGallery(response.data);
         // 추가적인 동작
+        console.log('글 작성 성공입니다~!');
+        console.log(response.data);
       } else {
         // 등록 실패 시의 처리
-        console.error('갤러리 등록 실패:', response.data);
+        console.error('갤러리 등록 실패임:', response.data);
       }
     } catch (error) {
-      console.error('갤러리 등록 실패:', error);
+      console.error('갤러리 등록 실패여:', error);
     }
   };
   const { errors } = form.formState;
@@ -133,11 +135,13 @@ const AddGallery = ({ onAddGallery }: { onAddGallery: (newGallery: I_GalleryData
               </div>
               <GalleryTags control={form.control} name={'tags' as never} tags={tags} />
             </div>
-            <GalleryForm.button type="submit">등록</GalleryForm.button>
+            <GalleryForm.button type="submit" className="w-[84.6rem] h-[4.8rem] text-2xl">
+              등록
+            </GalleryForm.button>
           </GalleryForm>
         </LayoutFormBody>
       </div>
     </LayoutForm>
   );
 };
-export default AddGallery;
+export default GalleryRegist;

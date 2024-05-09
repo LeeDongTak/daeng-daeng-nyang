@@ -10,10 +10,12 @@ const SESSION_ID = process.env.NEXT_PUBLIC_SESSION_PATH;
  */
 const getAuthorizationToken = () => {
   const AUTH_SESSION = sessionStorage.getItem(SESSION_ID as string);
+  console.log(AUTH_SESSION);
   if (AUTH_SESSION) {
     const {
       state: { accessToken, refreshToken },
     }: { state: I_AuthStore } = JSON.parse(AUTH_SESSION);
+
     return {
       accessToken,
       refreshToken,
@@ -32,6 +34,7 @@ axiosValid_API.interceptors.request.use(
   (config: InternalAxiosRequestConfig) => {
     const { accessToken, refreshToken } = getAuthorizationToken();
     if (!accessToken || !refreshToken) return config;
+
     config.headers.Authorization = `Bearer ${accessToken}`;
     config.headers.refreshToken = refreshToken;
     return config;
