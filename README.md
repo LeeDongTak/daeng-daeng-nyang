@@ -22,6 +22,7 @@
 <img width="613" alt="KakaoTalk_20240510_053957852" src="https://github.com/LeeDongTak/daeng-daeng-nyang/assets/56667369/11914310-f314-446f-953f-4f51631a3836">
 
 - [BackEnd]
+
 ![KakaoTalk_20240510_003137678](https://github.com/LeeDongTak/daeng-daeng-nyang/assets/56667369/a2d558f6-52e3-4f20-9117-137ce6f6523c)
 
 ## 기술 스택
