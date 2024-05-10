@@ -1,7 +1,6 @@
 import { cn } from '@/lib/utils';
 
 import useMobile from '@/hooks/client/useMobile';
-import useAuthStore from '@/store/auth/auth-store';
 import { useRouter } from 'next/router';
 import { useEffect, useRef, useState } from 'react';
 import Logo from '../common/Logo';
@@ -9,10 +8,8 @@ import MenuBox from './MenuBox';
 
 const Header = () => {
   const { pathname } = useRouter();
-  const [isNotAuthPathName, setIsNotAuthPathName] = useState(pathname === '/auth' ? false : true);
+  const [isNotAuthPathName, setIsNotAuthPathName] = useState(pathname.includes('auth') ? false : true);
   const [position, setPosition] = useState('');
-  const [isScrollBox, setIsScrollBox] = useState(false);
-  const scrollBox = isScrollBox ? '' : '';
   const headerRef = useRef<HTMLElement | null>(null);
   const { isMobileQuery: isMobileMax1680 } = useMobile('(max-width:1680px)');
   const { isMobileQuery: isMobileMax920 } = useMobile('(max-width:920px)');
@@ -20,24 +17,21 @@ const Header = () => {
   const px1680 = isMobileMax1680 ? 'w-[80%]' : 'w-full';
   const px920 = isMobileMax920 && 'w-[70%]';
   const px740 = isMobileMax740 && 'w-[calc(100%-6rem)]';
-  const { isLogin } = useAuthStore();
 
   // 스크롤 시 해더 고정
   const onScroll = () => {
     const scrollY = typeof window !== 'undefined' ? window.scrollY : 0;
     if (scrollY >= 80) {
       setPosition('fixed top-0 left-0 z-[300] opacity-80 shadow-[0_0_1rem_0_rgba(0,0,0,0.2)]');
-      setIsScrollBox(true);
     } else if (scrollY < 80) {
       setPosition('');
-      setIsScrollBox(false);
     }
   };
 
   // push로 페이지 이동 시 리렌더링하여 header를 바꾸기 위해 사용
   useEffect(() => {
     // /auth
-    setIsNotAuthPathName(pathname === '/auth' ? false : true);
+    setIsNotAuthPathName(pathname.includes('auth') ? false : true);
   }, [pathname]);
 
   useEffect(() => {
@@ -48,23 +42,20 @@ const Header = () => {
   }, []);
 
   return (
-    <>
-      <header className={cn('w-[100%] bg-[#fffdf9] h-[8rem]', position)} ref={headerRef}>
-        <div
-          className={cn(
-            'flex items-center w-[100%] max-w-[128rem] h-[100%] mx-auto',
-            isNotAuthPathName ? 'justify-between' : 'justify-center',
-            px1680,
-            px920,
-            px740,
-          )}
-        >
-          <Logo />
-          {isNotAuthPathName && <MenuBox />}
-        </div>
-      </header>
-      {/* {isScrollBox && <div className="h-[8rem] transition-all duration-300" />} */}
-    </>
+    <header className={cn('w-[100%] bg-[#fffdf9] h-[8rem]', position)} ref={headerRef}>
+      <div
+        className={cn(
+          'flex items-center w-[100%] max-w-[128rem] h-[100%] mx-auto',
+          isNotAuthPathName ? 'justify-between' : 'justify-center',
+          px1680,
+          px920,
+          px740,
+        )}
+      >
+        <Logo />
+        {isNotAuthPathName && <MenuBox />}
+      </div>
+    </header>
   );
 };
 

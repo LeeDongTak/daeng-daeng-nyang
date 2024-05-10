@@ -1,9 +1,11 @@
+import { cn } from '@/lib/utils';
 import useCalendarState from '@/store/calendar/calendar-store';
 import useDayState from '@/store/calendar/day-store';
 import { CellItemProps } from '@/types/calendar/calendar';
 import { cva } from 'class-variance-authority';
 import clsx from 'clsx';
 import { BIG_MODE, MINI_MODE } from '../calendar-type/calendarType';
+import { CALENDAR_CATEGORY } from '../reservation/reservation-type';
 import {
   getCalendarDateType,
   getCalendarMonthType,
@@ -15,21 +17,28 @@ import {
 
 type Cell = (param: CellItemProps) => JSX.Element;
 
-const CellItem: Cell = ({ day, selectDayHandler, mode, page, id }) => {
+const CellItem: Cell = ({ day, selectDayHandler, mode, page, id, schedulesData }) => {
   const SELECTED_DAY = 'SELECTEDTYPE';
   const currentDate = useCalendarState(staet => staet.currentDate);
   const { selectedDate, today } = useDayState();
+
+  const findSchedule =
+    schedulesData &&
+    schedulesData.map(schedule => {
+      return CALENDAR_CATEGORY.find(item => item.value === schedule.category);
+    });
+  const uniqueSchedules = new Set(findSchedule);
 
   const statusVariant = cva(
     'flex flex-col items-center w-[4.2rem] h-[4.2rem] flex-col text-[1.6rem] [&>span]:rounded-[50%] [&>span]:border [&>span]:w-full [&>span]:h-full font-semibold',
     {
       variants: {
         calendarType: {
-          CURRENT: 'opacity-100',
+          CURRENT: 'opacity-100 relative',
           NOT_CURRENT: 'opacity-50',
         },
         monthType: {
-          CURRENT: 'opacity-100',
+          CURRENT: 'opacity-100 relative',
           NOT_CURRENT: 'opacity-50',
         },
         dateType: {
@@ -102,6 +111,17 @@ const CellItem: Cell = ({ day, selectDayHandler, mode, page, id }) => {
           >
             {formatDate}
           </span>
+          {Array.from(uniqueSchedules).map(schedule => {
+            return (
+              <p
+                key={schedule?.value}
+                className={cn(
+                  'absolute w-[1rem] h-[1rem] rounded-full right-[-0.5rem] top-[-0.5rem] bg-[#ccc]',
+                  schedule?.color,
+                )}
+              ></p>
+            );
+          })}
         </div>
       )}
 
@@ -116,7 +136,19 @@ const CellItem: Cell = ({ day, selectDayHandler, mode, page, id }) => {
           )}
         >
           <p>{formatDate}</p>
-          <p className="bg-[#ccc] text-white text-[1.4rem] w-full p-1 rounded-full text-center">병원예약</p>
+          {Array.from(uniqueSchedules).map(schedule => {
+            return (
+              <p
+                key={schedule?.value}
+                className={cn(
+                  'text-white text-[1.4rem] w-full p-1 rounded-full text-center bg-[#ccc]',
+                  schedule?.color,
+                )}
+              >
+                {schedule?.label}
+              </p>
+            );
+          })}
         </div>
       )}
     </>

@@ -17,7 +17,7 @@ export const ModalCalendarHeader = ({ clickCloseModal }: CloseModalType) => {
             'cursor-pointer group-hover:[&_path]:stroke-[#ccc] group-hover:[&_path]:transition group-hover:[&_path]:duration-200',
           )}
         >
-          <X width={'3.2rem'} height={'3.2rem'} />
+          <X width={'2rem'} height={'2rem'} />
         </span>
       </span>
     </div>

@@ -1,24 +1,35 @@
-import { useEffect } from 'react';
+import { Button } from '@/components/ui/button';
+import { useModal } from '@/hooks/client/ui/useModal';
+import useToast from '@/hooks/client/useToast';
+import useScheduleListStore from '@/store/calendar/schedule-store';
 import RegistCalendar from '../../form/RegistCalendar';
+import ModalSchedule from '../schedule/ModalSchedule';
 
 const ModalCalendarBody = () => {
-  useEffect(() => {
-    const authDataString = localStorage.getItem('auth');
-    if (authDataString) {
-      const authData = JSON.parse(authDataString);
-      const accessToken = authData.state.auth.access_token; // accessToken
-      const refreshToken = authData.state.auth.refresh_token; // refreshToken
-      const userId = authData.state.auth.user.id; // 유저 아이디
-      // 이후 작업
-      console.log(userId);
-    }
-  }, []);
+  const { toast } = useToast();
+  const { DaengModal } = useModal();
+  const scheduleListData = useScheduleListStore(state => state.scheduleListData);
   return (
     <div>
-      <div>예약이 없습니다</div>
-      <div>예약이 있습니다. 예약 내용은 ~</div>
-      <div>날짜</div>
-      <RegistCalendar />
+      <ModalSchedule />
+      <Button
+        className="w-full mt-8"
+        type="button"
+        onClick={() => {
+          if (scheduleListData.length > 4) {
+            toast({
+              title: '하루에 일정 최대 갯수는 5개입니다.',
+              variant: 'danger',
+              position: 'top-center',
+              closeTimeOut: 2000,
+            });
+            return;
+          }
+          DaengModal.fire(<RegistCalendar />);
+        }}
+      >
+        스케줄 추가
+      </Button>
     </div>
   );
 };

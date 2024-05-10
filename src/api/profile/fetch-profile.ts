@@ -1,12 +1,7 @@
-import axios from 'axios';
+import { axiosValid_API } from '../common/axios_instance';
 
-interface I_paramsType {
-  authorization: string;
-  refreshtoken: string;
-}
-
-const fetchProfile = async (tokens: I_paramsType) => {
-  const res = await axios.get(`${process.env.NEXT_PUBLIC_DB_HOST}/users/mypage`, { headers: tokens });
+const fetchProfile = async () => {
+  const res = await axiosValid_API.get('users/mypage');
   return res.data.user;
 };
 
