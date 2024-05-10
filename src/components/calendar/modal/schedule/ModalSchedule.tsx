@@ -4,7 +4,7 @@ import useScheduleMutationQuery from '@/hooks/server/calendar/useScheduleMutatio
 import useScheduleFormStore from '@/store/calendar/form-store';
 import useSchedulePetStore from '@/store/calendar/pet-store';
 import useScheduleListStore from '@/store/calendar/schedule-store';
-import dayjs from 'dayjs';
+import RegistCalendar from '../../form/RegistCalendar';
 
 const ModalSchedule = () => {
   const scheduleFormDateStore = useScheduleFormStore(state => state.date);
@@ -30,13 +30,28 @@ const ModalSchedule = () => {
       {scheduleListData && scheduleListData.length > 0 ? (
         scheduleListData.map(item => (
           <div key={item.id}>
+            <p>글 아이디: {item.id}</p>
             <p>펫 이름: {schedulePetData?.find(map => map.value === item.petId.toString())?.label}</p>
             <p>카테고리: {item.category}</p>
-            <p>{dayjs(item.date).format('YYYY-MM-DD HH:MM')}</p>
+            {/* <p>{item.date}</p> */}
+            {/* <p>{dayjs(item.date).format('YYYY-MM-DD HH:mm')}</p> */}
+            <p>
+              {item.date.split('T')[0]} {item.date.split('T')[1].split(':')[0]}:{item.date.split('T')[1].split(':')[1]}
+            </p>
             <p>제목: {item.title}</p>
             <p>설명: {item.content}</p>
-            <p>도로명: {item.place}</p>
+            <p>장소: {item.place}</p>
             {item.location && <p>장소명: {item.location}</p>}
+            <Button
+              type="button"
+              variant="update"
+              size="sm"
+              onClick={() => {
+                DaengModal.fire(<RegistCalendar updateScheduleData={item} />);
+              }}
+            >
+              수정
+            </Button>
             <Button
               className="text-white"
               type="button"
@@ -51,8 +66,6 @@ const ModalSchedule = () => {
       ) : (
         <div>예약이 없습니다</div>
       )}
-
-      <div>날짜 : {scheduleFormDateStore}</div>
     </div>
   );
 };

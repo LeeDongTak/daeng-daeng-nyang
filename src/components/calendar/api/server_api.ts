@@ -18,3 +18,17 @@ export const deleteScheduleAPI = async (id: number) => {
     throw error;
   }
 };
+
+interface ParamType {
+  changeValueTarget: T_ScheduleSchema;
+  id: number | undefined;
+}
+
+export const updateScheduleAPI = async (param: ParamType) => {
+  try {
+    const { data } = await axiosValid_API.patch(`schedule/${param.id}`, param.changeValueTarget);
+    return data;
+  } catch (error) {
+    throw error;
+  }
+};
