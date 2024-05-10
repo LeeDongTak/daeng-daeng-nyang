@@ -8,6 +8,16 @@ interface I_GalleryListProps {
 }
 
 const GalleryList = () => {
+  const { data: galleries, isLoading, hasNextPage, fetchNextPage, isFetchingNextPage } = useFetchGalleryQuery();
+
+  const { ref } = useInView({
+    threshold: 0.5,
+    onChange: inView => {
+      if (!inView || !hasNextPage || isFetchingNextPage) return;
+      fetchNextPage();
+    },
+  });
+
   if (isLoading) return <div>로딩중.....</div>;
   if (!galleries) return <div>데이터가 없습니다.</div>;
 
