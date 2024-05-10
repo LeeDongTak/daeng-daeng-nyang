@@ -19,8 +19,6 @@ const buttonVariants = cva(
         delete: 'text-primary text-[1.4rem] font-[700] bg-[#FF583D] hover:bg-destructive/50',
         modal:
           'text-secondary text-[1.4rem] font-[700] bg-[#191919] rounded-[50px] hover:bg-destructive/30 hover:text-[#555]',
-        modalDelete:
-          'text-secondary text-[1.4rem] font-[700] bg-[#f00] rounded-[50px] hover:bg-destructive/30 hover:text-[#555]',
         // auth: 'text-secondary text-[1.4rem] font-[700] bg-[#191919] rounded-full hover:bg-destructive/30 hover:text-[#555]',
         chat: 'text-secondary text-[1.4rem] font-[600] bg-[#191919] rounded-full hover:bg-destructive/30 hover:text-[#555] disabled:pointer-events-none disabled:text-[#191919] disabled:bg-[#E1E6EC] disabled:opacity-100',
         more: 'text-secondary text-[1.2rem] font-[600] bg-[#191919] rounded-full hover:bg-destructive/30 hover:text-[#555] disabled:pointer-events-none disabled:text-[#191919] disabled:bg-[#E1E6EC] disabled:opacity-100',

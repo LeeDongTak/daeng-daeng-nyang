@@ -47,7 +47,7 @@ const PetList = ({ pets }: { pets: I_PetType[] }) => {
             [&>.swiper-pagination-bullet]:m-0 [&>.swiper-pagination-bullet]:bg-[#c5c9cf]
             [&>.swiper-pagination-bullet-active]:bg-[#35a37e]`,
           )}
-        ></div>
+        />
       </div>
     </div>
   );

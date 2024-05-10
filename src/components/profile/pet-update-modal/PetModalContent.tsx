@@ -9,7 +9,7 @@ import { PetInfoValuetype } from './PetUpdateModal';
 
 interface I_ModalType {
   form: UseFormReturn<PetInfoValuetype, any, undefined>;
-  profileImage: string;
+  profileImage: string | null;
   PET_INFO_VALUE_GROUP: PetInfoValuetype;
 }
 type T_keyType = ['petName', 'birthDate', 'gender', 'age', 'breed'];
@@ -31,7 +31,7 @@ const PetModalContent = ({ form, profileImage, PET_INFO_VALUE_GROUP }: I_ModalTy
           render={({ base64, register, remove, select, ...props }) => (
             <Fragment>
               <PreviewImage remove={remove} base64={base64} />
-              <FileInput register={register} />
+              <FileInput register={register} profileImage={profileImage} />
             </Fragment>
           )}
         />
@@ -41,7 +41,13 @@ const PetModalContent = ({ form, profileImage, PET_INFO_VALUE_GROUP }: I_ModalTy
           return (
             <div className={cn('flex items-center w-[calc(50%-0.4rem)]')} key={petInfoKey[index]}>
               <span className={cn('font-[600] mr-[1.6rem]')}>{PET_INFO_TITLE_GROUP[index]}</span>
-              <CustomInput {...STYLE_CSS} control={form.control} name={petInfoKey[index]} isLabel={false} />
+              <CustomInput
+                {...STYLE_CSS}
+                control={form.control}
+                inputType={item === 'birthDate' ? 'date' : 'text'}
+                name={petInfoKey[index]}
+                isLabel={false}
+              />
             </div>
           );
         })}

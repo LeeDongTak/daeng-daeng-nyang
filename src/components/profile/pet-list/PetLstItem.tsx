@@ -1,6 +1,7 @@
 import Title from '@/components/common/Title';
 import { Button } from '@/components/ui/button';
 import { useModal } from '@/hooks/client/ui/useModal';
+import useDeletePetMutation from '@/hooks/server/profile/useDeletePetMutation';
 import { cn } from '@/lib/utils';
 import { I_PetType } from '@/types/profile/profile';
 import dayjs from 'dayjs';
@@ -9,8 +10,9 @@ import Avatar from '../../../../public/icons/avatar.svg';
 import PetUpdateModal from '../pet-update-modal/PetUpdateModal';
 
 const PetLstItem = ({ petInfo }: { petInfo: I_PetType }) => {
-  const { birth, age, breed, gender, name, profileImage } = petInfo;
+  const { birth, age, breed, gender, name, profileImage, id } = petInfo;
   const { DaengModal } = useModal();
+  const { mutate } = useDeletePetMutation();
   const PET_INFO_GROUP = {
     name: ['이름', name],
     birthDate: ['생년월일', dayjs(birth).format('YYYY-MM-DD')],
@@ -21,6 +23,14 @@ const PetLstItem = ({ petInfo }: { petInfo: I_PetType }) => {
 
   const clickPetInfoUpdateHandler = () => {
     DaengModal.fire(<PetUpdateModal petInfo={petInfo} />);
+  };
+  const clickPetInfoDeleteHandler = () => {
+    DaengModal.confirm({
+      content: '정말로 삭제하시겠습니까?',
+      confirmButtonCallback: () => {
+        mutate(id);
+      },
+    });
   };
 
   return (
@@ -35,9 +45,10 @@ const PetLstItem = ({ petInfo }: { petInfo: I_PetType }) => {
         )}
       >
         <Title level={5} className="text-[2.4rem] h-auto m-0 font-[600]" text="반려동물 정보" />
-        <Button type="button" variant={'update'} onClick={clickPetInfoUpdateHandler}>
-          수정
-        </Button>
+        <div className="flex gap-[1rem]">
+          <Button type="button" variant={'update'} onClick={clickPetInfoUpdateHandler} children="수정" />
+          <Button type="button" variant={'delete'} onClick={clickPetInfoDeleteHandler} children="삭제" />
+        </div>
       </div>
       <div className={cn('flex justify-start items-center w-[100%] gap-[2.4rem]')}>
         <div className={cn('relative w-[12rem] h-[12rem] rounded-full overflow-hidden')}>
