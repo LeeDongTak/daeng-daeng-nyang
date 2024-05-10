@@ -9,3 +9,26 @@ export const addScheduleAPI = async (values: T_ScheduleSchema) => {
     throw error;
   }
 };
+
+export const deleteScheduleAPI = async (id: number) => {
+  try {
+    const { data } = await axiosValid_API.delete(`schedule/${id}`);
+    return data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+interface ParamType {
+  changeValueTarget: T_ScheduleSchema;
+  id: number | undefined;
+}
+
+export const updateScheduleAPI = async (param: ParamType) => {
+  try {
+    const { data } = await axiosValid_API.patch(`schedule/${param.id}`, param.changeValueTarget);
+    return data;
+  } catch (error) {
+    throw error;
+  }
+};

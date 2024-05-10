@@ -3,12 +3,12 @@ import { CalendarDataType } from '@/types/calendar/calendar';
 import { useQuery } from '@tanstack/react-query';
 
 enum MUTATION_QUERY_KEY {
-  FETCH_CALENDAR = 'FETCH_CALENDAR',
+  SCHEDULE_QUERY = 'SCHEDULE_QUERY',
 }
 
 const useFetchCalendarQuery = () => {
   const { data, isError, isLoading } = useQuery<CalendarDataType[]>({
-    queryKey: [MUTATION_QUERY_KEY.FETCH_CALENDAR],
+    queryKey: [MUTATION_QUERY_KEY.SCHEDULE_QUERY],
     queryFn: () => fetchCalendar(),
   });
 

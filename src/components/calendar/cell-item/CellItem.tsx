@@ -1,3 +1,4 @@
+import { cn } from '@/lib/utils';
 import useCalendarState from '@/store/calendar/calendar-store';
 import useDayState from '@/store/calendar/day-store';
 import { CellItemProps } from '@/types/calendar/calendar';
@@ -33,11 +34,11 @@ const CellItem: Cell = ({ day, selectDayHandler, mode, page, id, schedulesData }
     {
       variants: {
         calendarType: {
-          CURRENT: 'opacity-100',
+          CURRENT: 'opacity-100 relative',
           NOT_CURRENT: 'opacity-50',
         },
         monthType: {
-          CURRENT: 'opacity-100',
+          CURRENT: 'opacity-100 relative',
           NOT_CURRENT: 'opacity-50',
         },
         dateType: {
@@ -110,6 +111,17 @@ const CellItem: Cell = ({ day, selectDayHandler, mode, page, id, schedulesData }
           >
             {formatDate}
           </span>
+          {Array.from(uniqueSchedules).map(schedule => {
+            return (
+              <p
+                key={schedule?.value}
+                className={cn(
+                  'absolute w-[1rem] h-[1rem] rounded-full right-[-0.5rem] top-[-0.5rem] bg-[#ccc]',
+                  schedule?.color,
+                )}
+              ></p>
+            );
+          })}
         </div>
       )}
 
@@ -128,7 +140,10 @@ const CellItem: Cell = ({ day, selectDayHandler, mode, page, id, schedulesData }
             return (
               <p
                 key={schedule?.value}
-                className={`bg-[#ccc] bg-[${schedule?.color}] text-white text-[1.4rem] w-full p-1 rounded-full text-center`}
+                className={cn(
+                  'text-white text-[1.4rem] w-full p-1 rounded-full text-center bg-[#ccc]',
+                  schedule?.color,
+                )}
               >
                 {schedule?.label}
               </p>
