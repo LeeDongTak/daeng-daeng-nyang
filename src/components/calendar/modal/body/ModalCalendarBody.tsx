@@ -13,7 +13,7 @@ const ModalCalendarBody = () => {
     <div>
       <ModalSchedule />
       <Button
-        className="w-full mt-2"
+        className="w-full mt-8"
         type="button"
         onClick={() => {
           if (scheduleListData.length > 4) {

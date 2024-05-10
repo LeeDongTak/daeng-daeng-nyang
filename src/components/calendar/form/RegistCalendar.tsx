@@ -46,7 +46,7 @@ const RegistCalendar = ({
   });
 
   return (
-    <LayoutForm form={form}>
+    <LayoutForm form={form} className="min-w-[40rem] max-w-full">
       <LayoutFormHeader title="스케줄" />
       <LayoutFormBody>
         <CalendarForm onSubmit={form.handleSubmit(submitHandler)}>
@@ -59,22 +59,24 @@ const RegistCalendar = ({
             optionCn="z-[501]"
           />
           <CalendarForm.radio control={form.control} name="category" title="카테고리" radioItem={CALENDAR_CATEGORY} />
-          <CalendarForm.select
-            control={form.control}
-            name="hour"
-            title="시간"
-            placeholder="시간을 선택해주세요"
-            selectItem={CALENDAR_HOUR}
-            optionCn="z-[501]"
-          />
-          <CalendarForm.select
-            control={form.control}
-            name="minutes"
-            title=""
-            placeholder="분을 선택해주세요"
-            selectItem={CALENDAR_MINUTES}
-            optionCn="z-[501]"
-          />
+          <div className="flex items-end gap-2 [&>div]:flex-1">
+            <CalendarForm.select
+              control={form.control}
+              name="hour"
+              title="시간"
+              placeholder="시간을 선택해주세요"
+              selectItem={CALENDAR_HOUR}
+              optionCn="z-[501]"
+            />
+            <CalendarForm.select
+              control={form.control}
+              name="minutes"
+              title=""
+              placeholder="분을 선택해주세요"
+              selectItem={CALENDAR_MINUTES}
+              optionCn="z-[501]"
+            />
+          </div>
           <CalendarForm.input control={form.control} name="title" label="제목" />
           <CalendarForm.input control={form.control} name="content" label="세부내용" />
           <CalendarForm.input control={form.control} name="place" label="장소" />
