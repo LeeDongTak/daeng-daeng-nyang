@@ -17,7 +17,11 @@ const buttonVariants = cva(
         link: 'text-primary underline-offset-4 hover:underline',
         update: 'text-primary text-[1.4rem] font-[700] bg-[#E1E6EC] hover:bg-destructive/50',
         delete: 'text-primary text-[1.4rem] font-[700] bg-[#FF583D] hover:bg-destructive/50',
-        auth: 'text-secondary text-[1.4rem] font-[700] bg-[#191919] rounded-full hover:bg-destructive/30 hover:text-[#555]',
+        modal:
+          'text-secondary text-[1.4rem] font-[700] bg-[#191919] rounded-[50px] hover:bg-destructive/30 hover:text-[#555]',
+        modalDelete:
+          'text-secondary text-[1.4rem] font-[700] bg-[#f00] rounded-[50px] hover:bg-destructive/30 hover:text-[#555]',
+        // auth: 'text-secondary text-[1.4rem] font-[700] bg-[#191919] rounded-full hover:bg-destructive/30 hover:text-[#555]',
         chat: 'text-secondary text-[1.4rem] font-[600] bg-[#191919] rounded-full hover:bg-destructive/30 hover:text-[#555] disabled:pointer-events-none disabled:text-[#191919] disabled:bg-[#E1E6EC] disabled:opacity-100',
         more: 'text-secondary text-[1.2rem] font-[600] bg-[#191919] rounded-full hover:bg-destructive/30 hover:text-[#555] disabled:pointer-events-none disabled:text-[#191919] disabled:bg-[#E1E6EC] disabled:opacity-100',
         auth: 'text-primary text-[1.6rem] font-[600] bg-[#E1E6EC] rounded-full hover:bg-[#E1E6EC]/75 disabled:pointer-events-none disabled:text-[#191919] disabled:bg-[#E1E6EC] disabled:opacity-100',
@@ -29,7 +33,7 @@ const buttonVariants = cva(
         sm: 'h-9 rounded-md px-3',
         lg: 'h-11 rounded-md px-8',
         icon: 'h-10 w-10',
-        modal: 'px-[3.2rem] py-[0.8rem]',
+        modal: 'w-[12rem] py-[0.8rem]',
         chat: 'py-[1.35rem] px-[3.25rem]',
         more: 'py-[1.15rem] px-[5.5rem]',
         jumbotron: 'w-[calc(50%-1rem)] h-[calc(50%-1rem)]',
