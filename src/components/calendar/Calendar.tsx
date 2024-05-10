@@ -1,4 +1,5 @@
 import { useCalendar } from '@/hooks/client/calendar/useCalendar';
+import useMobile from '@/hooks/client/useMobile';
 import useFetchCalendarQuery from '@/hooks/server/calendar/useFetchCalendarQuery';
 import { setCalendarBindingData } from '@/store/calendar/data-store';
 import { setSchedulePetData } from '@/store/calendar/pet-store';
@@ -8,6 +9,7 @@ import CalendarTitle from './calendar-title/CalendarTitle';
 import { BIG_MODE, MINI_MODE } from './calendar-type/calendarType';
 
 const Calendar = () => {
+  const { isMobileQuery: isMobileMax740 } = useMobile('(max-width:740px)');
   const { data: schedule } = useFetchCalendarQuery();
   const { updateScheduleModal } = useCalendar();
 
@@ -21,9 +23,9 @@ const Calendar = () => {
   return (
     <div className="w-[100%] max-w-[128rem] py-[8rem] mx-auto">
       <CalendarTitle />
-      <div className="flex gap-6">
+      <div className="flex gap-6 justify-center">
         <CalendarBody mode={MINI_MODE} />
-        <CalendarBody mode={BIG_MODE} />
+        {!isMobileMax740 && <CalendarBody mode={BIG_MODE} />}
       </div>
     </div>
   );
