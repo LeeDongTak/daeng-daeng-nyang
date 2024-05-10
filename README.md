@@ -24,13 +24,13 @@
 - [BackEnd]
 ![KakaoTalk_20240510_003137678](https://github.com/LeeDongTak/daeng-daeng-nyang/assets/56667369/a2d558f6-52e3-4f20-9117-137ce6f6523c)
 
+
 ## 기술 스택
 
 ![KakaoTalk_20240510_182959304](https://github.com/LeeDongTak/daeng-daeng-nyang/assets/56667369/249d8f07-fd5b-447d-a6ed-eedc55767e59)
 
-## 주요 기능
 
-## POS
+## 주요 기능
 
 **`반려동물 등록 기능`** 본인의 반려동물을 등록하는 기능입니다. 
 
@@ -41,17 +41,6 @@
 **`Schdule Page`** 반려동물과 관련된 일정을 관리하는 page입니다.
 
 ## 코드 컨벤션
-
-- 컴포넌트 파일은 **파스칼 케이스**로 작성
-  `e.g) ComponentsTest.tsx`
-- 페이지명은 `indexPage.ts` **(끝에 Page명 표기)**
-- 일반 .ts 파일은 **케밥 케이스**로 작성 (ex. common.ts, date-helper.ts)
-- app 폴더 하위 페이지 파일 이름은 **케밥 케이스**로 작성
-- .module.css 파일은 컴포넌트 이름과 동일하게 작성!
-
-### 컴포넌트 생성
-
-- `rafce` 스니펫 사용
 
 ### 폴더 구조
 
