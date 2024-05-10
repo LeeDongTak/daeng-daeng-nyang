@@ -51,6 +51,7 @@ const Cell = ({ mode, page }: CalendarCellType) => {
       const schedulesData = calendarBindingData?.map(item =>
         item.schedule.filter(target => target.date.split('T')[0] === itemKey),
       );
+      const schedulesDataFlat = schedulesData.flat();
 
       days.push(
         <CellItem
@@ -59,7 +60,7 @@ const Cell = ({ mode, page }: CalendarCellType) => {
           page={page}
           mode={mode}
           day={day}
-          schedulesData={schedulesData[0] ? schedulesData[0] : undefined}
+          schedulesData={schedulesDataFlat ? schedulesDataFlat : undefined}
           {...(mode === MINI_MODE && { selectDayHandler: selectDayHandler })}
           // ... spreadOperator
           // 아래 조건부 함수는 Sales page에서 사용하는 props 입니다.

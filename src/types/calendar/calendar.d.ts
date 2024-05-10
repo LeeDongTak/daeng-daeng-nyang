@@ -40,12 +40,20 @@ export interface CloseModalType {
 }
 
 /**
+ * 달력에서 사용되는 select
+ */
+export interface CalendarPetDataType {
+  label: string;
+  value: string;
+}
+
+/**
  * 달력 데이타 바인딩 처리
  */
 export interface CalendarDataType {
   schedule: ScheduleDataType[];
   id: number;
-  dogNm: string;
+  name: string;
 }
 
 export interface ScheduleDataType {
