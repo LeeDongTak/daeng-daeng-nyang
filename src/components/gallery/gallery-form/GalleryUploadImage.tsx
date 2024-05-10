@@ -1,10 +1,11 @@
+import { getBase64 } from '@/lib/utils';
 import { ChangeEvent, useEffect, useState } from 'react';
 import { Control, FieldValues, Path, useController } from 'react-hook-form';
 import ImagePlus from '../../../../public/icons/image-plus.svg';
 
 interface I_GalleryUploadImage<T extends FieldValues> {
   className?: string;
-  onThumbnailChange: (file: File | null, dataUrl: string | null) => void;
+  onThumbnailChange: (file: File, dataUrl: string) => void;
   control: Control<T>;
   name: Path<T>;
 }
@@ -19,7 +20,6 @@ const GalleryUploadImage = <T extends FieldValues>({
   const [previewImages, setPreviewImages] = useState<string[]>([]);
   const { field, fieldState } = useController({ control, name });
   const { error } = fieldState;
-  console.log(error);
   const handleImageUpload = (e: ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
     if (!files) return;
@@ -28,21 +28,12 @@ const GalleryUploadImage = <T extends FieldValues>({
     const newUploadedImages = [...uploadedImages, ...limitedFiles];
     setUploadedImages(newUploadedImages);
 
-    Promise.all(limitedFiles.map(getDataUrl))
-      .then(dataUrls => {
-        setPreviewImages([...previewImages, ...dataUrls]);
+    Promise.all(limitedFiles.map(getBase64))
+      .then(getBase64 => {
+        setPreviewImages([...previewImages, ...getBase64]);
         field.onChange(newUploadedImages);
       })
       .catch(console.error);
-  };
-
-  const getDataUrl = (file: File): Promise<string> => {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.onload = () => resolve(reader.result as string);
-      reader.onerror = reject;
-      reader.readAsDataURL(file);
-    });
   };
 
   const handleImageDelete = (index: number) => {
@@ -50,17 +41,18 @@ const GalleryUploadImage = <T extends FieldValues>({
     setUploadedImages(newUploadedImages);
     const newPreviewImages = previewImages.filter((_, i) => i !== index);
     setPreviewImages(newPreviewImages);
-    field.onChange(newUploadedImages.map(file => getDataUrl(file)));
+    field.onChange(newUploadedImages.map(file => getBase64(file)));
   };
 
   useEffect(() => {
     const processImages = async () => {
-      const dataUrls = await Promise.all(uploadedImages.map(getDataUrl));
+      const dataUrls = await Promise.all(uploadedImages.map(getBase64));
       if (uploadedImages.length > 0) {
         onThumbnailChange(uploadedImages[0], dataUrls[0]);
-      } else {
-        onThumbnailChange(null, null);
       }
+      // else {
+      //   onThumbnailChange(null, null);
+      // }
     };
     processImages();
   }, [uploadedImages, onThumbnailChange]);

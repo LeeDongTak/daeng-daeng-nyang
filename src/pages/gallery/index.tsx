@@ -1,7 +1,7 @@
-import GalleryPage from '../../components/gallery/GalleryPage';
+import GalleryMain from '../../components/gallery/GalleryMain';
 
 const Gallery = () => {
-  return <GalleryPage />;
+  return <GalleryMain />;
 };
 
 export default Gallery;

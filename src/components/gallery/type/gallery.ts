@@ -1,8 +1,10 @@
 export interface I_GalleryData {
   id: number;
   title: string;
-  description: string;
+  content: string;
   tags: string[];
-  images: string[];
+  images: { id: number; postId: number; image: string }[];
   thumbnail: string | null;
+  updatedAt: string;
+  postcategory: { id: number; category: string; postId: number }[];
 }
