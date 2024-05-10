@@ -1,4 +1,3 @@
-import { axiosValid_API } from '@/api/common/axios_instance';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -21,7 +20,7 @@ const galleryFormSchema = z.object({
     .min(1, { message: '카테고리를 최소 1개 이상 등록해주세요.' })
     .max(4, { message: '카테고리는 최대 4개까지만 추가 가능합니다.' }),
 });
-type T_gallerySchema = z.infer<typeof galleryFormSchema>;
+export type T_gallerySchema = z.infer<typeof galleryFormSchema>;
 const GalleryRegist = ({ onAddGallery }: { onAddGallery: (newGallery: I_GalleryData) => void }) => {
   const form = useForm<T_gallerySchema>({
     defaultValues: { title: '', description: '', tags: [], images: [] },
@@ -50,42 +49,47 @@ const GalleryRegist = ({ onAddGallery }: { onAddGallery: (newGallery: I_GalleryD
     setSelectedThumbnail(file);
   };
   const tags = form.getValues('tags');
+
   const submitGalleryHandler = async (values: T_gallerySchema) => {
     if (form.formState.errors.images) {
       console.log(form.formState.errors.images.message);
       return;
     }
-    try {
-      const formData = new FormData();
-      formData.append('thumbnail', selectedThumbnail as Blob);
-      formData.append('title', values.title);
-      formData.append('content', values.description);
-      values.tags.forEach((tag, index) => {
-        formData.append(`tags[${index}]`, tag);
-      });
-      values.images.forEach((image, index) => formData.append(`images[${index}]`, image as Blob));
-      // console.log(values.title);
-      // console.log(values.description);
-      // console.log(JSON.stringify(values.tags));
-      // console.log(values.images);
-      // console.log(selectedThumbnail);
-      const response = await axiosValid_API.post('post', formData);
-      console.log(response);
-      if (response.status >= 200 && response.status < 300) {
-        // 성공적으로 등록
-        onAddGallery(response.data);
-        // 추가적인 동작
-        console.log('글 작성 성공입니다~!');
-        console.log(response.data);
-      } else {
-        // 등록 실패 시의 처리
-        console.error('갤러리 등록 실패임:', response.data);
-      }
-    } catch (error) {
-      console.error('갤러리 등록 실패여:', error);
-    }
+
+    const formData = new FormData();
+    formData.append('thumbnail', selectedThumbnail as Blob);
+    formData.append('title', values.title);
+    formData.append('content', values.description);
+    values.tags.forEach((tag, index) => {
+      formData.append(`tags[${index}]`, tag);
+    });
+    values.images.forEach((image, index) => formData.append(`images[${index}]`, image as Blob));
+
+    //   const response = await axiosValid_API.post('post', formData);
+    //   if (response.status >= 200 && response.status < 300) {
+    //     // 성공적으로 등록
+    //     onAddGallery(response.data);
+    //     // 추가적인 동작
+    //     console.log('글 작성 성공입니다~!');
+    //   } else {
+    //     // 등록 실패 시의 처리
+    //     console.error('갤러리 등록 실패임:', response.data);
+    //   }
+    // } catch (error) {
+    //   console.error('갤러리 등록 실패여:', error);
+    // }
   };
   const { errors } = form.formState;
+
+  // const fetchPost = async (formData: T_gallerySchema) => {
+  //   const response = await axiosValid_API.post('post/All', formData);
+  //   return response.data;
+  // };
+  // const { data: fetchGallery } = useQuery({
+  //   queryKey: ['galleryUpload'],
+  //   queryFn: () => fetchPost,
+  // });
+
   const TEST = [
     {
       component: GalleryForm.input({

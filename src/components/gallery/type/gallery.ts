@@ -3,6 +3,9 @@ export interface I_GalleryData {
   title: string;
   content: string;
   tags: string[];
-  images: string[];
-  thumbnail: string | null;
+  images: { id: number; postId: number; image: string }[];
+  thumbnail: string;
+  updatedAt: string;
+  createdAt: string;
+  postcategory: { id: number; category: string; postId: number }[];
 }

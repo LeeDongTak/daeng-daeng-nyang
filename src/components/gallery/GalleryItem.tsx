@@ -1,4 +1,5 @@
 import { useRouter } from 'next/router';
+import { useGalleryStore } from './GalleryMain';
 import { I_GalleryData } from './type/gallery';
 
 interface I_GalleryItemProps {
@@ -8,12 +9,14 @@ interface I_GalleryItemProps {
 const GalleryItem = ({ gallery }: I_GalleryItemProps) => {
   const router = useRouter();
   const mainImage = gallery.thumbnail || (gallery.images.length > 0 ? gallery.images[0] : null);
-
+  const setSelectedGallery = useGalleryStore(state => state.setSelectedGallery);
   const handleClick = () => {
+    setSelectedGallery(gallery);
     router.push({
       pathname: `/gallery/detail/${gallery.id}`,
       query: { id: gallery.id },
     });
+    3;
   };
 
   return (
