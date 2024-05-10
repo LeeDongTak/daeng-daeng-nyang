@@ -1,4 +1,5 @@
 import LayoutForm from '@/components/common/form/form-layout/LayoutForm';
+import useUpdatePetInfoMutation from '@/hooks/server/profile/useUpdatePetInfoMutation';
 import { I_PetType } from '@/types/profile/profile';
 import { zodResolver } from '@hookform/resolvers/zod';
 import dayjs from 'dayjs';
@@ -10,7 +11,7 @@ import PetModalTitle from './PetModalTitle';
 
 export type PetInfoValuetype = z.infer<typeof petInfoSchema>;
 const petInfoSchema = z.object({
-  petFile: z.string().nullable(),
+  petFile: z.instanceof(File).nullable(),
   petName: z.string(),
   birthDate: z.string(),
   gender: z.string(),
@@ -20,8 +21,9 @@ const petInfoSchema = z.object({
 
 const PetUpdateModal = ({ modalId, petInfo }: { modalId?: string; petInfo: I_PetType }) => {
   const { birth, age, breed, gender, name, profileImage, id } = petInfo;
+  const { mutate } = useUpdatePetInfoMutation();
   const PET_INFO_VALUE_GROUP = {
-    petFile: profileImage,
+    petFile: null,
     petName: name,
     birthDate: dayjs(birth).format('YYYY-MM-DD'),
     gender: gender,
@@ -33,7 +35,19 @@ const PetUpdateModal = ({ modalId, petInfo }: { modalId?: string; petInfo: I_Pet
     resolver: zodResolver(petInfoSchema),
   });
 
-  const submitHandler = () => {};
+  const submitHandler = (data: PetInfoValuetype) => {
+    const updatePetInfo = {
+      birth: data.birthDate,
+      age: data.age,
+      breed: data.breed,
+      gender: data.gender,
+      name: data.petName,
+      profileImage: data.petFile,
+    };
+
+    mutate({ petId: id, updateValue: updatePetInfo });
+    console.log(data);
+  };
   return (
     <LayoutForm form={form}>
       <form
@@ -41,7 +55,7 @@ const PetUpdateModal = ({ modalId, petInfo }: { modalId?: string; petInfo: I_Pet
         className="fixed z-[500] top-[50%] left-[calc(50%-400px)] translate-y-[-50%] w-[80rem] h-[auto] bg-white shadow-[0_0_1rem_0_rgba(0,0,0,0.15)]  rounded-[3rem] p-[3.2rem] flex flex-col gap-[1rem]"
       >
         <PetModalTitle modalId={modalId} />
-        <PetModalContent modalId={modalId} petId={id} form={form} PET_INFO_VALUE_GROUP={PET_INFO_VALUE_GROUP} />
+        <PetModalContent form={form} profileImage={profileImage} PET_INFO_VALUE_GROUP={PET_INFO_VALUE_GROUP} />
         <PetModalButton />
       </form>
     </LayoutForm>

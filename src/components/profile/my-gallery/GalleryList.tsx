@@ -13,7 +13,7 @@ const GalleryList = ({ posts }: { posts: I_Post[] }) => {
       )}
     >
       {posts.map(item => (
-        <GalleryListItem key={item.id} thumbnail={item.thumbnail} />
+        <GalleryListItem key={item.id} galleryId={item.id} thumbnail={item.thumbnail} />
       ))}
     </div>
   );

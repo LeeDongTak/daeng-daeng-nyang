@@ -96,8 +96,8 @@ const Cell = ({ mode, page }: CalendarCellType) => {
       })}
       {...{
         onClick: e => {
-          const data = clickShowScheduleModal?.(e);
-          DaengModal.fire(<CalendarModal scheduleData={data} />);
+          clickShowScheduleModal?.(e);
+          DaengModal.fire(<CalendarModal />);
         },
       }}
     >

@@ -1,18 +1,17 @@
 import { useModal } from '@/hooks/client/ui/useModal';
-import { ScheduleDataType } from '@/types/calendar/calendar';
 import ModalCalendarBody from './body/ModalCalendarBody';
 import { ModalCalendarHeader } from './header/ModalCalendarHeader';
 
-const CalendarModal = ({ scheduleData, modalId }: { scheduleData: ScheduleDataType[] | null; modalId?: string }) => {
+const CalendarModal = ({ modalId }: { modalId?: string }) => {
   const { DaengModal } = useModal();
 
   const clickCloseModal = () => {
     DaengModal.hide(modalId ?? '');
   };
   return (
-    <div className="relative p-8">
+    <div className="relative p-8 min-w-[30rem] max-w-full">
       <ModalCalendarHeader clickCloseModal={clickCloseModal} />
-      <ModalCalendarBody scheduleData={scheduleData} />
+      <ModalCalendarBody />
     </div>
   );
 };

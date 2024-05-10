@@ -64,4 +64,6 @@ export interface ScheduleDataType {
   petId: number;
   title: string;
   userId: number;
+  place: string;
+  location?: string;
 }
