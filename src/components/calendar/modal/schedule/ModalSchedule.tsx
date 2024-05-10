@@ -1,13 +1,11 @@
 import { Button } from '@/components/ui/button';
 import { useModal } from '@/hooks/client/ui/useModal';
 import useScheduleMutationQuery from '@/hooks/server/calendar/useScheduleMutationQuery';
-import useScheduleFormStore from '@/store/calendar/form-store';
 import useSchedulePetStore from '@/store/calendar/pet-store';
 import useScheduleListStore from '@/store/calendar/schedule-store';
 import RegistCalendar from '../../form/RegistCalendar';
 
 const ModalSchedule = () => {
-  const scheduleFormDateStore = useScheduleFormStore(state => state.date);
   const schedulePetData = useSchedulePetStore(state => state.schedulePetData);
   const scheduleListData = useScheduleListStore(state => state.scheduleListData);
 
@@ -33,8 +31,6 @@ const ModalSchedule = () => {
             <p>글 아이디: {item.id}</p>
             <p>펫 이름: {schedulePetData?.find(map => map.value === item.petId.toString())?.label}</p>
             <p>카테고리: {item.category}</p>
-            {/* <p>{item.date}</p> */}
-            {/* <p>{dayjs(item.date).format('YYYY-MM-DD HH:mm')}</p> */}
             <p>
               {item.date.split('T')[0]} {item.date.split('T')[1].split(':')[0]}:{item.date.split('T')[1].split(':')[1]}
             </p>
