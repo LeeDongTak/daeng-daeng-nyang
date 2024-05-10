@@ -1,3 +1,4 @@
+import { cn } from '@/lib/utils';
 import useCalendarState from '@/store/calendar/calendar-store';
 import useDayState from '@/store/calendar/day-store';
 import { CellItemProps } from '@/types/calendar/calendar';
@@ -128,7 +129,10 @@ const CellItem: Cell = ({ day, selectDayHandler, mode, page, id, schedulesData }
             return (
               <p
                 key={schedule?.value}
-                className={`bg-[#ccc] bg-[${schedule?.color}] text-white text-[1.4rem] w-full p-1 rounded-full text-center`}
+                className={cn(
+                  'text-white text-[1.4rem] w-full p-1 rounded-full text-center bg-[#ccc]',
+                  schedule?.color,
+                )}
               >
                 {schedule?.label}
               </p>
