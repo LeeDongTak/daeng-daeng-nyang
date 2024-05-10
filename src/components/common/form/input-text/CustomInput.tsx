@@ -13,6 +13,8 @@ interface I_ControlProps<
   label?: string;
   labelCn?: string; // label CSS
   messageCn?: string; // formMessage CSS
+  isLabel?: boolean; // 라벨여부
+  inputType?: string; // input의 타입여부
 }
 /**
  *
@@ -25,6 +27,8 @@ const CustomInput = <T extends FieldValues>({
   label,
   labelCn,
   messageCn,
+  isLabel = true,
+  inputType = 'text',
   ...props
 }: I_ControlProps<T>) => {
   const LABEL_NAME = label ? label : name;
@@ -34,9 +38,9 @@ const CustomInput = <T extends FieldValues>({
       name={name}
       render={({ field }) => (
         <FormItem>
-          <FormLabel className={labelCn}>{LABEL_NAME}</FormLabel>
+          {isLabel && <FormLabel className={labelCn}>{LABEL_NAME}</FormLabel>}
           <FormControl>
-            <Input {...field} {...props} style={{ cursor: 'default !important' }} />
+            <Input {...field} {...props} type={inputType} style={{ cursor: 'default !important' }} />
           </FormControl>
           <FormMessage className={messageCn} />
         </FormItem>

@@ -1,3 +1,5 @@
+import RegistPet from '@/components/regist-pet/RegistPet';
+import { useModal } from '@/hooks/client/ui/useModal';
 import useToast from '@/hooks/client/useToast';
 import { cn } from '@/lib/utils';
 import { setAuthLogOut } from '@/store/auth/auth-store';
@@ -12,10 +14,12 @@ interface I_propsType {
 const MenuBox = ({ isMouseHover, isMouseHoverClose, clickStateResetHandler }: I_propsType) => {
   const { toast } = useToast();
   const { push } = useRouter();
+  const { DaengModal } = useModal();
   const [showEffect, setShowEffect] = useState('opacity-0');
   const aa = isMouseHover ? 'opacity-100' : 'opacity-100';
   const USER_MENU_ITEM = {
     myPage: ['마이 페이지', '/profile'],
+    addPet: ['반려동물 등록', 'pet'],
     logout: ['로그아웃', 'logout'],
   };
 
@@ -28,6 +32,12 @@ const MenuBox = ({ isMouseHover, isMouseHoverClose, clickStateResetHandler }: I_
       logout(logoutCallbackFuc);
       return;
     }
+    if (menuType === 'pet') {
+      DaengModal.fire(<RegistPet />);
+      clickStateResetHandler();
+      return;
+    }
+
     push(menuType);
     clickStateResetHandler();
   };
