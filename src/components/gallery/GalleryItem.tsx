@@ -11,11 +11,7 @@ const GalleryItem = ({ gallery }: I_GalleryItemProps) => {
   // const setSelectedGallery = useGalleryStore(state => state.setSelectedGallery);
   const handleClick = () => {
     // setSelectedGallery(gallery);
-    router.push({
-      pathname: `/gallery/detail/${gallery.id}`,
-      query: { id: gallery.id },
-    });
-    3;
+    router.push(`/gallery/detail/${gallery.id}`);
   };
 
   return (
