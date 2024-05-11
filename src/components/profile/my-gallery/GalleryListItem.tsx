@@ -3,7 +3,7 @@ import { cn } from '@/lib/utils';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 
-const GalleryListItem = ({ thumbnail, galleryId }: { thumbnail: string | null; galleryId: string }) => {
+const GalleryListItem = ({ thumbnail, galleryId }: { thumbnail: string | null; galleryId: string | number }) => {
   const { push } = useRouter();
 
   const clickRouteHandler = () => {
