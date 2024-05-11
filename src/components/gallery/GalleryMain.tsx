@@ -37,8 +37,6 @@ const GalleryMain = () => {
     },
   });
 
-  // 쿼리 클라이언트를 어디서 또 써줘야 할까. .. .
-  //
   const navigateToAddGallery = () => {
     router.push('/gallery/add');
   };

@@ -71,6 +71,9 @@ dependencies:
   clsx:
     specifier: ^2.1.0
     version: 2.1.0
+  daeng-daeng-nyang:
+    specifier: 'link:'
+    version: 'link:'
   date-fns:
     specifier: ^3.6.0
     version: 3.6.0
