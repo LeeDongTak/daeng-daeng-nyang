@@ -1,5 +1,4 @@
-import { signIn, signUp } from '@/components/auth/api/server_api';
-import { setAuthLogin } from '@/store/auth/auth-store';
+import { signInWithCredentials, signUp } from '@/components/auth/api/server_api';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
 import { useRouter } from 'next/router';
@@ -43,12 +42,12 @@ const useAuthQuery = <T extends FieldValues>({ form }: I_useAuthQueryProps<T>) =
   });
 
   const signInMutaion = useMutation({
-    mutationFn: signIn,
+    mutationFn: signInWithCredentials,
     onSuccess: res => {
       queryClient.invalidateQueries({ queryKey: [QUERY_KEY.LOGIN] });
-      const { accessToken, refreshToken } = res;
-      setAuthLogin({ accessToken, refreshToken, isLogin: true });
-      router.push(ROUTER_PATH.HOME);
+      if (res.url) {
+        router.push(res.url);
+      }
     },
     onError: error => {
       if (axios.isAxiosError(error) && error.response) {
