@@ -6,6 +6,7 @@ import { cn } from '@/lib/utils';
 import '@/styles/globals.css';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import { SessionProvider } from 'next-auth/react';
 import type { AppProps } from 'next/app';
 import localFont from 'next/font/local';
 
@@ -15,14 +16,16 @@ const myFont = localFont({ src: '../../public/font/PretendardVariable.woff2', va
 export default function App({ Component, pageProps }: AppProps) {
   return (
     <QueryClientProvider client={queryClient}>
-      <ReactQueryDevtools initialIsOpen={false} />
-      <main className={cn(myFont.variable)}>
-        <CommonLayout>
-          <Component {...pageProps} />
-        </CommonLayout>
-      </main>
-      <Modal />
-      <Toast />
+      <SessionProvider>
+        <ReactQueryDevtools initialIsOpen={false} />
+        <main className={cn(myFont.variable)}>
+          <CommonLayout>
+            <Component {...pageProps} />
+          </CommonLayout>
+        </main>
+        <Modal />
+        <Toast />
+      </SessionProvider>
     </QueryClientProvider>
   );
 }
