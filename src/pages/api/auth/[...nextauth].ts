@@ -20,6 +20,7 @@ export const authOptions = {
             email,
             password,
           });
+
           return data;
         } catch (err) {
           // error를 던져도 / next-auth의 signIn에서 return 값은
@@ -36,13 +37,29 @@ export const authOptions = {
             throw new Error(JSON.stringify(err.response?.data));
           }
         }
-        return null;
+        // return null;  null을 return 하면 error를 내보낸다.따라서 커스터마이징 하고 싶으면 위와 같이 throw new Error 하고, 기본 내장 error를 내보내고 싶으면 return null 하자
       },
     }),
   ],
 
   pages: {
     signIn: '/auth/login', // next-auth에서 제공하는 폼 (http//localhost:3000/api/auth/signin)에서 로그인 하는 것이 아닌 custom login하는 장소를 지정합니다.
+  },
+  callbacks: {
+    //무언가 데이터를 넘겨주고 싶으면 jwt 토큰에 데이터를 유지하고 session 에서 처리해줘야함
+    async jwt({ token, user }) {
+      if (user) {
+        console.log(user, 'user??');
+      }
+      console.log('🚀 ~ jwt ~ token:', token);
+      // user라는 객체는 authorize에서 return 해준 값이다.
+
+      return {};
+    },
+    // async session({ session, user, token }) {
+    //   console.log(session, 'session');
+    //   console.log(user, 'user', '??????????');
+    // },
   },
 } satisfies NextAuthOptions; // 타입 추론 가능하게 하기 위해서
 
