@@ -34,9 +34,6 @@ const SignIn = () => {
       redirect: false,
       // callbackUrl:'res에 반환되는 url입니다.'
     })) as SignInResponse;
-    if (res.error) {
-      console.log(JSON.parse(res.error), '사인인 함수');
-    }
   };
   return (
     <Fragment>
