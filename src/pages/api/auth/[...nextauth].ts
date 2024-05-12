@@ -53,12 +53,10 @@ export const authOptions = {
         token.accessToken = user.accessToken;
         token.refreshToken = user.refreshToken;
       }
-      console.log('🚀 ~ jwt ~ token:', token);
 
       return token;
     },
     async session({ session, token }) {
-      console.log(token, 'token');
       session.user.accessToken = token.accessToken;
       return session;
     },
