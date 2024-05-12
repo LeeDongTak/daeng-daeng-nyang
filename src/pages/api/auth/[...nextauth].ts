@@ -46,20 +46,25 @@ export const authOptions = {
     signIn: '/auth/login', // next-auth에서 제공하는 폼 (http//localhost:3000/api/auth/signin)에서 로그인 하는 것이 아닌 custom login하는 장소를 지정합니다.
   },
   callbacks: {
-    //무언가 데이터를 넘겨주고 싶으면 jwt 토큰에 데이터를 유지하고 session 에서 처리해줘야함
+    // //무언가 데이터를 넘겨주고 싶으면 jwt 토큰에 데이터를 유지하고 session 에서 처리해줘야함
     async jwt({ token, user }) {
+      // user라는 객체는 authorize에서 return 해준 값이다.
       if (user) {
-        console.log(user, 'user??');
+        token.accessToken = user.accessToken;
+        token.refreshToken = user.refreshToken;
       }
       console.log('🚀 ~ jwt ~ token:', token);
-      // user라는 객체는 authorize에서 return 해준 값이다.
 
-      return {};
+      return token;
     },
-    // async session({ session, user, token }) {
-    //   console.log(session, 'session');
-    //   console.log(user, 'user', '??????????');
-    // },
+    async session({ session, token }) {
+      console.log(token, 'token');
+      session.user.accessToken = token.accessToken;
+      return session;
+    },
+  },
+  session: {
+    strategy: 'jwt',
   },
 } satisfies NextAuthOptions; // 타입 추론 가능하게 하기 위해서
 
