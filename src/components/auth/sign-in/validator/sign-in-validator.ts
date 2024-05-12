@@ -10,7 +10,7 @@ export const SIGN_IN_INPUTS = [
     label: '비밀번호',
     name: 'password',
     placeholder: '비밀번호를 입력해주세요.',
-    type: 'password',
+    inputType: 'password',
   },
 ] as const;
 export const SignInSchema = z.object({
