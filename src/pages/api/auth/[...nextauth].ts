@@ -58,11 +58,9 @@ export const authOptions = {
     },
     async session({ session, token }) {
       session.user.accessToken = token.accessToken;
+      session.user.refreshToken = token.refreshToken;
       return session;
     },
-  },
-  session: {
-    strategy: 'jwt',
   },
 } satisfies NextAuthOptions; // 타입 추론 가능하게 하기 위해서
 
