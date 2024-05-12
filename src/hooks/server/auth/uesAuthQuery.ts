@@ -1,4 +1,5 @@
 import { signInWithCredentials, signUp } from '@/components/auth/api/server_api';
+import { I_JSONError, I_SignInError } from '@/types/auth/auth';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
 import { useRouter } from 'next/router';
@@ -49,18 +50,19 @@ const useAuthQuery = <T extends FieldValues>({ form }: I_useAuthQueryProps<T>) =
         router.push(res.url);
       }
     },
-    onError: error => {
-      if (axios.isAxiosError(error) && error.response) {
-        const { status } = error.response;
+    onError: ({ error }: I_SignInError) => {
+      const parsedError = JSON.parse(error) as I_JSONError;
 
-        if (status === 400)
-          form.setError('email' as 'root', {
-            message: '이메일을 다시 확인해 주세요',
-          });
-        if (status === 401)
-          form.setError('password' as 'root', {
-            message: '비밀번호가 일치하지 않습니다.',
-          });
+      if (parsedError.statusCode === 400) {
+        form.setError('email' as 'root', {
+          message: '이메일을 다시 확인해 주세요',
+        });
+      }
+
+      if (parsedError.statusCode === 401) {
+        form.setError('password' as 'root', {
+          message: '비밀번호가 일치하지 않습니다.',
+        });
       }
     },
   });
