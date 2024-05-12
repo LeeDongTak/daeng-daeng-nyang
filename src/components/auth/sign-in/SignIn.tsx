@@ -1,4 +1,5 @@
 import useAuth from '@/hooks/client/auth/useAuth';
+import { signIn } from 'next-auth/react';
 import { Fragment } from 'react';
 import LayoutForm from '../../common/form/form-layout/LayoutForm';
 import LayoutFormBody from '../../common/form/form-layout/layout-form-body/LayoutFormBody';
@@ -24,7 +25,13 @@ const SignIn = () => {
     schema: SignInSchema,
     defaultValues: DEFAULT_VALUES,
   });
-
+  const test = (value: T_SignInSchema) => {
+    signIn('HTTPLogin', {
+      email: value.email,
+      password: value.password,
+      redirect: false,
+    });
+  };
   return (
     <Fragment>
       <AuthTitle title="Login" subTitle="나의 반려동물을 자랑해보세요" />
