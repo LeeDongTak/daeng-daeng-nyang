@@ -10,7 +10,7 @@ const useFetchGalleryQuery = () => {
       console.log(pageParam);
       const response = await axiosValid_API.get(`post/All/${pageParam}`);
       if (response.status >= 200 && response.status < 300) {
-        // setGalleries(response.data);
+        console.log(response.data);
         console.log('갤러리 데이터 가져오기 성공!');
 
         return response.data;

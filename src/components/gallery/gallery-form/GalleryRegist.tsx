@@ -75,6 +75,7 @@ const GalleryRegist = ({ onAddGallery }: { onAddGallery: (newGallery: I_GalleryD
       } else {
         // 등록 실패 시의 처리
         console.error('갤러리 등록 실패임:', response.data);
+        console.log(response.data);
       }
     } catch (error) {
       console.error('갤러리 등록 실패여:', error);

@@ -1,13 +1,16 @@
 import { getBase64 } from '@/lib/utils';
+import Image from 'next/image';
 import { ChangeEvent, useEffect, useState } from 'react';
 import { Control, FieldValues, Path, useController } from 'react-hook-form';
 import ImagePlus from '../../../../public/icons/image-plus.svg';
+import { I_GalleryData } from '../type/gallery';
 
 interface I_GalleryUploadImage<T extends FieldValues> {
   className?: string;
   onThumbnailChange: (file: File, dataUrl: string) => void;
   control: Control<T>;
   name: Path<T>;
+  defaultImages?: I_GalleryData['images'];
 }
 
 const GalleryUploadImage = <T extends FieldValues>({
@@ -15,33 +18,41 @@ const GalleryUploadImage = <T extends FieldValues>({
   onThumbnailChange,
   control,
   name,
+  defaultImages = [],
 }: I_GalleryUploadImage<T>) => {
   const [uploadedImages, setUploadedImages] = useState<File[]>([]);
-  const [previewImages, setPreviewImages] = useState<string[]>([]);
+  const [previewImages, setPreviewImages] = useState<string[]>(defaultImages.map(image => image.image));
+
   const { field, fieldState } = useController({ control, name });
   const { error } = fieldState;
+
   const handleImageUpload = (e: ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
     if (!files) return;
+
     const selectedFiles = Array.from(files);
-    const limitedFiles = selectedFiles.slice(0, 4 - uploadedImages.length);
+    const limitedFiles = selectedFiles.slice(0, 4 - previewImages.length);
     const newUploadedImages = [...uploadedImages, ...limitedFiles];
     setUploadedImages(newUploadedImages);
 
     Promise.all(limitedFiles.map(getBase64))
-      .then(getBase64 => {
-        setPreviewImages([...previewImages, ...getBase64]);
-        field.onChange(newUploadedImages);
+      .then(base64Images => {
+        setPreviewImages([...previewImages, ...base64Images]);
+        field.onChange([...uploadedImages, ...limitedFiles]);
       })
       .catch(console.error);
   };
 
   const handleImageDelete = (index: number) => {
-    const newUploadedImages = uploadedImages.filter((_, i) => i !== index);
-    setUploadedImages(newUploadedImages);
-    const newPreviewImages = previewImages.filter((_, i) => i !== index);
+    const newPreviewImages = [...previewImages];
+    newPreviewImages.splice(index, 1);
     setPreviewImages(newPreviewImages);
-    field.onChange(newUploadedImages.map(file => getBase64(file)));
+
+    const newUploadedImages = [...uploadedImages];
+    newUploadedImages.splice(index, 1);
+    setUploadedImages(newUploadedImages);
+
+    field.onChange(newUploadedImages);
   };
 
   useEffect(() => {
@@ -50,9 +61,6 @@ const GalleryUploadImage = <T extends FieldValues>({
       if (uploadedImages.length > 0) {
         onThumbnailChange(uploadedImages[0], dataUrls[0]);
       }
-      // else {
-      //   onThumbnailChange(null, null);
-      // }
     };
     processImages();
   }, [uploadedImages, onThumbnailChange]);
@@ -63,7 +71,7 @@ const GalleryUploadImage = <T extends FieldValues>({
         {previewImages.map((url, index) => (
           <div key={index} className="relative">
             <div className="w-[19.3rem] h-[12.8rem] rounded-[0.6rem] overflow-hidden border-2 border-[#C5C9CF]">
-              <img src={url} alt={`Preview ${index}`} className="w-full h-full object-cover rounded-[0.6rem]" />
+              <Image src={url} alt={`Preview ${index}`} layout="fill" objectFit="cover" />
             </div>
             <button
               onClick={() => handleImageDelete(index)}

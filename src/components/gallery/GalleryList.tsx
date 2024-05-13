@@ -2,10 +2,6 @@ import useFetchGalleryQuery from '@/hooks/server/gallery/useFetchGalleryQuery';
 import { useInView } from 'react-intersection-observer';
 import GalleryItem from './GalleryItem';
 
-// interface I_GalleryListProps {
-//   galleries: I_GalleryData[];
-// }
-
 const GalleryList = () => {
   const { data: galleries, isLoading, hasNextPage, fetchNextPage, isFetchingNextPage } = useFetchGalleryQuery();
 

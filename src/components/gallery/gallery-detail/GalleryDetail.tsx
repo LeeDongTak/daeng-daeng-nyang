@@ -1,34 +1,35 @@
+import { Button } from '@/components/ui/button';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
 import useFetchGalleryDetailQuery from '@/hooks/server/gallery/useFetchGalleryDetailQuery';
 import { format } from 'date-fns';
-import { NextPageContext } from 'next';
+import Image from 'next/image';
+import { useRouter } from 'next/router';
 
 const GalleryDetail = () => {
-  // const selectedGallery = useGalleryStore(state => state.selectedGallery);
-  // const { setSelectedGallery, galleries } = useGalleryStore();
+  const router = useRouter();
+  const { id } = router.query as { id: string };
+  const { data: gallery, isLoading } = useFetchGalleryDetailQuery(id);
 
-  const { data: gallery, isLoading } = useFetchGalleryDetailQuery();
+  const handleEdit = () => {
+    router.push(`/gallery/edit/${id}`);
+  };
 
   if (isLoading) return <div>로딩 중입니다!</div>;
   if (!gallery) return <div>데이터가 없습니다.!</div>;
 
   return (
-    <div className="flex flex-col items-center justify-center ">
+    <div className="flex flex-col items-center justify-center">
       <Carousel className="w-[84.6rem] h-[56rem] mb-8 cursor-pointer">
         <CarouselContent>
-          {/* {gallery?.images?.map((image, index) => ( */}
-          <CarouselItem>
-            <div className="w-[84.6rem] h-[56rem] flex justify-center items-center rounded-3xl">
-              <img
-                src={`${gallery.thumbnail}`}
-                alt={`Slide `}
-                className="w-[84.6rem] h-[56rem] object-cover rounded-3xl"
-              />
-            </div>
-          </CarouselItem>
-          {/* ))} */}
+          {gallery?.images?.map((image, index) => (
+            <CarouselItem key={image.id}>
+              <div className="w-[84.6rem] h-[56rem] flex justify-center items-center rounded-3xl">
+                <Image src={image.image} alt={`Slide ${index + 1}`} objectFit="cover" width={846} height={560} />
+              </div>
+            </CarouselItem>
+          ))}
         </CarouselContent>
-        <CarouselPrevious className="absolute left-2 top-1/2 transform -translate-y-1/2 w-[4rem] h-[3.7rem] " />
+        <CarouselPrevious className="absolute left-2 top-1/2 transform -translate-y-1/2 w-[4rem] h-[3.7rem]" />
         <CarouselNext className="absolute right-2 top-1/2 transform -translate-y-1/2 w-[4rem] h-[3.7rem]" />
       </Carousel>
       <div className="mt-4 flex justify-between w-[84.6rem]">
@@ -37,20 +38,15 @@ const GalleryDetail = () => {
       </div>
       <p className="mt-2 w-[84.6rem]">{gallery?.content}</p>
       <div className="mt-4 w-[84.6rem] flex space-x-2">
-        {/* {gallery?.postcategory?.map(category => (
+        {gallery?.postcategory?.map(category => (
           <span key={category.id} className="bg-gray-200 px-2 py-1 rounded-full text-sm">
             {category.category}
           </span>
-        ))} */}
+        ))}
       </div>
+      <Button onClick={handleEdit}>수정</Button>
     </div>
   );
 };
 
 export default GalleryDetail;
-
-export const getServerSideProps = async (context: NextPageContext) => {
-  const { query } = context;
-  const { id } = query;
-  return { props: { id } };
-};
