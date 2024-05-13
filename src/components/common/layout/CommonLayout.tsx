@@ -6,7 +6,9 @@ import MobileNav from './mobileNav/MobileNav';
 
 const CommonLayout = ({ children }: { children: ReactNode }) => {
   const { isMobileQuery: isMobileMax1024 } = useMobile('(max-width:1024px)');
-
+  // useEffect(() => {
+  //   signOut();
+  // }, []);
   return (
     <>
       <Header />
