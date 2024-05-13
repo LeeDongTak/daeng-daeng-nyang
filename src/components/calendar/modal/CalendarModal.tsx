@@ -9,7 +9,7 @@ const CalendarModal = ({ modalId }: { modalId?: string }) => {
     DaengModal.hide(modalId ?? '');
   };
   return (
-    <div className="relative p-8 min-w-[30rem] max-w-full">
+    <div className="relative p-8 w-full">
       <ModalCalendarHeader clickCloseModal={clickCloseModal} />
       <ModalCalendarBody />
     </div>
