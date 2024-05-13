@@ -1,5 +1,5 @@
-import { I_AuthStore } from '@/types/auth/auth';
 import axios, { InternalAxiosRequestConfig } from 'axios';
+import { getSession } from 'next-auth/react';
 
 const baseURL = process.env.NEXT_PUBLIC_SERVER_BASE_URL;
 const SESSION_ID = process.env.NEXT_PUBLIC_SESSION_PATH;
@@ -8,14 +8,13 @@ const SESSION_ID = process.env.NEXT_PUBLIC_SESSION_PATH;
  * @explain 서버와 요청할 때 토큰이 필요한 함수를 위한 util함수
  * @returns
  */
-const getAuthorizationToken = () => {
-  const AUTH_SESSION = sessionStorage.getItem(SESSION_ID as string);
-  console.log(AUTH_SESSION);
-  if (AUTH_SESSION) {
-    const {
-      state: { accessToken, refreshToken },
-    }: { state: I_AuthStore } = JSON.parse(AUTH_SESSION);
+const getAuthorizationToken = async () => {
+  const SESSION = await getSession(); // client: O , server:X
 
+  if (SESSION) {
+    const {
+      user: { accessToken, refreshToken },
+    } = SESSION;
     return {
       accessToken,
       refreshToken,
@@ -31,8 +30,8 @@ export const axiosValid_API = axios.create({
   baseURL,
 });
 axiosValid_API.interceptors.request.use(
-  (config: InternalAxiosRequestConfig) => {
-    const { accessToken, refreshToken } = getAuthorizationToken();
+  async (config: InternalAxiosRequestConfig) => {
+    const { accessToken, refreshToken } = await getAuthorizationToken();
     if (!accessToken || !refreshToken) return config;
 
     config.headers.Authorization = `Bearer ${accessToken}`;

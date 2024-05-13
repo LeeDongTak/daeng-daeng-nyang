@@ -7,12 +7,14 @@ export const SIGN_UP_INPUTS = [
     label: '비밀번호',
     placeholder: '비밀번호를 6자리이상 입력해주세요.',
     type: 'password',
+    inputType: 'password',
   },
   {
     name: 'confirmPassword',
     label: '비밀번호',
     placeholder: '비밀번호를 다시 한번 더 입력해주세요',
     type: 'password',
+    inputType: 'password',
   },
   {
     name: 'name',
