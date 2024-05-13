@@ -31,28 +31,26 @@ const GalleryUploadImage = <T extends FieldValues>({
     if (!files) return;
 
     const selectedFiles = Array.from(files);
-    const limitedFiles = selectedFiles.slice(0, 4 - previewImages.length);
+    const limitedFiles = selectedFiles.slice(0, 4 - uploadedImages.length);
     const newUploadedImages = [...uploadedImages, ...limitedFiles];
     setUploadedImages(newUploadedImages);
 
     Promise.all(limitedFiles.map(getBase64))
       .then(base64Images => {
-        setPreviewImages([...previewImages, ...base64Images]);
+        setPreviewImages([...defaultImages.map(image => image.image), ...base64Images]);
         field.onChange([...uploadedImages, ...limitedFiles]);
       })
       .catch(console.error);
   };
 
   const handleImageDelete = (index: number) => {
-    const newPreviewImages = [...previewImages];
-    newPreviewImages.splice(index, 1);
-    setPreviewImages(newPreviewImages);
-
-    const newUploadedImages = [...uploadedImages];
-    newUploadedImages.splice(index, 1);
+    const newUploadedImages = uploadedImages.filter((_, i) => i !== index);
     setUploadedImages(newUploadedImages);
 
-    field.onChange(newUploadedImages);
+    const newPreviewImages = previewImages.filter((_, i) => i !== index);
+    setPreviewImages(newPreviewImages);
+
+    field.onChange(newUploadedImages.map(file => getBase64(file)));
   };
 
   useEffect(() => {

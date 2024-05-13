@@ -72,6 +72,7 @@ const GalleryRegist = ({ onAddGallery }: { onAddGallery: (newGallery: I_GalleryD
         onAddGallery(response.data);
         // 추가적인 동작
         console.log('글 작성 성공입니다~!');
+        console.log(response.data);
       } else {
         // 등록 실패 시의 처리
         console.error('갤러리 등록 실패임:', response.data);

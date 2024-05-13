@@ -7,7 +7,6 @@ const useFetchGalleryQuery = () => {
    */
   const fetchGalleries = async (pageParam: number) => {
     try {
-      console.log(pageParam);
       const response = await axiosValid_API.get(`post/All/${pageParam}`);
       if (response.status >= 200 && response.status < 300) {
         console.log(response.data);
