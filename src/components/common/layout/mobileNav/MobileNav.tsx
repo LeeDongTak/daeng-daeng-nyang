@@ -10,7 +10,7 @@ const MobileNav = () => {
   const MENU_ITEM = {
     map: ['병원&약국 찾기', '/map', <Hospital color="#616161" />],
     calendar: ['일정 등록하기', '/calendar', <CalendarDays color="#616161" />],
-    gallery: ['겔러리', '/gallery', <Images color="#616161" />],
+    gallery: ['갤러리', '/gallery', <Images color="#616161" />],
   };
   const clickRouteHandler = (path: string) => {
     push(path);
