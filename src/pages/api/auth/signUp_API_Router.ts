@@ -6,7 +6,7 @@ interface I_CustomRequest extends NextApiRequest {
   body: T_SignUpSchema;
 }
 
-export default async function handler(req: I_CustomRequest, res: NextApiResponse) {
+export default async function POST(req: I_CustomRequest, res: NextApiResponse) {
   const userInfo = req.body;
   try {
     const { data } = await axiosAPI.post('auth/signup', userInfo);

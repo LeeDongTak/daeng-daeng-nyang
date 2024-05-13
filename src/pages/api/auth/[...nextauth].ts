@@ -1,10 +1,10 @@
 import { axiosAPI } from '@/api/common/axios_instance';
 import { T_SignInSchema } from '@/components/auth/sign-in/validator/sign-in-validator';
 import { AxiosError } from 'axios';
-import NextAuth, { NextAuthOptions } from 'next-auth';
+import NextAuth from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 
-export const authOptions = {
+const handler = NextAuth({
   providers: [
     CredentialsProvider({
       id: 'HTTPLogin', // auth/sign-in pages에서 사용될 signIn('HTTPLogin',value) /id를 써주지 않으면 default로 credentials 입니다. id가 없으면 (signIn('credentials',...))
@@ -64,6 +64,6 @@ export const authOptions = {
     },
   },
   secret: process.env.NEXTAUTH_SECRET,
-} satisfies NextAuthOptions; // 타입 추론 가능하게 하기 위해서
+});
 
-export default NextAuth(authOptions);
+export { handler as GET, handler as POST };
