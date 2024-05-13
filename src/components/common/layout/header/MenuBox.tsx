@@ -1,6 +1,6 @@
 import useMobile from '@/hooks/client/useMobile';
 import { cn } from '@/lib/utils';
-import useAuthStore from '@/store/auth/auth-store';
+import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import AuthButton from './AuthButton';
 import UserMenuBox from './userMenuBox/UserMenuBox';
@@ -10,13 +10,13 @@ import UserMenuBox from './userMenuBox/UserMenuBox';
 // import Search from '../../../../../public/icons/search.svg';
 
 const MenuBox = () => {
-  const { isLogin } = useAuthStore();
+  const { data: isLogin } = useSession();
   const { isMobileQuery: isMobileMax1024 } = useMobile('(max-width:1024px)');
   const { push } = useRouter();
   const MENU_ITEM = {
     map: ['병원&약국 찾기', '/map'],
     calendar: ['일정 등록하기', '/calendar'],
-    gallery: ['겔러리', '/gallery'],
+    gallery: ['갤러리', '/gallery'],
   };
 
   const clickRouteHandler = (path: string) => {

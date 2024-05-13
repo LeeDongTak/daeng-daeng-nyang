@@ -2,7 +2,7 @@ import RegistPet from '@/components/regist-pet/RegistPet';
 import { useModal } from '@/hooks/client/ui/useModal';
 import useToast from '@/hooks/client/useToast';
 import { cn } from '@/lib/utils';
-import { setAuthLogOut } from '@/store/auth/auth-store';
+import { signOut } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 
@@ -48,7 +48,7 @@ const MenuBox = ({ isMouseHover, isMouseHoverClose, clickStateResetHandler }: I_
    * @returns
    */
   const logout = (message: () => void) => {
-    setAuthLogOut();
+    signOut();
     return message();
   };
 

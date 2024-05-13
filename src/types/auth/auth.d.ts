@@ -1,3 +1,5 @@
+import { T_PositionType, T_VariantType } from '../toast/toast';
+
 export interface I_AuthStore {
   isLogin: boolean;
   accessToken: string | null;
@@ -63,4 +65,14 @@ export interface I_ResPonse_SignUp_400 {
   message: string[];
   error: string;
   statusCode: number;
+}
+
+/**
+ * @explain auth관련 react-query 실행 이후 콜백함수 타입입니다.
+ */
+export interface I_AuthCallback {
+  title: string;
+  path: string;
+  variant?: T_VariantType;
+  position?: T_PositionType;
 }

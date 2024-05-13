@@ -7,8 +7,8 @@ const MenuListItem = ({ menuItem }: { menuItem: string[] }) => {
       <div className={cn('flex flex-col justify-start items-start gap-[1.4rem] [&>div]:cursor-pointer')}>
         {menuItem
           .filter(item => item !== menuItem[0])
-          .map(item => {
-            return <div>{item}</div>;
+          .map((item, idx) => {
+            return <div key={`${item}+${idx}`}>{item}</div>;
           })}
       </div>
     </div>
