@@ -52,6 +52,7 @@ export const authOptions = {
       if (user) {
         token.accessToken = user.accessToken;
         token.refreshToken = user.refreshToken;
+        token.role = 'user';
       }
 
       return token;
