@@ -63,6 +63,7 @@ export const authOptions = {
       return session;
     },
   },
+  secret: process.env.NEXTAUTH_SECRET,
 } satisfies NextAuthOptions; // 타입 추론 가능하게 하기 위해서
 
 export default NextAuth(authOptions);
