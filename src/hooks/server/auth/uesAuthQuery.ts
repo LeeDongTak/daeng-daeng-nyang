@@ -3,7 +3,7 @@ import { I_JSONError, I_SignInError } from '@/types/auth/auth';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
 import { useRouter } from 'next/router';
-import { FieldValues, Path, UseFormReturn } from 'react-hook-form';
+import { FieldValues, UseFormReturn } from 'react-hook-form';
 
 interface I_useAuthQueryProps<T extends FieldValues> {
   form: UseFormReturn<T>;
@@ -26,19 +26,22 @@ const useAuthQuery = <T extends FieldValues>({ form }: I_useAuthQueryProps<T>) =
   const signUpMutation = useMutation({
     mutationFn: signUp,
     onSuccess: res => {
+      console.log(res, '성공??');
       queryClient.invalidateQueries({ queryKey: [QUERY_KEY.SIGNUP] });
       router.push(ROUTER_PATH.LOGIN);
     },
     onError: error => {
       if (axios.isAxiosError(error) && error.response) {
+        console.log(error, 'isAxios');
         if (error.response.status === 400) {
           //400 status는 존재하는 이메일이라는 의미
           form.setError('email' as 'root', {
             message: '이미 존재하는 아이디 입니다.',
           });
-          form.resetField('email' as Path<T>);
         }
       }
+
+      console.log(error);
     },
   });
 

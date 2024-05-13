@@ -1,4 +1,4 @@
-import { axiosAPI } from '@/api/common/axios_instance';
+import axios from 'axios';
 import { signIn } from 'next-auth/react';
 import { T_SignInSchema } from '../sign-in/validator/sign-in-validator';
 import { T_SignUpSchema } from '../sign-up/validator/sign-up-validator';
@@ -18,7 +18,10 @@ export const signInWithCredentials = async (values: T_SignInSchema) => {
 
 export const signUp = async (values: T_SignUpSchema) => {
   try {
-    const { data } = await axiosAPI.post('/auth/signup', values);
+    const { data } = await axios.post(
+      `${process.env.NEXT_PUBLIC_SIGN_UP_API_BASE_PATH}api/auth/signUp_API_Router`,
+      values,
+    );
     return data;
   } catch (err) {
     throw err;

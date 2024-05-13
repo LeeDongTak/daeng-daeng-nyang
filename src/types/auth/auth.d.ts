@@ -14,3 +14,53 @@ export interface I_SignInError extends SignInResponse {
   ok: boolean;
   url: null;
 }
+
+export interface I_ResPonse_SignUp_200 {
+  statusCode: number;
+  message: string;
+  user: {
+    name: string;
+    email: string;
+    password: string;
+    registration_information: string;
+    id: number;
+    role: number;
+    createdAt: string;
+    updatedAt: string;
+    deletedAt: boolean;
+  };
+}
+/** 
+ * @type 성공시 type
+ * {
+    "statusCode": 201,
+    "message": "회원가입에 성공했습니다.",
+    "user": {
+        "name": "최태영",
+        "email": "1452a@naver.com",
+        "password": "$2b$12$fYpZPSp1U6groER2Z.ccx.m0rbecEqoyPsi0HjcT0qpC9wrGc5C56",
+        "registration_information": "SITE",
+        "id": 10,
+        "role": 0,
+        "createdAt": "2024-05-13T00:36:07.060Z",
+        "updatedAt": "2024-05-13T00:36:07.060Z",
+        "deletedAt": null
+    }
+}
+ */
+
+/**
+ * @type Error
+ * {
+    "message": [
+        "This Email is already in SITE use"
+    ],
+    "error": "Bad Request",
+    "statusCode": 400
+}
+ */
+export interface I_ResPonse_SignUp_400 {
+  message: string[];
+  error: string;
+  statusCode: number;
+}
