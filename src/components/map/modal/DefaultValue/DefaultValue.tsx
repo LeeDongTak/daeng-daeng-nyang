@@ -1,9 +1,10 @@
 import { CardContent } from '@/components/ui/card';
 import clsx from 'clsx';
+import { Session } from 'next-auth';
 import { Fragment } from 'react';
 import Search from '../../../../../public/icons/search.svg';
 interface I_ModalHeaderProps {
-  isLogin: boolean;
+  isLogin: null | Session;
   place: string;
   location: string;
 }
