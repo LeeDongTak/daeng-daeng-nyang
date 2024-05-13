@@ -4,13 +4,14 @@ import LayoutFormHeader from '@/components/common/form/form-layout/layout-form-h
 import useModalForm from '@/hooks/client/map/modal-form/useModalFom';
 import { I_CustomMarkerProps } from '@/types/map/kakao';
 import clsx from 'clsx';
+import { Session } from 'next-auth';
 import ScheduleForm from '../form/ScheduleForm';
 import { T_ScheduleSchema, scheduleSchema } from '../form/validator/schedule-validator';
 import DefaultValue from './DefaultValue/DefaultValue';
 import DynamicChangeValue from './DynamicInputValue/DynamicInputValue';
 interface I_MarkerModalProps {
   marker: I_CustomMarkerProps;
-  isLogin: boolean;
+  isLogin: null | Session;
   removeSelectedMarker: () => void;
 }
 
