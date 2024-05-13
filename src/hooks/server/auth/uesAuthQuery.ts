@@ -1,12 +1,14 @@
 import { signInWithCredentials, signUp } from '@/components/auth/api/server_api';
-import { I_JSONError, I_SignInError } from '@/types/auth/auth';
+import { I_AuthCallback, I_JSONError, I_SignInError } from '@/types/auth/auth';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
+import { SignInResponse } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import { FieldValues, UseFormReturn } from 'react-hook-form';
 
 interface I_useAuthQueryProps<T extends FieldValues> {
   form: UseFormReturn<T>;
+  callbackAuthFn: (param: I_AuthCallback) => void;
 }
 
 const enum QUERY_KEY {
@@ -15,11 +17,15 @@ const enum QUERY_KEY {
 }
 
 const enum ROUTER_PATH {
-  HOME = '/',
   LOGIN = '/auth/login',
 }
 
-const useAuthQuery = <T extends FieldValues>({ form }: I_useAuthQueryProps<T>) => {
+const enum AUTH_TITLE {
+  SIGNUP = '회원가입을 축하드립니다.',
+  LOGIN = '로그인이 완료하였습니다.',
+}
+
+const useAuthQuery = <T extends FieldValues>({ form, callbackAuthFn }: I_useAuthQueryProps<T>) => {
   const queryClient = useQueryClient();
   const router = useRouter();
 
@@ -29,6 +35,7 @@ const useAuthQuery = <T extends FieldValues>({ form }: I_useAuthQueryProps<T>) =
       console.log(res, '성공??');
       queryClient.invalidateQueries({ queryKey: [QUERY_KEY.SIGNUP] });
       router.push(ROUTER_PATH.LOGIN);
+      callbackAuthFn({ title: AUTH_TITLE.SIGNUP, path: ROUTER_PATH.LOGIN });
     },
     onError: error => {
       if (axios.isAxiosError(error) && error.response) {
@@ -47,10 +54,10 @@ const useAuthQuery = <T extends FieldValues>({ form }: I_useAuthQueryProps<T>) =
 
   const signInMutaion = useMutation({
     mutationFn: signInWithCredentials,
-    onSuccess: res => {
+    onSuccess: (res: SignInResponse) => {
       queryClient.invalidateQueries({ queryKey: [QUERY_KEY.LOGIN] });
       if (res.url) {
-        router.push(res.url);
+        callbackAuthFn({ title: AUTH_TITLE.LOGIN, path: res.url, variant: 'danger' });
       }
     },
     onError: ({ error }: I_SignInError) => {
