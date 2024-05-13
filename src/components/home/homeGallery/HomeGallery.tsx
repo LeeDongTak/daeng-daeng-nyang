@@ -47,7 +47,7 @@ const HomeGallery = () => {
               text="댕댕냥이와 행복한 순간들을 함께해요"
             />
           </div>
-          <p className={cn('font-[500] text-[2.4rem]')}>#겔러리 #반려동물 #자랑 #일상 #행복</p>
+          <p className={cn('font-[500] text-[2.4rem]')}>#갤러리 #반려동물 #자랑 #일상 #행복</p>
           <p className={cn('mt-[3.6rem] transition-all delay-300 duration-1000', animation)}>
             <Button type="button" variant="more" size="more" children="겔러리 보러 가기" onClick={clickRouteHandler} />
           </p>
