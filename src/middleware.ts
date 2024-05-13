@@ -11,7 +11,6 @@ export default async function middleware(req: NextRequest) {
 
   const isAuthenticated = !!token;
   const isPublicRoute = RESTRIC_ROUTE.includes(nextUrl.pathname);
-  console.log('🚀 ~ middleware ~ isPublicRoute:', isPublicRoute);
 
   // 로그인시 auth/login으로 넘어가지 않게 하기
   if (isAuthenticated && !isPublicRoute) return Response.redirect(new URL(ROOT, req.url));
