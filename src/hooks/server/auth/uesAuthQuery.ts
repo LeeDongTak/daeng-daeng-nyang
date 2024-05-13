@@ -32,7 +32,6 @@ const useAuthQuery = <T extends FieldValues>({ form, callbackAuthFn }: I_useAuth
   const signUpMutation = useMutation({
     mutationFn: signUp,
     onSuccess: res => {
-      console.log(res, '성공??');
       queryClient.invalidateQueries({ queryKey: [QUERY_KEY.SIGNUP] });
       router.push(ROUTER_PATH.LOGIN);
       callbackAuthFn({ title: AUTH_TITLE.SIGNUP, path: ROUTER_PATH.LOGIN });
