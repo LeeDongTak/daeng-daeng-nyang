@@ -21,7 +21,7 @@ const nextConfig = {
         destination: `http://openAPI.seoul.go.kr:8088/${process.env.NEXT_PUBLIC_ANIMAL_HOSPITAL}/json/:location/:start/:end/`,
       },
       {
-        source: '/api/map/seoulApi/:location/:start/:end/',
+        source: '/api/map/seoulApi/json/:location/:start/:end/',
         destination: `http://openapi.seoul.go.kr:8088/${process.env.NEXT_PUBLIC_ANIMAL_PHARAMCY}/json/:location/:start/:end/`,
       },
     ];
