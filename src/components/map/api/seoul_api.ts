@@ -76,7 +76,7 @@ export const ParalledQueriesAnimalMedicineAPI = async (api_query: string | null)
     const results = await axios.post(`${process.env.NEXT_PUBLIC_SEOUL_API_URL}`, { api_query });
     return results.data;
   } catch (err) {
-    console.log(err);
+    console.log(err, 'map Error');
     return []; // 성공 실패시 균일하게 해주기 위해서
   }
 };
