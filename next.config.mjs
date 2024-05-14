@@ -14,6 +14,18 @@ const nextConfig = {
 
     return config;
   },
+  async rewrites() {
+    return [
+      {
+        source: '/api/map/seoul_API',
+        destination: `http://openAPI.seoul.go.kr:8088/${process.env.NEXT_PUBLIC_SEOUL_PARK}/json/:slug*`,
+      },
+      {
+        source: '/api/map/seoul_API',
+        destination: `http://openapi.seoul.go.kr:8088/${process.env.NEXT_PUBLIC_ANIMAL_PHARAMCY}/json/:slug*`,
+      },
+    ];
+  },
 };
 
 export default nextConfig;
