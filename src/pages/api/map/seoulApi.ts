@@ -7,12 +7,10 @@ export default async function POST(req: NextApiRequest, res: NextApiResponse) {
   try {
     const results = await Promise.all(
       api_queries.map(async query => {
-        const result = await query.fn(`${query.query_key}${api_query}/1/20/01`);
+        const result = await query.fn(`${query.query_key}${api_query}/1/01/20`);
         return { data: result.data, query_string: query.query_key, api_query }; //데이터 추출 하기 위해서 return 값에 key,value 추가
       }),
     );
-
-    //   console.log(results, 'results');
     res.status(200).send(results);
   } catch (err) {
     res.status(500).send(err);
