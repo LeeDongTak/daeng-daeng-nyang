@@ -18,7 +18,7 @@ const nextConfig = {
     return [
       {
         source: '/api/map/seoul_API',
-        destination: `http://openAPI.seoul.go.kr:8088/${process.env.NEXT_PUBLIC_SEOUL_PARK}/json/:slug*`,
+        destination: `http://openAPI.seoul.go.kr:8088/${process.env.NEXT_PUBLIC_ANIMAL_HOSPITAL}/json/:slug*`,
       },
       {
         source: '/api/map/seoul_API',
