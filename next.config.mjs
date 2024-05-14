@@ -16,12 +16,12 @@ const nextConfig = {
   async rewrites() {
     return [
       {
-        source: '/api/map/seoul_API',
-        destination: `http://openAPI.seoul.go.kr:8088/${process.env.NEXT_PUBLIC_ANIMAL_HOSPITAL}/json/:slug*`,
+        source: '/api/map/seoulApi/1/20/01',
+        destination: `http://openAPI.seoul.go.kr:8088/${process.env.NEXT_PUBLIC_ANIMAL_HOSPITAL}/json/:filter/:start/:end`,
       },
       {
-        source: '/api/map/seoul_API',
-        destination: `http://openapi.seoul.go.kr:8088/${process.env.NEXT_PUBLIC_ANIMAL_PHARAMCY}/json/:slug*`,
+        source: '/api/map/seoulApi',
+        destination: `http://openapi.seoul.go.kr:8088/${process.env.NEXT_PUBLIC_ANIMAL_PHARAMCY}/json/:filter/:start/:end`,
       },
     ];
   },

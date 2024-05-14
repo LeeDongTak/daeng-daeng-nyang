@@ -3,7 +3,7 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 
 export default async function POST(req: NextApiRequest, res: NextApiResponse) {
   const { api_query } = req.body;
-  console.log('🚀 ~ POST ~ api_query:', api_query);
+
   try {
     const results = await Promise.all(
       api_queries.map(async query => {
