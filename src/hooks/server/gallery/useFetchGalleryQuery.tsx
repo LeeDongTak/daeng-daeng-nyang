@@ -8,7 +8,7 @@ const useFetchGalleryQuery = () => {
   const fetchGalleries = async (pageParam: number) => {
     try {
       const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_SIGN_UP_API_BASE_PATH}api/serverReq/serverReqApi?params=post/All/${pageParam}`,
+        `${window.location.origin}/api/serverReq/serverReqApi?params=post/All/${pageParam}`,
       );
       console.log('asdf', response.data);
       return response.data;
