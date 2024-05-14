@@ -10,7 +10,7 @@ interface I_SelectProps<
   name: TName;
   title: string;
   placeholder: string;
-  selectItem: { value: string; label: string }[];
+  selectItem: { value: string; label: string }[] | null;
   optionCn?: string; // 모달창에선 안보일땐 원하는 z-index 넣어주면 됨
   customOnchagne?: (value: string) => void;
   labelCn?: string;
@@ -41,7 +41,7 @@ const CustomSelect = <T extends FieldValues>({
               </SelectTrigger>
             </FormControl>
             <SelectContent className={optionCn}>
-              {selectItem.map(item => (
+              {selectItem?.map(item => (
                 <SelectItem key={item.value} value={item.value}>
                   {item.label === '' ? '이름없음' : item.label}
                 </SelectItem>

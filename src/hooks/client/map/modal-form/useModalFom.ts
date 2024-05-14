@@ -23,7 +23,7 @@ const useModalForm = <T extends FieldValues>({
   });
   const { addSchedule } = useAddScheduleMutation({ removeSelectedMarker });
   const pets = useMap_PetStore(state => state.pets) as I_PetInfo[];
-  const select_item = refinePetInfo(pets);
+  const select_item = refinePetInfo(pets ?? null);
   const submitHandler = (value: T_ScheduleSchema) => {
     addSchedule(value);
   };

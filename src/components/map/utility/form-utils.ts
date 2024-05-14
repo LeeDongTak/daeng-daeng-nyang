@@ -5,6 +5,7 @@ import { I_PetInfo } from '@/types/map/pet-info/pet-info';
  * @returns
  */
 export const refinePetInfo = (pet_info: I_PetInfo[]) => {
+  if (!pet_info) return null;
   const info = pet_info.map(info => ({ value: String(info.id), label: info.name }));
   return info;
 };
