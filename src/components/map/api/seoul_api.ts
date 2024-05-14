@@ -77,7 +77,7 @@ export const ParalledQueriesAnimalMedicineAPI = async (api_query: string | null)
     const results = await Promise.all(
       DYNAMIC_API_QURIES.map(async query => {
         const result = await axios.post(
-          `${process.env.NEXT_PUBLIC_SEOUL_API_URL}${query.query_key}${api_query}/1/100`,
+          `${process.env.NEXT_PUBLIC_SEOUL_API_URL}/json/${query.query_key}/${api_query}/1/100`,
           {
             api_query,
             api_name: query.api_name,
