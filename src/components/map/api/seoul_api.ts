@@ -62,7 +62,7 @@ export const searchSeoulParkInfo = axios.create({
 /**
  * fn은 react-query의 queryfn 함수이고 query_key는 각 동물병원, 동물약국으로 보낼 필요 query 입니다.
  */
-const api_queries = [
+export const api_queries = [
   { api_name: 'animal-hospital', fn: animalHospitalAPI, query_key: 'LOCALDATA_020301_' },
   { api_name: 'animal-pharmacy', fn: animalPharamcyAPI, query_key: 'LOCALDATA_020302_' },
 ];
@@ -73,15 +73,10 @@ const api_queries = [
  */
 export const ParalledQueriesAnimalMedicineAPI = async (api_query: string | null) => {
   try {
-    const results = await Promise.all(
-      api_queries.map(async query => {
-        const data = await query.fn(`${query.query_key}${api_query}/1/20/01`);
-        return { data: data, query_string: query.query_key, api_query }; //데이터 추출 하기 위해서 return 값에 key,value 추가
-      }),
-    );
-
-    return results;
+    const results = await axios.post(`${process.env.NEXT_PUBLIC_SEOUL_API_URL}`, { api_query });
+    return results.data;
   } catch (err) {
+    console.log(err);
     return []; // 성공 실패시 균일하게 해주기 위해서
   }
 };

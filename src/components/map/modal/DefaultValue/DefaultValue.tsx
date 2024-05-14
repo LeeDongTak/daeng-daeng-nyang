@@ -28,7 +28,6 @@ const DefaultValue = ({ isLogin, place, location }: I_ModalHeaderProps) => {
         <Search width={18} height={23} />
         {location}
       </CardContent>
-      ;
     </Fragment>
   );
 };

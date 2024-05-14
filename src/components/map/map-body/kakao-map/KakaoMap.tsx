@@ -25,6 +25,7 @@ const KakaoMap = ({ isLogin }: I_KakakoMapProps) => {
     clickShowLocationInfo,
     selectedMarker,
     removeSelectedMarker,
+    changeZoomLevel,
   } = useKakaoMap();
   const [loading, error] = useKakaoLoader();
 
@@ -39,6 +40,7 @@ const KakaoMap = ({ isLogin }: I_KakakoMapProps) => {
         onCreate={kakaoMapHandler}
         onDragEnd={handleDragEndMap}
         onClick={removeSelectedMarker}
+        onZoomChanged={changeZoomLevel}
       >
         <Button
           className="absolute top-3 right-8 z-50  justify-around px-4 w-32 h-12 text-base tracking-wider hover:text-white"

@@ -26,15 +26,16 @@ function convertGRStoWGS84(x: string, y: string) {
  */
 function extractSeoulApiData(
   axiosRes: {
-    data: AxiosResponse;
+    data: AxiosResponse['data'];
     query_string: string;
     api_query: string | null;
   }[],
 ): I_SeoulAnimalMedicineAPI[] {
   const results = axiosRes
-    .map(result => result.data.data[`${result.query_string}${result.api_query}`].row)
+    .map(result => result.data[`${result.query_string}${result.api_query}`]['row'])
     .flat()
     .filter(target => target.DTLSTATENM === '정상' && target.X > 1); //target.X>1을 추가한 이유는 X,Y좌표 값이 없는 데이터가 있기에 지도 상 위치표시가 이상해지기 때문입니다.
+
   return results;
 }
 /**
@@ -55,7 +56,7 @@ function formattingDataMarkers(extraction: I_SeoulAnimalMedicineAPI[]) {
 
 export function refineSeoulApiData(
   axiosRes: {
-    data: AxiosResponse;
+    data: AxiosResponse['data'];
     query_string: string;
     api_query: string | null;
   }[],

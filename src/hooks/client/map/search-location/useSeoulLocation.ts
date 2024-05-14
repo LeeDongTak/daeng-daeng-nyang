@@ -1,6 +1,6 @@
 import { querySearchPlaces } from '@/components/map/api/kakao_api';
 import useLocationQuery from '@/hooks/server/map/useLocationQuery';
-import useKakaoMapStore from '@/store/map/kakako-map/kakaoMap-store';
+import useKakaoMapStore, { setSelectedMarker } from '@/store/map/kakako-map/kakaoMap-store';
 import useSearchLocationStore, { setApiQuery, setIsUsingInnerKakaoApi } from '@/store/map/search-location/search-store';
 import useSeoulParkStore from '@/store/map/seoul-park/seoulPark-store';
 import { I_CustomMarkerProps } from '@/types/map/kakao';
@@ -40,7 +40,7 @@ const useSeoulLocation = <T extends { [P in keyof T]: T[P] }>(props: I_UseTabPro
     setApiQuery(api_query);
     changeItem(idx); // tab CSS change
     if (isUsingInnerKakaoApi) setIsUsingInnerKakaoApi(false); // kakao api 의 내장함수를 사용하지 않겠다는 state 입니다.
-
+    setSelectedMarker(null);
     if (api_type === 'walk') querySearchPlaces(kakaoMap, seoulPark?.get(api_query) as I_CustomMarkerProps[]);
   };
   return {
