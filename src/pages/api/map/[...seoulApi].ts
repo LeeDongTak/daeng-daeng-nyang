@@ -1,19 +1,21 @@
-import { api_queries } from '@/components/map/api/seoul_api';
+import { animalHospitalAPI, animalPharamcyAPI } from '@/components/map/api/seoul_api';
 import type { NextApiRequest, NextApiResponse } from 'next';
 
 export default async function POST(req: NextApiRequest, res: NextApiResponse) {
-  const { api_query } = req.body;
-  console.log(api_query);
+  const { seoulApi } = req.query;
+  const { api_name, query_key, api_query } = req.body;
 
+  const api_fn = {
+    animal_hospital: animalHospitalAPI,
+    animal_pharmacy: animalPharamcyAPI,
+  };
   try {
-    const results = await Promise.all(
-      api_queries.map(async query => {
-        const result = await query.fn(`${query.query_key}${api_query}/1/20/01`);
-        return { data: result.data, query_string: query.query_key, api_query }; //데이터 추출 하기 위해서 return 값에 key,value 추가
-      }),
+    const result = await api_fn[api_name as 'animal_hospital' | 'animal_pharmacy'](
+      `${seoulApi![1]}/${seoulApi![2]}/${seoulApi![3]}`,
     );
-    res.status(200).send(results);
+    res.status(200).send({ data: result.data, query_string: query_key, api_query });
   } catch (err) {
+    // console.log(err);
     res.status(500).send(err);
   }
 }
