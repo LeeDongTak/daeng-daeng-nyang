@@ -26,7 +26,10 @@ const ModalSchedule = () => {
   };
 
   return (
-    <div className="flex flex-col gap-4 h-auto max-h-[20rem] overflow-y-auto">
+    <div
+      className="flex flex-col gap-4 h-auto max-h-[20rem] overflow-y-auto scrollbar-thin scrollbar-w-4 scrollbar-thumb-rounded-full scrollbar-track-rounded-full 
+    scrollbar-track-[#ccc] scrollbar-thumb-[#191919] scroll-[100rem] px-2"
+    >
       {scheduleListData && scheduleListData.length > 0 ? (
         scheduleListData.map(item => (
           <div key={item.id} className="relative pt-5 border-t first:border-t-0">
@@ -38,15 +41,15 @@ const ModalSchedule = () => {
                   </span>
                 );
               })}
-              <span className="font-semibold text-[1.4rem]">
+              <span className="font-semibold text-[1.4rem] ">
                 {schedulePetData?.find(map => map.value === item.petId.toString())?.label}
               </span>
             </p>
             <p className="text-[1.2rem] text-gray-500">
               {item.date.split('T')[0]} {item.date.split('T')[1].split(':')[0]}:{item.date.split('T')[1].split(':')[1]}
             </p>
-            <p className="text-[1.6rem] font-semibold mt-3">{item.title}</p>
-            <p className="text-[1.4rem] mt-1">{item.content}</p>
+            <p className="text-[1.6rem] font-semibold break-words mt-3">{item.title}</p>
+            <p className="text-[1.4rem] break-words mt-1">{item.content}</p>
             <p className="text-[1.2rem] text-gray-400 mt-1">{item.place}</p>
             {item.location && <p className="text-[1.2rem] text-gray-400 mt-1">{item.location}</p>}
             <div className="absolute right-0 top-5 flex gap-1">

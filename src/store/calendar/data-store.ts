@@ -3,12 +3,10 @@ import { create } from 'zustand';
 
 interface DataStore {
   calendarBindingData: CalendarDataType[];
-  scheduleSum: number | null;
 }
 
 const useScheduleStore = create<DataStore>()(() => ({
   calendarBindingData: [],
-  scheduleSum: null,
 }));
 
 export const setCalendarBindingData = (data: CalendarDataType[]) =>
