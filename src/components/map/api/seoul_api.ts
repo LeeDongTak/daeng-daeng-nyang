@@ -37,14 +37,14 @@ import axios from 'axios';
  */
 
 export const animalHospitalAPI = axios.create({
-  baseURL: `http://openapi.seoul.go.kr:8088/${process.env.NEXT_PUBLIC_ANIMAL_HOSPITAL}/json/`,
+  baseURL: `${process.env.NEXT_PUBLIC_ANIMAL_HOSPITAL}/`,
 });
 
 /**
  * @param LOCALDATA_020302_${api_query}/01/endPoint
  */
 export const animalPharamcyAPI = axios.create({
-  baseURL: `http://openapi.seoul.go.kr:8088/${process.env.NEXT_PUBLIC_ANIMAL_PHARAMCY}/json/`,
+  baseURL: `${process.env.NEXT_PUBLIC_ANIMAL_PHARAMCY}/`,
 });
 
 /**
