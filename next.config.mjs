@@ -16,7 +16,7 @@ const nextConfig = {
   async rewrites() {
     return [
       {
-        source: '/api/map/seoulApi/1/20/01',
+        source: '/api/map/seoulApi',
         destination: `http://openAPI.seoul.go.kr:8088/${process.env.NEXT_PUBLIC_ANIMAL_HOSPITAL}/json/:filter/:start/:end`,
       },
       {
