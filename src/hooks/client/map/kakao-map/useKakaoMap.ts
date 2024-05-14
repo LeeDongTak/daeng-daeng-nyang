@@ -52,6 +52,14 @@ const useKakaoMap = () => {
     kakaoMap.panTo(newLatLng);
     removeSelectedMarker;
   };
+  /**
+   *
+   * @explain zoomlevel이 변할 때 modal이 있는 것을 조절
+   */
+  const changeZoomLevel = (map: kakao.maps.Map) => {
+    if (!selectedMarker) return;
+    setSelectedMarker(null);
+  };
 
   /**
    * 초기 위치값 설정 useEffect
@@ -82,6 +90,7 @@ const useKakaoMap = () => {
     clickShowLocationInfo,
     selectedMarker,
     removeSelectedMarker,
+    changeZoomLevel,
   };
 };
 

@@ -1,4 +1,4 @@
-import useAuthStore from '@/store/auth/auth-store';
+import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import GalleryList from './GalleryList';
 import { I_GalleryData } from './type/gallery';
@@ -20,7 +20,7 @@ interface I_GalleryDataState {
 
 const GalleryMain = () => {
   const router = useRouter();
-  const isLogin = useAuthStore(state => state.isLogin);
+  const { data: isLogin } = useSession();
 
   // 사용하지 않는 코드
   // const { galleries, setGalleries } = useGalleryStore();

@@ -1,4 +1,3 @@
-/** @type {import('next').NextConfig} */
 const nextConfig = {
   swcMinify: true,
   // output: 'export',
@@ -17,8 +16,12 @@ const nextConfig = {
   async rewrites() {
     return [
       {
-        source: '/api/v2/:path*/',
-        destination: `${process.env.NEXT_PUBLIC_SERVER_BASE_URL}/:path*/`,
+        source: '/api/map/seoul_API',
+        destination: `http://openAPI.seoul.go.kr:8088/${process.env.NEXT_PUBLIC_ANIMAL_HOSPITAL}/json/:slug*`,
+      },
+      {
+        source: '/api/map/seoul_API',
+        destination: `http://openapi.seoul.go.kr:8088/${process.env.NEXT_PUBLIC_ANIMAL_PHARAMCY}/json/:slug*`,
       },
     ];
   },

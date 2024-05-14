@@ -27,7 +27,7 @@ const MarkerModal = ({ marker, isLogin, removeSelectedMarker }: I_MarkerModalPro
     <LayoutForm
       form={form}
       className={clsx('z-[1]', {
-        'absolute right-[46.5rem] top-[16rem]': !isLogin,
+        'absolute right-[38.5rem] top-[16rem]': !isLogin,
         'w-[30rem] absolute right-[30rem] top-[3rem]': isLogin,
       })}
     >
