@@ -1,5 +1,5 @@
-import { axiosValid_API } from '@/api/common/axios_instance';
 import { useInfiniteQuery } from '@tanstack/react-query';
+import axios from 'axios';
 
 const useFetchGalleryQuery = () => {
   /**
@@ -7,16 +7,9 @@ const useFetchGalleryQuery = () => {
    */
   const fetchGalleries = async (pageParam: number) => {
     try {
-      console.log(pageParam);
-      const response = await axiosValid_API.get(`post/All/${pageParam}`);
-      if (response.status >= 200 && response.status < 300) {
-        // setGalleries(response.data);
-        console.log('갤러리 데이터 가져오기 성공!');
-
-        return response.data;
-      } else {
-        console.error('갤러리 데이터 가져오기 실패:', response.data);
-      }
+      const response = await axios.get(`http://localhost:3000/api/serverReq/serverReqApi?params=post/All/${pageParam}`);
+      console.log('asdf', response.data);
+      return response.data;
     } catch (error) {
       console.error('갤러리 데이터 가져오기 실패:', error);
     }
