@@ -1,4 +1,3 @@
-/** @type {import('next').NextConfig} */
 const nextConfig = {
   swcMinify: true,
   // output: 'export',
@@ -23,6 +22,10 @@ const nextConfig = {
       {
         source: '/api/map/seoulApi/json/:location/:start/:end/',
         destination: `${process.env.NEXT_PUBLIC_ANIMAL_PHARAMCY}/:location/:start/:end/`,
+      },
+      {
+        source: '/api/serverReq/:path*',
+        destination: `${process.env.NEXT_PUBLIC_SERVER_BASE_URL}/:path*`,
       },
     ];
   },
