@@ -37,14 +37,14 @@ import axios from 'axios';
  */
 
 export const animalHospitalAPI = axios.create({
-  baseURL: `${process.env.NEXT_PUBLIC_ANIMAL_HOSPITAL}/`,
+  baseURL: `${process.env.NEXT_PUBLIC_ANIMAL_HOSPITAL}`,
 });
 
 /**
  * @param LOCALDATA_020302_${api_query}/01/endPoint
  */
 export const animalPharamcyAPI = axios.create({
-  baseURL: `${process.env.NEXT_PUBLIC_ANIMAL_PHARAMCY}/`,
+  baseURL: `${process.env.NEXT_PUBLIC_ANIMAL_PHARAMCY}`,
 });
 
 /**
@@ -72,12 +72,14 @@ const DYNAMIC_API_QURIES = [
  * @param api_query react-query에서 enabled와 지역구 query로 활용하는 인자 값입니다.
  * @returns
  */
+
 export const ParalledQueriesAnimalMedicineAPI = async (api_query: string | null) => {
+  // 'http://openapi.seoul.go.kr:8088/4a62764c4b636d6b37304b634c7a67/json/LOCALDATA_020302_JG/1/100/01';
   try {
     const results = await Promise.all(
       DYNAMIC_API_QURIES.map(async query => {
         const result = await axios.post(
-          `${process.env.NEXT_PUBLIC_SEOUL_API_URL}/json/${query.query_key}${api_query}/1/100`,
+          `${process.env.NEXT_PUBLIC_SEOUL_API_URL}json/${query.query_key}${api_query}/1/50/01`,
           {
             api_query,
             api_name: query.api_name,

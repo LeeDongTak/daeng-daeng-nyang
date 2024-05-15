@@ -9,7 +9,14 @@ const FOCUS_ITEM = 'bg-primary text-white';
 
 const SeoulLocation = () => {
   const { clickGetSeoulLocation, currentIndex } = useSeoulLocation({ initialValue: null, allTabs: SEOUL_LOCATION });
-
+  // const test = async () => {
+  //   const result = await axios.post(`http://localhost:3000/api/seoul/json/LOCALDATA_020302_JG/1/100/01'`, 1);
+  //   return result;
+  // };
+  // useEffect(() => {
+  //   console.log('???');
+  //   test().then(a => console.log(a));
+  // }, []);
   return (
     <div className={SCROLL_HORIZONTAL_WRAPPER}>
       {SEOUL_LOCATION.map(({ location, api_query }, idx) => (
