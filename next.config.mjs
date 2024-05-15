@@ -17,12 +17,12 @@ const nextConfig = {
   async rewrites() {
     return [
       {
-        source: '/api/map/seoulApi/json/:location/:start/:end/',
-        destination: `${process.env.NEXT_PUBLIC_ANIMAL_HOSPITAL}/:location/:start/:end/`,
+        source: '/api/seoul/',
+        destination: `${process.env.NEXT_PUBLIC_ANIMAL_HOSPITAL}:path*`,
       },
       {
-        source: '/api/map/seoulApi/json/:location/:start/:end/',
-        destination: `${process.env.NEXT_PUBLIC_ANIMAL_PHARAMCY}/:location/:start/:end/`,
+        source: '/api/seoul/',
+        destination: `${process.env.NEXT_PUBLIC_ANIMAL_PHARAMCY}:path*`,
       },
     ];
   },
