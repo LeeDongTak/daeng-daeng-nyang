@@ -74,7 +74,6 @@ const DYNAMIC_API_QURIES = [
  */
 
 export const ParalledQueriesAnimalMedicineAPI = async (api_query: string | null) => {
-  // 'http://openapi.seoul.go.kr:8088/4a62764c4b636d6b37304b634c7a67/json/LOCALDATA_020302_JG/1/100/01';
   try {
     const results = await Promise.all(
       DYNAMIC_API_QURIES.map(async query => {
