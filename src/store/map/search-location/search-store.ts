@@ -6,6 +6,7 @@ interface I_MapSearch {
   searchValue: string;
   api_query: null | T_LocationType;
   isUsingInnerKakaoApi: boolean;
+  isRequestAPI: boolean;
 }
 
 const initialValue = {
@@ -13,6 +14,7 @@ const initialValue = {
   searchValue: '',
   api_query: null,
   isUsingInnerKakaoApi: false,
+  isRequestAPI: false,
 } as I_MapSearch;
 
 const useSearchLocationStore = create<I_MapSearch>()(() => ({
@@ -31,3 +33,6 @@ export const setApiQuery = (api_query: T_LocationType | null) =>
 
 export const setIsUsingInnerKakaoApi = (isUsingInnerKakaoApi: boolean) =>
   useSearchLocationStore.setState(state => ({ ...state, isUsingInnerKakaoApi }));
+
+export const setIsRequestAPI = (isRequestAPI: boolean) =>
+  useSearchLocationStore.setState(state => ({ ...state, isRequestAPI }));
