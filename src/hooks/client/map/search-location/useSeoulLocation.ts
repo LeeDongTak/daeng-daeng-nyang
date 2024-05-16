@@ -21,7 +21,7 @@ const useSeoulLocation = <T extends { [P in keyof T]: T[P] }>(props: I_UseTabPro
   const kakaoMap = useKakaoMapStore(state => state.map);
   const { api_query, isUsingInnerKakaoApi, category_type: api_type, isRequestAPI } = useSearchLocationStore();
   const seoulPark = useSeoulParkStore(state => state.seoulPark);
-  const { medicine, isGetRequestApiData } = useLocationQuery({ api_query, isUsingInnerKakaoApi, api_type, kakaoMap });
+  const { medicine, isGetRequestApiData } = useLocationQuery({ api_query, api_type });
 
   useEffect(() => {
     if (isRequestAPI === isGetRequestApiData) return;
