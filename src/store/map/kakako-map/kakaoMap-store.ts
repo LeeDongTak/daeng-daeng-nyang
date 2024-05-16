@@ -14,6 +14,7 @@ interface I_KakaoMap {
   currentPosition: { lat: number; lng: number };
   currentLocation: { lat: number; lng: number };
   selectedMarker: I_CustomMarkerProps | null;
+  isRequestAPI: boolean;
 }
 
 const initialValues = {
@@ -22,6 +23,7 @@ const initialValues = {
   currentPosition: { lat: 37.5616381543437, lng: 126.996862574927 },
   currentLocation: { lat: 37.5616381543437, lng: 126.996862574927 },
   selectedMarker: null,
+  isRequestAPI: false,
 };
 const useKakaoMapStore = create<I_KakaoMap>()(() => ({
   ...initialValues,
@@ -60,4 +62,15 @@ export const setSelectedMarker = (selectedMarker: null | I_CustomMarkerProps) =>
   useKakaoMapStore.setState(state => ({
     ...state,
     selectedMarker,
+  }));
+
+/**
+ * @explain useLocationQuery의 isLoading값을 전역적으로 관리하기 위해서입니다. props drilling이 되기에 전역관리함
+ * @param isRequestAPI useLocationQuery의 isLoading 값입니다.
+ * @returns
+ */
+export const setIsRequestAPI = (isRequestAPI: boolean) =>
+  useKakaoMapStore.setState(state => ({
+    ...state,
+    isRequestAPI,
   }));
