@@ -78,21 +78,15 @@ export const ParalledQueriesAnimalMedicineAPI = async (api_query: string | null)
   try {
     const results = await Promise.all(
       DYNAMIC_API_QURIES.map(async query => {
-        const result = await axios.post(
-          `${process.env.NEXT_PUBLIC_SEOUL_API_URL}json/${query.query_key}${api_query}/1/50/01`,
-          {
-            api_query,
-            api_name: query.api_name,
-            query_key: query.query_key,
-          },
-        );
+        const result = await axios.post(`${process.env.NEXT_PUBLIC_SEOUL_API_URL}`, {
+          api_query,
+          api_name: query.api_name,
+          query_key: query.query_key,
+        });
         return result.data;
       }),
     );
     return results;
-
-    // const results = await axios.post(`${process.env.NEXT_PUBLIC_SEOUL_API_URL}`, { api_query });
-    // return results.data;
   } catch (err) {
     console.log(err, 'map Error');
     return []; // 성공 실패시 균일하게 해주기 위해서
