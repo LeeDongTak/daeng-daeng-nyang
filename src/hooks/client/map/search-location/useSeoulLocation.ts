@@ -14,16 +14,14 @@ interface I_UseTabProps<T> {
 const useSeoulLocation = <T extends { [P in keyof T]: T[P] }>(props: I_UseTabProps<T>) => {
   const { initialValue, allTabs } = props;
   const { changeItem, currentIndex } = useTab({ initialValue, allTabs });
-  const kakaoMap = useKakaoMapStore(state => state.map);
+  const { map: kakaoMap, isRequestAPI } = useKakaoMapStore();
   const { api_query, isUsingInnerKakaoApi, category_type: api_type } = useSearchLocationStore();
   const seoulPark = useSeoulParkStore(state => state.seoulPark);
   const { medicine, isGetSeoulLocationData } = useLocationQuery({
     api_query,
-    isUsingInnerKakaoApi,
     api_type,
-    kakaoMap,
   });
-  useEffect(() => {}, [isGetSeoulLocationData]);
+
   /**
    * react-query로 받아온 medicine 데이터를 kakao map에 그려주는 useEffect입니다.
    */

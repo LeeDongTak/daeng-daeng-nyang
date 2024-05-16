@@ -24,7 +24,6 @@ const useKakaoMap = () => {
     if (markers) setMarkers(markers as I_CustomMarkerProps[]);
     removeSelectedMarker();
   };
-
   const kakaoMapHandler = (map: kakao.maps.Map) => {
     if (!kakaoMap) {
       setKakaoMap(map);

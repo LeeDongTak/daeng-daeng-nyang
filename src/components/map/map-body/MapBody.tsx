@@ -5,7 +5,6 @@ import SearchLocation from './search-location/SearchLocation';
 
 const MapBody = () => {
   const { data: isLogin } = useSession();
-
   return (
     <Fragment>
       <SearchLocation />

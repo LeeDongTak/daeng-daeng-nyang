@@ -29,8 +29,9 @@ const KakaoMap = ({ isLogin }: I_KakakoMapProps) => {
   } = useKakaoMap();
   const [loading, error] = useKakaoLoader();
 
-  // error || loading시 Skeleton
+  // error || loading Skeleton
   if (loading || error) return <Skeleton type="map" />;
+
   return (
     <div className="relative">
       <Map
