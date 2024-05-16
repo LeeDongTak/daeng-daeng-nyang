@@ -4,17 +4,18 @@ import useKakaoLoader from '@/hooks/client/map/kakao-map/useKakaoLoader';
 import useKakaoMap from '@/hooks/client/map/kakao-map/useKakaoMap';
 import { LocateFixed, MapPin } from 'lucide-react';
 import { Session } from 'next-auth';
-import { CSSProperties } from 'react';
+import { CSSProperties, useRef } from 'react';
 import { CustomOverlayMap, Map } from 'react-kakao-maps-sdk';
 import MarkerModal from '../../modal/MarkerModal';
 import CustomMarker from './custom-marker/CustomMarker';
-interface I_KakakoMapProps {
+interface I_KakaoMapProps {
   isLogin: null | Session;
 }
 const MAP_STYLE: CSSProperties = { width: '1264px', height: '640px', position: 'relative', overflow: 'hidden' };
 const INITIAL_ZOOM = 3;
 
-const KakaoMap = ({ isLogin }: I_KakakoMapProps) => {
+const KakaoMap = ({ isLogin }: I_KakaoMapProps) => {
+  const mapRef = useRef<null | kakao.maps.Map>(null);
   const {
     handleDragEndMap,
     kakaoMapHandler,
@@ -26,11 +27,14 @@ const KakaoMap = ({ isLogin }: I_KakakoMapProps) => {
     selectedMarker,
     removeSelectedMarker,
     changeZoomLevel,
+    isRequestAPI,
   } = useKakaoMap();
+
   const [loading, error] = useKakaoLoader();
 
   // error || loading시 Skeleton
   if (loading || error) return <Skeleton type="map" />;
+
   return (
     <div className="relative">
       <Map

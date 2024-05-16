@@ -35,6 +35,7 @@ const useLocationQuery = (props: I_QueryProps) => {
 
   return {
     medicine,
+    isGetRequestApiData: isLoading,
   };
 };
 
