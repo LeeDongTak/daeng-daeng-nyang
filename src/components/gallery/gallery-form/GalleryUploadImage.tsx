@@ -21,7 +21,7 @@ const GalleryUploadImage = <T extends FieldValues>({
   defaultImages = [],
 }: I_GalleryUploadImage<T>) => {
   const [uploadedImages, setUploadedImages] = useState<File[]>([]);
-  const [previewImages, setPreviewImages] = useState<string[]>(defaultImages.map(image => image.image));
+  const [previewImages, setPreviewImages] = useState<string[]>([]);
 
   const { field, fieldState } = useController({ control, name });
   const { error } = fieldState;
@@ -37,12 +37,11 @@ const GalleryUploadImage = <T extends FieldValues>({
 
     Promise.all(limitedFiles.map(getBase64))
       .then(base64Images => {
-        setPreviewImages([...defaultImages.map(image => image.image), ...base64Images]);
+        setPreviewImages([...previewImages, ...base64Images]);
         field.onChange([...uploadedImages, ...limitedFiles]);
       })
       .catch(console.error);
   };
-
   const handleImageDelete = (index: number) => {
     const newUploadedImages = uploadedImages.filter((_, i) => i !== index);
     setUploadedImages(newUploadedImages);

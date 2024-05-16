@@ -1,5 +1,6 @@
 import { Button } from '@/components/ui/button';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
+import useFetchGalleryDeleteQuery from '@/hooks/server/gallery/useFetchGalleryDeleteQuery';
 import useFetchGalleryDetailQuery from '@/hooks/server/gallery/useFetchGalleryDetailQuery';
 import { format } from 'date-fns';
 import Image from 'next/image';
@@ -8,12 +9,21 @@ import { useRouter } from 'next/router';
 const GalleryDetail = () => {
   const router = useRouter();
   const { id } = router.query as { id: string };
-  const { data: gallery, isLoading } = useFetchGalleryDetailQuery(id);
+  const { refetch: deleteGallery } = useFetchGalleryDeleteQuery(id);
+  const { data: gallery, isLoading, refetch: fetchGalleries } = useFetchGalleryDetailQuery(id);
 
   const handleEdit = () => {
     router.push(`/gallery/edit/${id}`);
   };
-
+  const handleDelete = async () => {
+    try {
+      await deleteGallery();
+      await fetchGalleries();
+      router.push('/gallery');
+    } catch (error) {
+      console.log('갤러리 삭제 중 오류 발생:', error);
+    }
+  };
   if (isLoading) return <div>로딩 중입니다!</div>;
   if (!gallery) return <div>데이터가 없습니다.!</div>;
 
@@ -44,7 +54,10 @@ const GalleryDetail = () => {
           </span>
         ))}
       </div>
-      <Button onClick={handleEdit}>수정</Button>
+      <div className="flex gap-2">
+        <Button onClick={handleEdit}>수정</Button>
+        <Button onClick={handleDelete}>삭제</Button>
+      </div>
     </div>
   );
 };

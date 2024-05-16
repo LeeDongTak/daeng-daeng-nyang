@@ -6,11 +6,10 @@ import GalleryForm from '@/components/gallery/gallery-form/GalleryForm';
 import GalleryTags from '@/components/gallery/gallery-form/GalleryTags';
 import useFetchGalleryDetailQuery from '@/hooks/server/gallery/useFetchGalleryDetailQuery';
 import useUpdateGalleryMutation from '@/hooks/server/gallery/useUpdateGalleryMutaion';
-import { getBase64 } from '@/lib/utils';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { isEqual } from 'lodash';
 import { useRouter } from 'next/router';
-import { ChangeEvent, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import GalleryUploadImage from './gallery-form/GalleryUploadImage';
@@ -53,6 +52,7 @@ const GalleryUpdate = () => {
     resolver: zodResolver(galleryFormSchema),
   });
 
+  // 기존 데이터 받아오기
   useEffect(() => {
     if (gallery) {
       form.setValue('title', gallery.title);
@@ -62,7 +62,7 @@ const GalleryUpdate = () => {
         gallery.postcategory.map(category => category.category),
       );
       setPreviewImages(gallery.images.map(image => image.image));
-      console.log(gallery);
+      setUploadedImages([]);
     }
   }, [gallery]);
 
@@ -89,22 +89,22 @@ const GalleryUpdate = () => {
     setSelectedThumbnail(file);
   };
 
-  const handleImageUpload = (e: ChangeEvent<HTMLInputElement>) => {
-    const files = e.target.files;
-    if (!files) return;
+  // const handleImageUpload = (e: ChangeEvent<HTMLInputElement>) => {
+  //   const files = e.target.files;
+  //   if (!files) return;
 
-    const selectedFiles = Array.from(files);
-    const limitedFiles = selectedFiles.slice(0, 4 - uploadedImages.length);
-    const newUploadedImages = [...uploadedImages, ...limitedFiles];
-    setUploadedImages(newUploadedImages);
+  //   const selectedFiles = Array.from(files);
+  //   const limitedFiles = selectedFiles.slice(0, 4 - uploadedImages.length);
+  //   const newUploadedImages = [...uploadedImages, ...limitedFiles];
+  //   setUploadedImages(newUploadedImages);
 
-    Promise.all(limitedFiles.map(getBase64))
-      .then(base64Images => {
-        setPreviewImages([...previewImages, ...base64Images]);
-        form.setValue('images', newUploadedImages);
-      })
-      .catch(console.error);
-  };
+  //   Promise.all(limitedFiles.map(getBase64))
+  //     .then(base64Images => {
+  //       setPreviewImages([...previewImages, ...base64Images]);
+  //       form.setValue('images', newUploadedImages);
+  //     })
+  //     .catch(console.error);
+  // };
 
   const tags = form.getValues('tags');
 
@@ -141,9 +141,9 @@ const GalleryUpdate = () => {
     values.tags.forEach((tag, index) => {
       formData.append(`tags[${index}]`, tag);
     });
-    const existingImages = gallery?.images || [];
-    existingImages.forEach((image, index) => {
-      formData.append(`existingImages[${index}]`, image.image);
+    const images = gallery?.images || [];
+    images.forEach((image, index) => {
+      formData.append(`images[${index}]`, image.image);
     });
 
     uploadedImages.forEach((image, index) => {
