@@ -32,9 +32,9 @@ const useLocationQuery = (props: I_QueryProps) => {
     select: refineSeoulApiData,
     refetchOnWindowFocus: false,
   });
-
   return {
     medicine,
+    isGetSeoulLocationData: isLoading,
   };
 };
 

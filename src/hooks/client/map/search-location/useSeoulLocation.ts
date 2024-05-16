@@ -17,8 +17,13 @@ const useSeoulLocation = <T extends { [P in keyof T]: T[P] }>(props: I_UseTabPro
   const kakaoMap = useKakaoMapStore(state => state.map);
   const { api_query, isUsingInnerKakaoApi, category_type: api_type } = useSearchLocationStore();
   const seoulPark = useSeoulParkStore(state => state.seoulPark);
-  const { medicine } = useLocationQuery({ api_query, isUsingInnerKakaoApi, api_type, kakaoMap });
-
+  const { medicine, isGetSeoulLocationData } = useLocationQuery({
+    api_query,
+    isUsingInnerKakaoApi,
+    api_type,
+    kakaoMap,
+  });
+  useEffect(() => {}, [isGetSeoulLocationData]);
   /**
    * react-query로 받아온 medicine 데이터를 kakao map에 그려주는 useEffect입니다.
    */
