@@ -83,14 +83,18 @@ export function replaceLocationToApiQuery<T extends { [key: string | number]: un
  * @param seoulParkInfoHashMap 서울근교공원에 장소가 빈문자열이 있어서 빈문자열을 삭제 하기 위한 하드코딩 함수 입니다.
  * @returns 빈문자열이 없는 hashMap을 반환합니다.
  */
-export function removeEmptySeoulParkInfoHashMap<T extends { [key: string | number]: unknown }>(
+export function examineSeoulParkHashMap<T extends { [key: string | number]: unknown }>(
   seoulParkInfoHashMap: Map<keyof T, T[]>,
 ) {
+  console.log(seoulParkInfoHashMap);
   if (seoulParkInfoHashMap.has('') && seoulParkInfoHashMap.get('')) {
     seoulParkInfoHashMap.get('노원구')?.push(...(seoulParkInfoHashMap?.get('') as T[]));
     seoulParkInfoHashMap.delete('');
   }
-
+  if (seoulParkInfoHashMap.has('중구')) {
+    // "중구"에서 data 오류로 lng,lat값이 없어서 하드코딩해야 합니다.
+    seoulParkInfoHashMap.get('중구')?.pop();
+  }
   seoulParkInfoHashMap.delete('과천시');
   return seoulParkInfoHashMap;
 }
