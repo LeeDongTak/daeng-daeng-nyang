@@ -24,6 +24,7 @@ const useSeoulLocation = <T extends { [P in keyof T]: T[P] }>(props: I_UseTabPro
   const { medicine, isGetRequestApiData } = useLocationQuery({ api_query, api_type });
 
   useEffect(() => {
+    // 값이 다를 때 만 상태변경해주고 싶기에 조건문 처리
     if (isRequestAPI === isGetRequestApiData) return;
     setIsRequestAPI(isGetRequestApiData);
   }, [isGetRequestApiData]);
@@ -33,7 +34,7 @@ const useSeoulLocation = <T extends { [P in keyof T]: T[P] }>(props: I_UseTabPro
    */
   useEffect(() => {
     if (api_type !== 'hospital') return;
-    if (!api_query || isRequestAPI) return;
+    if (!api_query || isRequestAPI) return; // api_query가 없을 때 함수 호출은 되면 안되고, HTTP 통신이 끝난 이후에 "querySearchPlaces"함수가 실행되야 하므로
     querySearchPlaces(kakaoMap, medicine as I_CustomMarkerProps[]);
   }, [api_type, api_query, medicine, isRequestAPI]);
   /**
