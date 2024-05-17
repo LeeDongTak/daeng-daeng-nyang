@@ -32,7 +32,7 @@ const KakaoMap = ({ isLogin }: I_KakaoMapProps) => {
 
   const [loading, error] = useKakaoLoader();
 
-  // error || loading시 Skeleton
+  // kakao SDK 로드 할 때 사용 될 error || loading시 Skeleton UI 입니다.`
   if (loading || error) return <Skeleton type="map" />;
 
   return (
@@ -76,6 +76,8 @@ const KakaoMap = ({ isLogin }: I_KakaoMapProps) => {
           <MarkerModal marker={selectedMarker} isLogin={isLogin} removeSelectedMarker={removeSelectedMarker} />
         )}
       </Map>
+
+      {/* 병원&약국을 API통해 데이터 받아올 때 loading UI Component 입니다. */}
       <RequestLoading isRequestAPI={isRequestAPI} />
     </div>
   );
