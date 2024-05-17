@@ -25,6 +25,7 @@ const useLocationQuery = (props: I_QueryProps) => {
     enabled: !!api_query && api_type === 'hospital',
     select: refineSeoulApiData,
     refetchOnWindowFocus: false,
+    staleTime: Infinity,
   });
 
   return {
