@@ -63,11 +63,11 @@ const KakaoMap = ({ isLogin }: I_KakaoMapProps) => {
 
         {/* location Marker */}
         {!isRequestAPI &&
-          markers?.map(marker => {
+          markers?.map((marker, idx) => {
             return (
               <CustomMarker
                 onClick={clickShowLocationInfo(marker)}
-                key={`marker-${marker.id}-${marker.position.lat - marker.position.lng}-${marker.address}`}
+                key={`marker-${marker.id}-${marker.position.lat - marker.position.lng}-${marker.address}-${idx}`}
                 position={marker.position}
               ></CustomMarker>
             );
