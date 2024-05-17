@@ -7,6 +7,7 @@ import { Session } from 'next-auth';
 import { CSSProperties } from 'react';
 import { CustomOverlayMap, Map } from 'react-kakao-maps-sdk';
 import MarkerModal from '../../modal/MarkerModal';
+import RequestLoading from '../../request-loading/RequestLoading';
 import CustomMarker from './custom-marker/CustomMarker';
 interface I_KakaoMapProps {
   isLogin: null | Session;
@@ -75,6 +76,7 @@ const KakaoMap = ({ isLogin }: I_KakaoMapProps) => {
           <MarkerModal marker={selectedMarker} isLogin={isLogin} removeSelectedMarker={removeSelectedMarker} />
         )}
       </Map>
+      <RequestLoading isRequestAPI={isRequestAPI} />
     </div>
   );
 };
