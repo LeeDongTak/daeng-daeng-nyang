@@ -1,6 +1,5 @@
 import CommonLayout from '@/components/common/layout/CommonLayout';
 import Toast from '@/components/common/toast/Toast';
-
 import Modal from '@/components/modal/Modal';
 import { cn } from '@/lib/utils';
 import '@/styles/globals.css';
@@ -13,10 +12,10 @@ import localFont from 'next/font/local';
 const queryClient = new QueryClient();
 const myFont = localFont({ src: '../../public/font/PretendardVariable.woff2', variable: '--main-font' });
 
-export default function App({ Component, pageProps }: AppProps) {
+export default function App({ Component, pageProps: { session, ...pageProps } }: AppProps) {
   return (
-    <QueryClientProvider client={queryClient}>
-      <SessionProvider>
+    <SessionProvider session={session}>
+      <QueryClientProvider client={queryClient}>
         <ReactQueryDevtools initialIsOpen={false} />
         <main className={cn(myFont.variable)}>
           <CommonLayout>
@@ -25,7 +24,7 @@ export default function App({ Component, pageProps }: AppProps) {
         </main>
         <Modal />
         <Toast />
-      </SessionProvider>
-    </QueryClientProvider>
+      </QueryClientProvider>
+    </SessionProvider>
   );
 }
