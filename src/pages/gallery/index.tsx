@@ -6,7 +6,6 @@ const Gallery = () => {
     <>
       <Head>
         <title>갤러리 - 홈</title>
-        <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests" />
       </Head>
       <GalleryMain />
     </>

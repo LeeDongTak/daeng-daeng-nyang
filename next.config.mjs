@@ -23,10 +23,6 @@ const nextConfig = {
         source: '/api/map/seoul',
         destination: `${process.env.NEXT_PUBLIC_ANIMAL_PHARAMCY}`,
       },
-      {
-        source: '/api/serverReq/:path*',
-        destination: `${process.env.NEXT_PUBLIC_SERVER_BASE_URL}/:path*`,
-      },
     ];
   },
 };
