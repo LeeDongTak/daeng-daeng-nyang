@@ -53,9 +53,6 @@ axiosValid_API.interceptors.request.use(
 export const axiosAPI = axios.create({
   baseURL,
 });
-export const axiosApiRouteAPI = axios.create({
-  baseURL: locationURL,
-});
 export const axiosApiRouteAPINotHeader = axios.create({
   baseURL: locationURL,
 });

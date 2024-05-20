@@ -24,6 +24,7 @@ export default async function serverRequest(req: NextApiRequest, res: NextApiRes
     if (Boolean(isNotHeader)) {
       const response = await axiosAPI.get(`${url}`);
       res.status(200).send(response.data);
+      return;
     }
     const config = {
       method,
