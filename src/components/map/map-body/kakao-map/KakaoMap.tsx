@@ -7,14 +7,15 @@ import { Session } from 'next-auth';
 import { CSSProperties } from 'react';
 import { CustomOverlayMap, Map } from 'react-kakao-maps-sdk';
 import MarkerModal from '../../modal/MarkerModal';
+import RequestLoading from '../../request-loading/RequestLoading';
 import CustomMarker from './custom-marker/CustomMarker';
-interface I_KakakoMapProps {
+interface I_KakaoMapProps {
   isLogin: null | Session;
 }
 const MAP_STYLE: CSSProperties = { width: '1264px', height: '640px', position: 'relative', overflow: 'hidden' };
 const INITIAL_ZOOM = 3;
 
-const KakaoMap = ({ isLogin }: I_KakakoMapProps) => {
+const KakaoMap = ({ isLogin }: I_KakaoMapProps) => {
   const {
     handleDragEndMap,
     kakaoMapHandler,
@@ -26,11 +27,14 @@ const KakaoMap = ({ isLogin }: I_KakakoMapProps) => {
     selectedMarker,
     removeSelectedMarker,
     changeZoomLevel,
+    isRequestAPI,
   } = useKakaoMap();
+
   const [loading, error] = useKakaoLoader();
 
-  // error || loading시 Skeleton
+  // kakao SDK 로드 할 때 사용 될 error || loading시 Skeleton UI 입니다.`
   if (loading || error) return <Skeleton type="map" />;
+
   return (
     <div className="relative">
       <Map
@@ -58,19 +62,23 @@ const KakaoMap = ({ isLogin }: I_KakakoMapProps) => {
         </CustomOverlayMap>
 
         {/* location Marker */}
-        {markers?.map(marker => {
-          return (
-            <CustomMarker
-              onClick={clickShowLocationInfo(marker)}
-              key={`marker-${marker.id}-${marker.position.lat - marker.position.lng}-${marker.address}`}
-              position={marker.position}
-            ></CustomMarker>
-          );
-        })}
+        {!isRequestAPI &&
+          markers?.map((marker, idx) => {
+            return (
+              <CustomMarker
+                onClick={clickShowLocationInfo(marker)}
+                key={`marker-${marker.id}-${marker.position.lat - marker.position.lng}-${marker.address}-${idx}`}
+                position={marker.position}
+              ></CustomMarker>
+            );
+          })}
         {selectedMarker && (
           <MarkerModal marker={selectedMarker} isLogin={isLogin} removeSelectedMarker={removeSelectedMarker} />
         )}
       </Map>
+
+      {/* 병원&약국을 API통해 데이터 받아올 때 loading UI Component 입니다. */}
+      <RequestLoading isRequestAPI={isRequestAPI} />
     </div>
   );
 };
