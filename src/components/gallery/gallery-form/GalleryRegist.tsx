@@ -82,15 +82,6 @@ const GalleryRegist = ({ onAddGallery }: { onAddGallery: (newGallery: I_GalleryD
   };
   const { errors } = form.formState;
 
-  // const fetchPost = async (formData: T_gallerySchema) => {
-  //   const response = await axiosValid_API.post('post/All', formData);
-  //   return response.data;
-  // };
-  // const { data: fetchGallery } = useQuery({
-  //   queryKey: ['galleryUpload'],
-  //   queryFn: () => fetchPost,
-  // });
-
   const TEST = [
     {
       component: GalleryForm.input({
