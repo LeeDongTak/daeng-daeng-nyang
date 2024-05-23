@@ -1,5 +1,6 @@
 import GalleryRegist from '@/components/gallery/gallery-form/GalleryRegist';
 import { I_GalleryData } from '@/components/gallery/type/gallery';
+import Head from 'next/head';
 import { useRouter } from 'next/router';
 
 const AddGalleryPage = () => {
@@ -10,7 +11,14 @@ const AddGalleryPage = () => {
     router.push('/gallery');
   };
 
-  return <GalleryRegist onAddGallery={handleAddGallery} />;
+  return (
+    <>
+      <Head>
+        <title>댕댕냥 - 갤러리 등록</title>
+      </Head>
+      <GalleryRegist onAddGallery={handleAddGallery} />
+    </>
+  );
 };
 
 export default AddGalleryPage;
