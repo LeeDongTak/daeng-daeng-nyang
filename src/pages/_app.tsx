@@ -16,7 +16,7 @@ export default function App({ Component, pageProps: { session, ...pageProps } }:
   return (
     <SessionProvider session={session}>
       <QueryClientProvider client={queryClient}>
-        <HydrationBoundary state={pageProps.hydratedState}>
+        <HydrationBoundary state={pageProps.dehydratedState}>
           <ReactQueryDevtools initialIsOpen={false} />
           <main className={cn(myFont.variable)}>
             <CommonLayout>
