@@ -1,13 +1,11 @@
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
-import useFetchGalleryDetailQuery from '@/hooks/server/gallery/useFetchGalleryDetailQuery';
 import { format } from 'date-fns';
 import { NextPageContext } from 'next';
+import { I_GalleryData } from './type/gallery';
 
-const GalleryDetail = () => {
+const GalleryDetail = ({ gallery, isLoading }: { gallery?: I_GalleryData; isLoading: boolean }) => {
   // const selectedGallery = useGalleryStore(state => state.selectedGallery);
   // const { setSelectedGallery, galleries } = useGalleryStore();
-
-  const { data: gallery, isLoading } = useFetchGalleryDetailQuery();
 
   if (isLoading) return <div>로딩 중입니다!</div>;
   if (!gallery) return <div>데이터가 없습니다.!</div>;
