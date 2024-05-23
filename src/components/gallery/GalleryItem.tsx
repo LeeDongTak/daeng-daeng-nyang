@@ -8,9 +8,8 @@ interface I_GalleryItemProps {
 const GalleryItem = ({ gallery }: I_GalleryItemProps) => {
   const router = useRouter();
   const mainImage = gallery?.thumbnail || (gallery?.images.length > 0 ? gallery?.images[0]?.image : null);
-  // const setSelectedGallery = useGalleryStore(state => state.setSelectedGallery);
+
   const handleClick = () => {
-    // setSelectedGallery(gallery);
     router.push(`/gallery/detail/${gallery.id}`);
   };
 
