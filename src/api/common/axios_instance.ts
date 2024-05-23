@@ -60,7 +60,11 @@ export const axiosAPI = axios.create({
 const axiosInstance_SSR = axios.create({
   baseURL,
 });
-
+/**
+ *
+ * @param ctx ServerSideProps를 사용할 때 호출하는 함수입니다. 각 로그인시 데이터 통신을 할 때 사용할 axios instance 입니다.
+ * @returns
+ */
 export const getAuthorizedAxios = async (ctx: GetServerSidePropsContext) => {
   if (!isServer) return; // 클라이언트에서 실행하지 않음
   if (axiosInstance_SSR.defaults.headers.Authorization || axiosInstance_SSR.defaults.headers.refreshToken) {
