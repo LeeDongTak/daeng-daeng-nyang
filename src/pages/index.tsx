@@ -1,4 +1,5 @@
 import Home from '@/components/home/Home';
+import { getSession } from 'next-auth/react';
 import Head from 'next/head';
 
 const HomePage = () => {

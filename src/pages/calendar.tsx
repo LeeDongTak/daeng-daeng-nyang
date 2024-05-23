@@ -5,7 +5,7 @@ const CalendarPage = () => {
   return (
     <>
       <Head>
-        <title>댕댕냥 - 캘린더</title>
+        <title>댕댕냥 - 캘린더 </title>
       </Head>
       <Calendar />
     </>

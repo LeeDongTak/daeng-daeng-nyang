@@ -1,4 +1,3 @@
-import { axiosAPI } from '@/api/common/axios_instance';
 import axios from 'axios';
 import { NextApiRequest, NextApiResponse } from 'next';
 
@@ -9,9 +8,6 @@ export default async function serverRequest(req: NextApiRequest, res: NextApiRes
   const url = req.url?.replace('/api/server-request/', '');
   const { isNotHeader } = req.query as { isNotHeader: string };
 
-  console.log('./////////////////////////////////////////////////////////////////////////////////////////////////');
-  console.log(authorization);
-  console.log(isNotHeader);
   try {
     // path검사
     if (!url) {
@@ -20,8 +16,12 @@ export default async function serverRequest(req: NextApiRequest, res: NextApiRes
     }
     // 토큰 없는 api 서버 통신
     if (Boolean(isNotHeader) || method === 'DELETE') {
-      const response = await axiosAPI.get(`${url}`);
-      res.status(200).send(response.data);
+      // const response = await axiosAPI.get(`${url}`);
+      const response = await axios.get(
+        'https://sunah.s3.ap-northeast-2.amazonaws.com/images/gallery5-1715348346203.png',
+      );
+      console.log(JSON.parse(JSON.stringify(response.data)));
+      res.status(200).send(JSON.parse(JSON.stringify(response.data)));
       return;
     }
     // 토큰 검사
