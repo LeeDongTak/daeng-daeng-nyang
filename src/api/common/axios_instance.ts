@@ -1,4 +1,7 @@
+import { isServer } from '@tanstack/react-query';
 import axios, { InternalAxiosRequestConfig } from 'axios';
+import { GetServerSidePropsContext } from 'next';
+import { getToken } from 'next-auth/jwt';
 import { getSession } from 'next-auth/react';
 
 const baseURL = process.env.NEXT_PUBLIC_SERVER_BASE_URL;
@@ -35,11 +38,15 @@ export const axiosValid_API = axios.create({
 });
 axiosValid_API.interceptors.request.use(
   async (config: InternalAxiosRequestConfig) => {
-    const { accessToken, refreshToken } = await getAuthorizationToken();
-    if (!accessToken || !refreshToken) return config;
+    if (!isServer) {
+      // SSR할 때 Error가 남 getAuthorizationToken안에 있는 getSession함수가 호출이 client에만 되니까 Error가 난다.
+      const { accessToken, refreshToken } = await getAuthorizationToken();
+      if (!accessToken || !refreshToken) return config;
 
-    config.headers.Authorization = `Bearer ${accessToken}`;
-    config.headers.refreshToken = refreshToken;
+      config.headers.Authorization = `Bearer ${accessToken}`;
+      config.headers.refreshToken = refreshToken;
+    }
+
     return config;
   },
   error => {
@@ -56,3 +63,33 @@ export const axiosAPI = axios.create({
 export const axiosApiRouteAPINotHeader = axios.create({
   baseURL: locationURL,
 });
+
+const axiosInstance_SSR = axios.create({
+  baseURL,
+});
+/**
+ *
+ * @param ctx ServerSideProps를 사용할 때 호출하는 함수입니다. 각 로그인시 데이터 통신을 할 때 사용할 axios instance 입니다.
+ * @returns
+ */
+export const getAuthorizedAxios = async (ctx: GetServerSidePropsContext) => {
+  if (!isServer) return; // 클라이언트에서 실행하지 않음
+  if (axiosInstance_SSR.defaults.headers.Authorization || axiosInstance_SSR.defaults.headers.refreshToken) {
+    // axiosInstance_SSR의 default header안에 token이 있으면 그냥 return 합니다.
+    // 의미없는 비동기 통신안하려고 넣어놓은 조건문 입니다.
+    return axiosInstance_SSR;
+  }
+  const req = ctx.req;
+  try {
+    const session = await getToken({ req });
+
+    if (session) {
+      axiosInstance_SSR.defaults.headers.Authorization = `Bearer ${session.accessToken}`;
+      axiosInstance_SSR.defaults.headers.refreshToken = session.refreshToken;
+    }
+  } catch (error) {
+    console.error('Error fetching session:', error);
+  }
+
+  return axiosInstance_SSR;
+};
