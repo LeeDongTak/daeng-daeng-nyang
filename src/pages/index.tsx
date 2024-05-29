@@ -1,4 +1,6 @@
 import Home from '@/components/home/Home';
+import { GetServerSideProps, GetServerSidePropsContext } from 'next';
+import { Session } from 'next-auth';
 import { getSession } from 'next-auth/react';
 import Head from 'next/head';
 
