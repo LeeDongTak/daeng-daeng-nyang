@@ -16,12 +16,15 @@ const GalleryDetail = () => {
     router.push(`/gallery/edit/${id}`);
   };
   const handleDelete = async () => {
-    try {
-      await deleteGallery();
-      await fetchGalleries();
-      router.push('/gallery');
-    } catch (error) {
-      console.log('갤러리 삭제 중 오류 발생:', error);
+    const confirmed = window.confirm('정말로 게시물을 삭제하시겠습니까?');
+    if (confirmed) {
+      try {
+        await deleteGallery();
+        await fetchGalleries();
+        router.push('/gallery');
+      } catch (error) {
+        console.log('갤러리 삭제 중 오류 발생:', error);
+      }
     }
   };
   if (isLoading) return <div>로딩 중입니다!</div>;

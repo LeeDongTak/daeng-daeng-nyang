@@ -6,19 +6,26 @@ import { useRouter } from 'next/router';
 const useUpdateGalleryMutation = () => {
   const client = useQueryClient();
   const router = useRouter();
-  const { id } = router.query as { id: string };
-  const { mutate } = useMutation({
-    mutationFn: updateGallery,
-    onSuccess: data => {
-      client.invalidateQueries({ queryKey: [QUERY_KEY.GALLERY_DETAIL, data.id] });
+
+  const { mutate, data: updatedGalleryData } = useMutation<
+    // I_GalleryData,
+    { id: number },
+    Error,
+    { id: string; formData: FormData },
+    unknown
+  >({
+    mutationFn: variables => updateGallery(variables),
+    onSuccess: updatedGallery => {
+      client.invalidateQueries({ queryKey: [QUERY_KEY.GALLERY_DETAIL, updatedGallery.id] });
       client.invalidateQueries({ queryKey: [QUERY_KEY.GALLERY_LIST] });
-      router.push(`/gallery/detail/${id}`);
+      router.push(`/gallery/detail/${updatedGallery.id}`);
     },
     onError: error => {
       console.error('갤러리 수정 실패:', error);
     },
   });
 
-  return { mutate };
+  return { mutate, data: updatedGalleryData };
 };
+
 export default useUpdateGalleryMutation;

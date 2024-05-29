@@ -21,7 +21,13 @@ const GalleryItem = ({ gallery }: I_GalleryItemProps) => {
     >
       {mainImage && (
         <span className="w-[30.2rem] h-[20rem] object-cover mb-6 relative">
-          <Image src={`${mainImage}`} alt={gallery.title} layout="fill" objectFit="cover" objectPosition="center" />
+          <Image
+            src={mainImage ? mainImage : ''}
+            alt={gallery.title}
+            layout="fill"
+            objectFit="cover"
+            objectPosition="center"
+          />
         </span>
       )}
 

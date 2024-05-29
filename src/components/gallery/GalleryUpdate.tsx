@@ -1,3 +1,4 @@
+import { axiosValid_API } from '@/api/common/axios_instance';
 import LayoutForm from '@/components/common/form/form-layout/LayoutForm';
 import LayoutFormBody from '@/components/common/form/form-layout/layout-form-body/LayoutFormBody';
 import LayoutFormHeader from '@/components/common/form/form-layout/layout-form-header/LayoutFormHeader';
@@ -6,6 +7,7 @@ import GalleryForm from '@/components/gallery/gallery-form/GalleryForm';
 import GalleryTags from '@/components/gallery/gallery-form/GalleryTags';
 import useFetchGalleryDetailQuery from '@/hooks/server/gallery/useFetchGalleryDetailQuery';
 import useUpdateGalleryMutation from '@/hooks/server/gallery/useUpdateGalleryMutaion';
+import { getBase64 } from '@/lib/utils';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { isEqual } from 'lodash';
 import { useRouter } from 'next/router';
@@ -25,8 +27,6 @@ const galleryFormSchema = z.object({
     .min(1, { message: '카테고리를 최소 1개 이상 등록해주세요.' })
     .max(4, { message: '카테고리는 최대 4개까지만 추가 가능합니다.' }),
 });
-// !! 이미지 서버에서 주는 url을 문자열로 바꿔서 이미지 태그에 끼워넣어야함.
-// !! 서버에 저장된 이미지 수정 시 전체 데이터 삭제 후 재등록하도록 되어 있기 때문
 
 export type T_gallerySchema = z.infer<typeof galleryFormSchema>;
 
@@ -34,14 +34,15 @@ const GalleryUpdate = () => {
   const router = useRouter();
   const { id } = router.query as { id: string };
 
-  const { data: gallery, isLoading, refetch } = useFetchGalleryDetailQuery(id);
-  const { mutate: updateGallery } = useUpdateGalleryMutation();
+  const { data: gallery, isLoading } = useFetchGalleryDetailQuery(id);
+  const { mutate: updateGallery, data: updatedGalleryData } = useUpdateGalleryMutation();
 
   const [selectedCategory, setSelectedCategory] = useState<string>('');
   const [selectedThumbnail, setSelectedThumbnail] = useState<File | null>(null);
-  const [uploadedImages, setUploadedImages] = useState<File[]>([]);
+  const [existingImages, setExistingImages] = useState<{ id: number; postId: number; image: string }[]>([]);
+  const [newImages, setNewImages] = useState<File[]>([]);
   const [previewImages, setPreviewImages] = useState<string[]>([]);
-
+  const [deletedImages, setDeletedImages] = useState<number[]>([]);
   const form = useForm<T_gallerySchema>({
     defaultValues: {
       title: '',
@@ -52,7 +53,6 @@ const GalleryUpdate = () => {
     resolver: zodResolver(galleryFormSchema),
   });
 
-  // 기존 데이터 받아오기
   useEffect(() => {
     if (gallery) {
       form.setValue('title', gallery.title);
@@ -62,7 +62,7 @@ const GalleryUpdate = () => {
         gallery.postcategory.map(category => category.category),
       );
       setPreviewImages(gallery.images.map(image => image.image));
-      setUploadedImages([]);
+      setExistingImages(gallery.images);
     }
   }, [gallery]);
 
@@ -85,26 +85,45 @@ const GalleryUpdate = () => {
     }
   };
 
-  const handleThumbnailChange = (file: File | null) => {
+  const handleThumbnailChange = (file: File | null, dataUrl: string) => {
     setSelectedThumbnail(file);
   };
 
-  // const handleImageUpload = (e: ChangeEvent<HTMLInputElement>) => {
-  //   const files = e.target.files;
-  //   if (!files) return;
+  const handleImageUpload = (files: File[]) => {
+    const newImageFiles = [...newImages, ...files];
+    setNewImages(newImageFiles);
 
-  //   const selectedFiles = Array.from(files);
-  //   const limitedFiles = selectedFiles.slice(0, 4 - uploadedImages.length);
-  //   const newUploadedImages = [...uploadedImages, ...limitedFiles];
-  //   setUploadedImages(newUploadedImages);
+    const urls = [
+      ...(gallery?.images?.map(image => getBase64(new File([image.image], 'temp.png'))) || []),
+      ...files.map(file => getBase64(file)),
+    ];
 
-  //   Promise.all(limitedFiles.map(getBase64))
-  //     .then(base64Images => {
-  //       setPreviewImages([...previewImages, ...base64Images]);
-  //       form.setValue('images', newUploadedImages);
-  //     })
-  //     .catch(console.error);
-  // };
+    Promise.all(urls)
+      .then(base64Images => {
+        setPreviewImages([...previewImages, ...base64Images]);
+        form.setValue('images', [...existingImages, ...newImageFiles]);
+      })
+      .catch(console.error);
+  };
+
+  const handleImageDelete = (index: number) => {
+    if (index < existingImages.length) {
+      const newExistingImages = [...existingImages];
+      newExistingImages.splice(index, 1);
+      setExistingImages(newExistingImages);
+      setDeletedImages([...deletedImages, existingImages[index].id]);
+    } else {
+      const newImageFiles = [...newImages];
+      newImageFiles.splice(index - existingImages.length, 1);
+      setNewImages(newImageFiles);
+    }
+
+    const newPreviewImages = [...previewImages];
+    newPreviewImages.splice(index, 1);
+    setPreviewImages(newPreviewImages);
+
+    form.setValue('images', [...existingImages, ...newImages]);
+  };
 
   const tags = form.getValues('tags');
 
@@ -114,6 +133,11 @@ const GalleryUpdate = () => {
       return;
     }
 
+    const deleteImages: { id: number; postId: number; image: string }[] =
+      gallery?.images
+        .filter((_, index) => deletedImages.includes(index))
+        .map(image => ({ id: image.id, postId: image.postId, image: image.image })) || [];
+
     const isChanged =
       values.title !== gallery?.title ||
       values.description !== gallery?.content ||
@@ -121,10 +145,8 @@ const GalleryUpdate = () => {
         values.tags,
         gallery?.postcategory.map(category => category.category),
       ) ||
-      !isEqual(
-        previewImages,
-        gallery?.images.map(image => image.image),
-      );
+      newImages.length > 0 ||
+      deleteImages?.length > 0;
 
     if (!isChanged) {
       const confirmed = window.confirm('변경 내역이 없습니다. 저장하시겠습니까?');
@@ -141,30 +163,24 @@ const GalleryUpdate = () => {
     values.tags.forEach((tag, index) => {
       formData.append(`tags[${index}]`, tag);
     });
-    const images = gallery?.images || [];
-    images.forEach((image, index) => {
-      formData.append(`images[${index}]`, image.image);
+    existingImages.forEach((image, index) => {
+      formData.append(`existingImages[${index}]`, JSON.stringify(image));
+    });
+    newImages.forEach((image, index) => {
+      formData.append(`newImages[${index}]`, image);
+    });
+    deleteImages.forEach(image => {
+      formData.append('deletedImages[]', image.id.toString());
     });
 
-    uploadedImages.forEach((image, index) => {
-      formData.append(`images[${index}]`, image as Blob);
-    });
-
-    updateGallery(
-      { id, formData },
-      {
-        onSuccess: async () => {
-          alert('갤러리가 성공적으로 수정되었습니다.');
-          await refetch();
-          router.push(`/gallery/detail/${id}`);
-        },
-        onError: error => {
-          alert('갤러리 수정에 실패했습니다. 다시 시도해주세요.');
-          console.error('갤러리 수정 실패:', error);
-          console.log('FormData:', Object.fromEntries(formData.entries()));
-        },
-      },
-    );
+    try {
+      await axiosValid_API.patch(`post/${id}`, formData);
+      alert('갤러리가 성공적으로 수정되었습니다.');
+      router.push(`/gallery/detail/${id}`);
+    } catch (error) {
+      alert('갤러리 수정에 실패했습니다. 다시 시도해주세요.');
+      console.error('갤러리 수정 실패:', error);
+    }
   };
 
   const { errors } = form.formState;
@@ -195,8 +211,10 @@ const GalleryUpdate = () => {
               name="images"
               className={`w-full ${errors['images'] && 'border-red-500'}`}
               onThumbnailChange={handleThumbnailChange}
+              onImageDelete={handleImageDelete}
+              onImageUpload={handleImageUpload}
               control={form.control}
-              defaultImages={gallery?.images || []}
+              defaultImages={gallery?.images.map(image => image.image) || []}
             />
             <div>
               <div className="flex items-center space-x-4">
