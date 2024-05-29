@@ -4,9 +4,7 @@ import {} from '@/lib/utils';
 import { useQuery } from '@tanstack/react-query';
 interface I_QueryProps {
   api_type: 'hospital' | 'walk';
-  isUsingInnerKakaoApi: boolean;
   api_query: string | null;
-  kakaoMap: kakao.maps.Map | null;
 }
 enum LOCATION_QUERY {
   HOSPITAL = 'hospital',
@@ -19,22 +17,20 @@ enum LOCATION_QUERY {
 // api_query가 null이면 호출 하지 않기
 // kakao 내장 검색으로 위치 찾으면 호출 하지 않기
 const useLocationQuery = (props: I_QueryProps) => {
-  const { api_type, api_query, kakaoMap } = props;
+  const { api_type, api_query } = props;
 
-  const {
-    data: medicine,
-    isLoading,
-    isFetching,
-  } = useQuery({
+  const { data: medicine, isLoading } = useQuery({
     queryKey: [LOCATION_QUERY.HOSPITAL, api_query],
     queryFn: () => ParalledQueriesAnimalMedicineAPI(api_query),
     enabled: !!api_query && api_type === 'hospital',
     select: refineSeoulApiData,
     refetchOnWindowFocus: false,
+    staleTime: Infinity,
   });
 
   return {
     medicine,
+    isGetRequestApiData: isLoading,
   };
 };
 

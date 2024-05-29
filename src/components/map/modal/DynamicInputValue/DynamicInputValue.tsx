@@ -4,10 +4,12 @@ import { Control, FieldPath, FieldValues, Path } from 'react-hook-form';
 import ScheduleForm from '../../form/ScheduleForm';
 interface I_DynamicChangeValue<T extends FieldValues, TName extends FieldPath<T> = FieldPath<T>> {
   control: Control<T>;
-  select_item: {
-    value: string;
-    label: string;
-  }[];
+  select_item:
+    | {
+        value: string;
+        label: string;
+      }[]
+    | null;
   customSelectDisableDate: (param: Date) => boolean;
   petId?: TName;
   date?: TName;

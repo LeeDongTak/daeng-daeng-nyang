@@ -6,6 +6,7 @@ interface I_MapSearch {
   searchValue: string;
   api_query: null | T_LocationType;
   isUsingInnerKakaoApi: boolean;
+  isRequestAPI: boolean;
 }
 
 const initialValue = {
@@ -13,6 +14,7 @@ const initialValue = {
   searchValue: '',
   api_query: null,
   isUsingInnerKakaoApi: false,
+  isRequestAPI: false,
 } as I_MapSearch;
 
 const useSearchLocationStore = create<I_MapSearch>()(() => ({
@@ -31,3 +33,11 @@ export const setApiQuery = (api_query: T_LocationType | null) =>
 
 export const setIsUsingInnerKakaoApi = (isUsingInnerKakaoApi: boolean) =>
   useSearchLocationStore.setState(state => ({ ...state, isUsingInnerKakaoApi }));
+
+/**
+ * @explain useLocationQuery의 isLoading값을 전역적으로 관리하기 위해서입니다. props drilling이 되기에 전역관리함
+ * @param isRequestAPI useLocationQuery의 isLoading 값입니다.
+ * @returns
+ */
+export const setIsRequestAPI = (isRequestAPI: boolean) =>
+  useSearchLocationStore.setState(state => ({ ...state, isRequestAPI }));

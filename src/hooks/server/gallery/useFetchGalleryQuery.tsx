@@ -1,4 +1,4 @@
-import { axiosValid_API } from '@/api/common/axios_instance';
+import { axiosApiRouteAPINotHeader } from '@/api/common/axios_instance';
 import { useInfiniteQuery } from '@tanstack/react-query';
 
 const useFetchGalleryQuery = () => {
@@ -7,15 +7,9 @@ const useFetchGalleryQuery = () => {
    */
   const fetchGalleries = async (pageParam: number) => {
     try {
-      const response = await axiosValid_API.get(`post/All/${pageParam}`);
-      if (response.status >= 200 && response.status < 300) {
-        console.log(response.data);
-        console.log('갤러리 데이터 가져오기 성공!');
-
-        return response.data;
-      } else {
-        console.error('갤러리 데이터 가져오기 실패:', response.data);
-      }
+      const response = await axiosApiRouteAPINotHeader.get(`post/All/${pageParam}?isNotHeader=true`);
+      console.log(response);
+      return response.data;
     } catch (error) {
       console.error('갤러리 데이터 가져오기 실패:', error);
     }

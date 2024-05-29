@@ -7,7 +7,7 @@ import proj4 from 'proj4';
 // Korea 2000 좌표 시스템 정의 (EPSG:2097)
 proj4.defs('EPSG:2097', '+proj=tmerc +lat_0=38 +lon_0=127 +k=1 +x_0=200000 +y_0=500000 +ellps=GRS80 +units=m +no_defs');
 
-// WGS84 좌표 시스템 정의
+// WGS84 좌표 시스템 정의 - 카카오맵에서 사용하는 좌표계
 proj4.defs('EPSG:4326', '+proj=longlat +datum=WGS84 +no_defs');
 /**
  *
@@ -26,15 +26,16 @@ function convertGRStoWGS84(x: string, y: string) {
  */
 function extractSeoulApiData(
   axiosRes: {
-    data: AxiosResponse;
+    data: AxiosResponse['data'];
     query_string: string;
     api_query: string | null;
   }[],
 ): I_SeoulAnimalMedicineAPI[] {
   const results = axiosRes
-    .map(result => result.data.data[`${result.query_string}${result.api_query}`].row)
+    .map(result => result.data[`${result.query_string}${result.api_query}`]['row'])
     .flat()
     .filter(target => target.DTLSTATENM === '정상' && target.X > 1); //target.X>1을 추가한 이유는 X,Y좌표 값이 없는 데이터가 있기에 지도 상 위치표시가 이상해지기 때문입니다.
+
   return results;
 }
 /**
@@ -55,7 +56,7 @@ function formattingDataMarkers(extraction: I_SeoulAnimalMedicineAPI[]) {
 
 export function refineSeoulApiData(
   axiosRes: {
-    data: AxiosResponse;
+    data: AxiosResponse['data'];
     query_string: string;
     api_query: string | null;
   }[],
@@ -82,12 +83,16 @@ export function replaceLocationToApiQuery<T extends { [key: string | number]: un
  * @param seoulParkInfoHashMap 서울근교공원에 장소가 빈문자열이 있어서 빈문자열을 삭제 하기 위한 하드코딩 함수 입니다.
  * @returns 빈문자열이 없는 hashMap을 반환합니다.
  */
-export function removeEmptySeoulParkInfoHashMap<T extends { [key: string | number]: unknown }>(
+export function examineSeoulParkHashMap<T extends { [key: string | number]: unknown }>(
   seoulParkInfoHashMap: Map<keyof T, T[]>,
 ) {
   if (seoulParkInfoHashMap.has('') && seoulParkInfoHashMap.get('')) {
     seoulParkInfoHashMap.get('노원구')?.push(...(seoulParkInfoHashMap?.get('') as T[]));
     seoulParkInfoHashMap.delete('');
+  }
+  if (seoulParkInfoHashMap.has('중구')) {
+    // "중구"에서 data 오류로 lng,lat값이 없어서 하드코딩해야 합니다.
+    seoulParkInfoHashMap.get('중구')?.pop();
   }
 
   seoulParkInfoHashMap.delete('과천시');

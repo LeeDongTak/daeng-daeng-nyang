@@ -1,4 +1,3 @@
-/** @type {import('next').NextConfig} */
 const nextConfig = {
   swcMinify: true,
   // output: 'export',
@@ -13,6 +12,18 @@ const nextConfig = {
     });
 
     return config;
+  },
+  async rewrites() {
+    return [
+      {
+        source: '/api/map/seoul',
+        destination: `${process.env.NEXT_PUBLIC_ANIMAL_HOSPITAL}`,
+      },
+      {
+        source: '/api/map/seoul',
+        destination: `${process.env.NEXT_PUBLIC_ANIMAL_PHARAMCY}`,
+      },
+    ];
   },
 };
 

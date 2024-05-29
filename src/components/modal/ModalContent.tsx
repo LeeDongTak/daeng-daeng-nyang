@@ -7,7 +7,7 @@ const ModalContent = ({ id, className, children }: { id: string; className?: str
     <motion.div
       id={id}
       className={clsx(
-        'flex justify-center items-center flex-col min-w-40 w-max bg-white rounded-2xl shadow-[0_0_10px_0_rgba(0,0,0,0.1)] col-[2] row-[2] z-[500]',
+        'flex justify-center items-center flex-col w-[30rem] max-w-full bg-white rounded-2xl shadow-[0_0_10px_0_rgba(0,0,0,0.1)] col-[2] row-[2] z-[500]',
         className,
       )}
       animate={{

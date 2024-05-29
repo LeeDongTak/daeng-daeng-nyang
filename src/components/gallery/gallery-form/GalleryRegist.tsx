@@ -82,6 +82,10 @@ const GalleryRegist = ({ onAddGallery }: { onAddGallery: (newGallery: I_GalleryD
     }
   };
   const { errors } = form.formState;
+<<<<<<< HEAD
+=======
+
+>>>>>>> 72690e27d690f8480ab0ef21faf227043ffb5433
   const TEST = [
     {
       component: GalleryForm.input({

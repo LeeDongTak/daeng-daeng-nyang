@@ -36,15 +36,15 @@ import axios from 'axios';
  * @param LOCALDATA_020301_${api_query}/01/endPoint
  */
 
-const animalHospitalAPI = axios.create({
-  baseURL: `http://openapi.seoul.go.kr:8088/${process.env.NEXT_PUBLIC_ANIMAL_HOSPITAL}/json/`,
+export const animalHospitalAPI = axios.create({
+  baseURL: `${process.env.NEXT_PUBLIC_ANIMAL_HOSPITAL}`,
 });
 
 /**
  * @param LOCALDATA_020302_${api_query}/01/endPoint
  */
-const animalPharamcyAPI = axios.create({
-  baseURL: `http://openapi.seoul.go.kr:8088/${process.env.NEXT_PUBLIC_ANIMAL_PHARAMCY}/json/`,
+export const animalPharamcyAPI = axios.create({
+  baseURL: `${process.env.NEXT_PUBLIC_ANIMAL_PHARAMCY}`,
 });
 
 /**
@@ -60,28 +60,34 @@ export const searchSeoulParkInfo = axios.create({
 });
 
 /**
- * fn은 react-query의 queryfn 함수이고 query_key는 각 동물병원, 동물약국으로 보낼 필요 query 입니다.
+ * 기존에는 fn에 각 axios인스턴스를 담았지만 api router로 보낼때 함수는 보내지 못하여 export해주었고 기존 객체 배열에서 뺐습니다.
  */
-const api_queries = [
-  { api_name: 'animal-hospital', fn: animalHospitalAPI, query_key: 'LOCALDATA_020301_' },
-  { api_name: 'animal-pharmacy', fn: animalPharamcyAPI, query_key: 'LOCALDATA_020302_' },
+
+const DYNAMIC_API_QURIES = [
+  { api_name: 'animal_hospital', query_key: 'LOCALDATA_020301_' },
+  { api_name: 'animal_pharmacy', query_key: 'LOCALDATA_020302_' },
 ];
 /**
  *
  * @param api_query react-query에서 enabled와 지역구 query로 활용하는 인자 값입니다.
  * @returns
  */
+
 export const ParalledQueriesAnimalMedicineAPI = async (api_query: string | null) => {
   try {
     const results = await Promise.all(
-      api_queries.map(async query => {
-        const data = await query.fn(`${query.query_key}${api_query}/1/20/01`);
-        return { data: data, query_string: query.query_key, api_query }; //데이터 추출 하기 위해서 return 값에 key,value 추가
+      DYNAMIC_API_QURIES.map(async query => {
+        const result = await axios.post(`${process.env.NEXT_PUBLIC_SEOUL_API_URL}`, {
+          api_query,
+          api_name: query.api_name,
+          query_key: query.query_key,
+        });
+        return result.data;
       }),
     );
-
     return results;
   } catch (err) {
+    console.log(err, 'map Error');
     return []; // 성공 실패시 균일하게 해주기 위해서
   }
 };

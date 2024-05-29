@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 import { axiosValid_API } from '@/api/common/axios_instance';
+=======
+>>>>>>> 72690e27d690f8480ab0ef21faf227043ffb5433
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
@@ -14,6 +17,7 @@ interface I_GalleryDataState {
 
 const GalleryMain = () => {
   const router = useRouter();
+<<<<<<< HEAD
   const { data } = useSession();
   const test = async () => {
     const result = await axiosValid_API.get('/post/100');
@@ -22,6 +26,9 @@ const GalleryMain = () => {
   useEffect(() => {
     test().then(a => console.log(a));
   }, []);
+=======
+  const { data: isLogin } = useSession();
+>>>>>>> 72690e27d690f8480ab0ef21faf227043ffb5433
 
   const navigateToAddGallery = () => {
     router.push('/gallery/add');
