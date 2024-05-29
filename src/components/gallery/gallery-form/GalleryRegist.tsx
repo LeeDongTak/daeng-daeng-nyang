@@ -52,10 +52,6 @@ const GalleryRegist = ({ onAddGallery }: { onAddGallery: (newGallery: I_GalleryD
   const tags = form.getValues('tags');
 
   const submitGalleryHandler = async (values: T_gallerySchema) => {
-    if (form.formState.errors.images) {
-      console.log(form.formState.errors.images.message);
-      return;
-    }
     try {
       const formData = new FormData();
       formData.append('thumbnail', selectedThumbnail as Blob);
@@ -66,6 +62,10 @@ const GalleryRegist = ({ onAddGallery }: { onAddGallery: (newGallery: I_GalleryD
       });
       values.images.forEach((image, index) => formData.append(`images[${index}]`, image as Blob));
 
+      for (const [key, value] of formData.entries()) {
+        console.log(key, value);
+      }
+
       const response = await axiosValid_API.post('post', formData);
       if (response.status >= 200 && response.status < 300) {
         // 성공적으로 등록
@@ -75,13 +75,17 @@ const GalleryRegist = ({ onAddGallery }: { onAddGallery: (newGallery: I_GalleryD
       } else {
         // 등록 실패 시의 처리
         console.error('갤러리 등록 실패임:', response.data);
+        console.log(response.data);
       }
     } catch (error) {
       console.error('갤러리 등록 실패여:', error);
     }
   };
   const { errors } = form.formState;
+<<<<<<< HEAD
+=======
 
+>>>>>>> 72690e27d690f8480ab0ef21faf227043ffb5433
   const TEST = [
     {
       component: GalleryForm.input({

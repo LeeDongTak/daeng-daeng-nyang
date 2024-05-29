@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { I_GalleryData } from './type/gallery';
 
@@ -18,7 +19,18 @@ const GalleryItem = ({ gallery }: I_GalleryItemProps) => {
       className="flex flex-col items-center w-[30.2rem] h-[32.5rem] bg-white rounded-lg shadow-md cursor-pointer overflow-hidden"
       onClick={handleClick}
     >
-      {mainImage && <img className="w-[30.2rem] h-[20rem] object-cover mb-6" src={mainImage} alt={gallery.title} />}
+      {mainImage && (
+        <span className="w-[30.2rem] h-[20rem] object-cover mb-6 relative">
+          <Image
+            src={mainImage ? mainImage : ''}
+            alt={gallery.title}
+            layout="fill"
+            objectFit="cover"
+            objectPosition="center"
+          />
+        </span>
+      )}
+
       <h3 className="text-xl font-bold mb-2">{gallery?.title}</h3>
       <p className="text-gray-500 mb-4">{gallery?.content}</p>
       <div className="flex space-x-2">

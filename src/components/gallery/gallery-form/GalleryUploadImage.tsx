@@ -1,61 +1,80 @@
 import { getBase64 } from '@/lib/utils';
+import Image from 'next/image';
 import { ChangeEvent, useEffect, useState } from 'react';
 import { Control, FieldValues, Path, useController } from 'react-hook-form';
 import ImagePlus from '../../../../public/icons/image-plus.svg';
 
-interface I_GalleryUploadImage<T extends FieldValues> {
+interface I_GalleryUploadImageProps<T extends FieldValues> {
   className?: string;
-  onThumbnailChange: (file: File, dataUrl: string) => void;
+  onThumbnailChange: (file: File | null, dataUrl: string) => void;
+  onImageDelete?: (index: number) => void;
+  onImageUpload?: (files: File[]) => void;
   control: Control<T>;
   name: Path<T>;
+  defaultImages?: string[];
 }
 
 const GalleryUploadImage = <T extends FieldValues>({
   className,
   onThumbnailChange,
+  onImageDelete,
+  onImageUpload,
   control,
   name,
-}: I_GalleryUploadImage<T>) => {
+  defaultImages = [],
+}: I_GalleryUploadImageProps<T>) => {
   const [uploadedImages, setUploadedImages] = useState<File[]>([]);
-  const [previewImages, setPreviewImages] = useState<string[]>([]);
+  const [previewImages, setPreviewImages] = useState<string[]>([...defaultImages]);
   const { field, fieldState } = useController({ control, name });
   const { error } = fieldState;
+
   const handleImageUpload = (e: ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
     if (!files) return;
+
     const selectedFiles = Array.from(files);
-    const limitedFiles = selectedFiles.slice(0, 4 - uploadedImages.length);
+    const limitedFiles = selectedFiles.slice(0, 4 - previewImages.length);
     const newUploadedImages = [...uploadedImages, ...limitedFiles];
     setUploadedImages(newUploadedImages);
 
     Promise.all(limitedFiles.map(getBase64))
-      .then(getBase64 => {
-        setPreviewImages([...previewImages, ...getBase64]);
+      .then(base64Images => {
+        setPreviewImages([...previewImages, ...base64Images]);
         field.onChange(newUploadedImages);
       })
       .catch(console.error);
   };
+  useEffect(() => {
+    if (uploadedImages.length > 0) {
+      const processImages = async () => {
+        const dataUrls = await Promise.all(uploadedImages.map(getBase64));
+        onThumbnailChange(uploadedImages[0], dataUrls[0]);
+      };
+      processImages();
+    }
+  }, [uploadedImages, onThumbnailChange]);
 
   const handleImageDelete = (index: number) => {
-    const newUploadedImages = uploadedImages.filter((_, i) => i !== index);
-    setUploadedImages(newUploadedImages);
-    const newPreviewImages = previewImages.filter((_, i) => i !== index);
+    const newPreviewImages = [...previewImages];
+    newPreviewImages.splice(index, 1);
     setPreviewImages(newPreviewImages);
-    field.onChange(newUploadedImages.map(file => getBase64(file)));
-  };
+    if (onImageDelete) {
+      onImageDelete(index);
+    }
 
-  useEffect(() => {
-    const processImages = async () => {
-      const dataUrls = await Promise.all(uploadedImages.map(getBase64));
-      if (uploadedImages.length > 0) {
-        onThumbnailChange(uploadedImages[0], dataUrls[0]);
-      }
-      // else {
-      //   onThumbnailChange(null, null);
-      // }
-    };
-    processImages();
-  }, [uploadedImages, onThumbnailChange]);
+    if (index < defaultImages.length) {
+      // 삭제한 이미지가 기존 이미지인 경우
+      const newUploadedImages = [...uploadedImages];
+      newUploadedImages.splice(index - defaultImages.length, 1);
+      setUploadedImages(newUploadedImages);
+      field.onChange(newUploadedImages);
+    } else {
+      // 삭제한 이미지가 새로 업로드한 이미지인 경우
+      const newUploadedImages = uploadedImages.filter((_, i) => i !== index - defaultImages.length);
+      setUploadedImages(newUploadedImages);
+      field.onChange(newUploadedImages);
+    }
+  };
 
   return (
     <div className={`container mx-auto px-4 py-8 ${className}`}>
@@ -63,7 +82,7 @@ const GalleryUploadImage = <T extends FieldValues>({
         {previewImages.map((url, index) => (
           <div key={index} className="relative">
             <div className="w-[19.3rem] h-[12.8rem] rounded-[0.6rem] overflow-hidden border-2 border-[#C5C9CF]">
-              <img src={url} alt={`Preview ${index}`} className="w-full h-full object-cover rounded-[0.6rem]" />
+              <Image src={url} alt={`Preview ${index}`} layout="fill" objectFit="cover" />
             </div>
             <button
               onClick={() => handleImageDelete(index)}
