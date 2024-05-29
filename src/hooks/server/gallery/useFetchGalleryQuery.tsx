@@ -8,7 +8,6 @@ const useFetchGalleryQuery = () => {
   const fetchGalleries = async (pageParam: number) => {
     try {
       const response = await axiosApiRouteAPINotHeader.get(`post/All/${pageParam}?isNotHeader=true`);
-
       console.log(response.data);
       return response.data;
     } catch (error) {
