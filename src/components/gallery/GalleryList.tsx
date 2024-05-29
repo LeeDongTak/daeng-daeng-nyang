@@ -3,10 +3,6 @@ import { useInView } from 'react-intersection-observer';
 import GalleryItem from './GalleryItem';
 import { I_GalleryData } from './type/gallery';
 
-// interface I_GalleryListProps {
-//   galleries: I_GalleryData[];
-// }
-
 const GalleryList = () => {
   const { data: galleries, isLoading, hasNextPage, fetchNextPage, isFetchingNextPage } = useFetchGalleryQuery();
 
