@@ -13,7 +13,7 @@ const useFetchGalleryDetailQuery = (id: string) => {
     }
   };
 
-  const { data, isLoading, refetch } = useQuery<I_GalleryData>({
+  const { data, isLoading, refetch, isError, error } = useQuery<I_GalleryData>({
     queryKey: ['galleryDetail', id],
     queryFn: fetchGalleriesDetail,
     enabled: !!id,

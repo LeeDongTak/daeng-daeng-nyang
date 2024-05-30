@@ -1,4 +1,4 @@
-import { axiosValid_API } from '@/api/common/axios_instance';
+import useAddGalleryMutation from '@/hooks/server/gallery/useAddGalleryMutation';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -6,7 +6,6 @@ import { z } from 'zod';
 import LayoutForm from '../../common/form/form-layout/LayoutForm';
 import LayoutFormBody from '../../common/form/form-layout/layout-form-body/LayoutFormBody';
 import LayoutFormHeader from '../../common/form/form-layout/layout-form-header/LayoutFormHeader';
-import { I_GalleryData } from '../type/gallery';
 import GalleryCategoryMenu from './GalleryCategoryMenu';
 import GalleryForm from './GalleryForm';
 import GalleryTags from './GalleryTags';
@@ -22,7 +21,9 @@ const galleryFormSchema = z.object({
     .max(4, { message: '카테고리는 최대 4개까지만 추가 가능합니다.' }),
 });
 export type T_gallerySchema = z.infer<typeof galleryFormSchema>;
-const GalleryRegist = ({ onAddGallery }: { onAddGallery: (newGallery: I_GalleryData) => void }) => {
+const GalleryRegist = () => {
+  const { mutate } = useAddGalleryMutation();
+
   const form = useForm<T_gallerySchema>({
     defaultValues: { title: '', description: '', tags: [], images: [] },
     resolver: zodResolver(galleryFormSchema),
@@ -52,40 +53,10 @@ const GalleryRegist = ({ onAddGallery }: { onAddGallery: (newGallery: I_GalleryD
   const tags = form.getValues('tags');
 
   const submitGalleryHandler = async (values: T_gallerySchema) => {
-    try {
-      const formData = new FormData();
-      formData.append('thumbnail', selectedThumbnail as Blob);
-      formData.append('title', values.title);
-      formData.append('content', values.description);
-      values.tags.forEach((tag, index) => {
-        formData.append(`tags[${index}]`, tag);
-      });
-      values.images.forEach((image, index) => formData.append(`images[${index}]`, image as Blob));
-
-      for (const [key, value] of formData.entries()) {
-        console.log(key, value);
-      }
-
-      const response = await axiosValid_API.post('post', formData);
-      if (response.status >= 200 && response.status < 300) {
-        // 성공적으로 등록
-        onAddGallery(response.data);
-        // 추가적인 동작
-        console.log('글 작성 성공입니다~!');
-      } else {
-        // 등록 실패 시의 처리
-        console.error('갤러리 등록 실패임:', response.data);
-        console.log(response.data);
-      }
-    } catch (error) {
-      console.error('갤러리 등록 실패여:', error);
-    }
+    mutate(values);
   };
   const { errors } = form.formState;
-<<<<<<< HEAD
-=======
 
->>>>>>> 72690e27d690f8480ab0ef21faf227043ffb5433
   const TEST = [
     {
       component: GalleryForm.input({

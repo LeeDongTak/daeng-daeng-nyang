@@ -64,7 +64,7 @@ const JumbotronTitle = () => {
           size="jumbotron"
           children="일정 등록 하기"
           onClick={() => {
-            clickRouteHandler('/schedule');
+            clickRouteHandler('/calendar');
           }}
         />
         <Button

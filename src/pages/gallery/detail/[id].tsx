@@ -1,9 +1,12 @@
 import GalleryDetail from '@/components/gallery/GalleryDetail';
 import useFetchGalleryDetailQuery from '@/hooks/server/gallery/useFetchGalleryDetailQuery';
 import Head from 'next/head';
+import { useRouter } from 'next/router';
 
 const GalleryDetailPage = () => {
-  const { data, isLoading } = useFetchGalleryDetailQuery();
+  const { query } = useRouter();
+  const { id } = query as { id: string };
+  const { data, isLoading, refetch: fetchGalleries } = useFetchGalleryDetailQuery(id);
 
   return (
     <>

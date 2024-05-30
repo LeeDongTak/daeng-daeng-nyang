@@ -8,7 +8,7 @@ const useFetchGalleryQuery = () => {
   const fetchGalleries = async (pageParam: number) => {
     try {
       const response = await axiosApiRouteAPINotHeader.get(`post/All/${pageParam}?isNotHeader=true`);
-      console.log(response);
+      console.log(response.data);
       return response.data;
     } catch (error) {
       console.error('갤러리 데이터 가져오기 실패:', error);
