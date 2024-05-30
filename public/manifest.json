@@ -2,11 +2,11 @@
   "theme_color": "#F8D555",
   "background_color": "#F9F6EB",
   "display": "standalone",
-  "scope": "/",
-  "start_url": "/",
-  "name": "댕댕냥 - 댕댕냥이 세상을 구한다",
-  "short_name": "댕댕냥",
-  "description": "반려동물과 함께하는 일상생활",
+  "scope": "./",
+  "start_url": "./",
+  "name": "\ub315\ub315\ub0e5 - \ub315\ub315\ub0e5\uc774 \uc138\uc0c1\uc744 \uad6c\ud55c\ub2e4",
+  "short_name": "\ub315\ub315\ub0e5",
+  "description": "\ubc18\ub824\ub3d9\ubb3c\uacfc \ud568\uaed8\ud558\ub294 \uc77c\uc0c1\uc0dd\ud65c",
   "icons": [
     {
       "src": "/seo/favicon/android-icon-36x36.png",
@@ -48,6 +48,24 @@
       "sizes": "192x192",
       "type": "image/png",
       "density": "4.0",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/seo/favicon/android-icon-256x256.png",
+      "sizes": "256x256",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/seo/favicon/android-icon-384x384.png",
+      "sizes": "384x384",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/seo/favicon/android-icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
       "purpose": "maskable any"
     }
   ]
