@@ -8,6 +8,7 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { SessionProvider } from 'next-auth/react';
 import type { AppProps } from 'next/app';
 import localFont from 'next/font/local';
+import Head from 'next/head';
 
 const queryClient = new QueryClient();
 const myFont = localFont({ src: '../../public/font/PretendardVariable.woff2', variable: '--main-font' });
@@ -17,6 +18,9 @@ export default function App({ Component, pageProps: { session, ...pageProps } }:
     <SessionProvider session={session}>
       <QueryClientProvider client={queryClient}>
         <HydrationBoundary state={pageProps.dehydratedState}>
+          <Head>
+            <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+          </Head>
           <ReactQueryDevtools initialIsOpen={false} />
           <main className={cn(myFont.variable)}>
             <CommonLayout>
