@@ -11,7 +11,11 @@ const CalendarPage = () => {
   return (
     <>
       <Head>
-        <title>댕댕냥 - 캘린더</title>
+        <title>일정등록 - 댕댕냥</title>
+        <meta name="author" content="냥댕댕" />
+        <meta name="title" content="일정등록 - 댕댕냥이 세상을 구한다!!" />
+        <meta name="description" content="반려동물과 함께 일정을 등록하세요!" />
+        <meta name="keywords" content="달력, 반려동물, 애완동물, 산책, 동물병원, 동물약국, 산책로, 일정등록" />
       </Head>
       <Calendar />
     </>

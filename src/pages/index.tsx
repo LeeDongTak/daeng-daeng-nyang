@@ -9,6 +9,16 @@ const HomePage = () => {
     <>
       <Head>
         <title>댕댕냥 - 댕댕냥이 세상을 바꾼다!</title>
+        <meta name="author" content="냥댕댕" />
+        <meta name="title" content="댕댕냥 - 댕댕냥이 세상을 구한다!!" />
+        <meta
+          name="description"
+          content="반려동물에게 필요한 동물병원, 동물약국 그리고 산책로에대한 정보를 한 눈에 확인하고, 일정을 등록해보세요!"
+        />
+        <meta
+          name="keywords"
+          content="반려동물, 애완동물, 산책, 동물병원, 동물약국, 산책로, 댕댕냥이 세상을 구한다, "
+        />
       </Head>
       <Home />
     </>
