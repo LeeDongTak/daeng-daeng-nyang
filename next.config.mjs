@@ -1,3 +1,6 @@
+const withPWA = require('next-pwa')({
+  dest: 'public',
+});
 const nextConfig = {
   swcMinify: true,
   // output: 'export',
@@ -27,4 +30,4 @@ const nextConfig = {
   },
 };
 
-export default nextConfig;
+export default withPWA(nextConfig);
