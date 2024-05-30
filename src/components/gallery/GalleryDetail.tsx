@@ -2,6 +2,7 @@ import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious
 import useFetchGalleryDeleteQuery from '@/hooks/server/gallery/useFetchGalleryDeleteQuery';
 import { format } from 'date-fns';
 import { NextPageContext } from 'next';
+import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { Button } from '../ui/button';
 import { I_GalleryData } from './type/gallery';
