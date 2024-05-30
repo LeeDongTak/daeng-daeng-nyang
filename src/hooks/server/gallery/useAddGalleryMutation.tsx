@@ -28,7 +28,7 @@ const useAddGalleryMutation = () => {
     }
   };
 
-  const { isPending, mutate, isError, Error } = useMutation({
+  const { isPending, mutate, isError, error } = useMutation({
     mutationFn: addGallery,
     onSuccess: () => {
       client.invalidateQueries({ queryKey: ['galleryUpload'] });
