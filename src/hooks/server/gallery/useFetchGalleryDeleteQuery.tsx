@@ -1,7 +1,12 @@
 import { axiosValid_API } from '@/api/common/axios_instance';
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useRouter } from 'next/router';
 
+// crud에서 데이터를 r(read)를 제외한 cud(등록, 수정, 삭제)는 useQuery가 아닌 useMutation입니다.
 const useFetchGalleryDeleteQuery = (id: string) => {
+  const client = useQueryClient();
+  const { push } = useRouter();
+
   const fetchGalleriesDelete = async () => {
     try {
       const response = await axiosValid_API.delete(`post/${id}`);
@@ -14,13 +19,15 @@ const useFetchGalleryDeleteQuery = (id: string) => {
     }
   };
 
-  const { isLoading, refetch } = useQuery({
-    queryKey: ['galleryDelete', id],
-    queryFn: fetchGalleriesDelete,
-    enabled: false,
+  const { mutate, isPending } = useMutation({
+    mutationFn: fetchGalleriesDelete,
+    onSuccess: () => {
+      client.invalidateQueries({ queryKey: ['galleryDetail', id] });
+      push('/profile');
+    },
   });
 
-  return { isLoading, refetch };
+  return { mutate, isPending };
 };
 
 export default useFetchGalleryDeleteQuery;

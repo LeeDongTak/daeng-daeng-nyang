@@ -1,5 +1,6 @@
 export interface I_GalleryData {
   id: number;
+  userId: string | number;
   title: string;
   content: string;
   tags: string[];

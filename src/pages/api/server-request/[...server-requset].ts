@@ -1,11 +1,13 @@
 import { axiosAPI } from '@/api/common/axios_instance';
 import axios from 'axios';
 import { NextApiRequest, NextApiResponse } from 'next';
+import { getToken } from 'next-auth/jwt';
 
 export default async function serverRequest(req: NextApiRequest, res: NextApiResponse) {
   const body = req.body;
+
   const method = req.method;
-  const { authorization, refreshtoken } = req.headers;
+  const session = await getToken({ req });
   const url = req.url?.replace('/api/server-request/', '');
   const { isNotHeader } = req.query as { isNotHeader: string };
 
@@ -16,13 +18,13 @@ export default async function serverRequest(req: NextApiRequest, res: NextApiRes
       return;
     }
     // 토큰 없는 api 서버 통신
-    if (Boolean(isNotHeader) || method === 'DELETE') {
+    if (Boolean(isNotHeader)) {
       const response = await axiosAPI.get(`${url}`);
       res.status(200).send(response.data);
       return;
     }
     // 토큰 검사
-    if (!authorization || !refreshtoken) {
+    if (!session) {
       res.status(200).send('토큰이 없습니다. ');
       return;
     }
@@ -31,8 +33,8 @@ export default async function serverRequest(req: NextApiRequest, res: NextApiRes
       method,
       url: `${process.env.NEXT_PUBLIC_SERVER_BASE_URL}${url}`,
       headers: {
-        Authorization: authorization,
-        refreshToken: refreshtoken,
+        Authorization: `Bearer ${session.accessToken}`,
+        refreshToken: `${session.refreshtoken}`,
       },
       data: body,
     };
@@ -41,7 +43,7 @@ export default async function serverRequest(req: NextApiRequest, res: NextApiRes
     const response = await axios(result);
     res.status(200).send(response.data);
   } catch (error) {
-    console.log(error);
-    res.status(500).send(error);
+    console.log(JSON.parse(JSON.stringify(body)));
+    res.status(400).send(JSON.parse(JSON.stringify(body)));
   }
 }
