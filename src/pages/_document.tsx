@@ -16,7 +16,8 @@ export default function Document() {
           name="keywords"
           content="반려동물, 애완동물, 산책, 동물병원, 동물약국, 산책로, 댕댕냥이 세상을 구한다, "
         />
-
+        {/* Naver WebMaster */}
+        <meta name="naver-site-verification" content="44417ac2c17a79545912adf1651d5c9556c12e61" />
         {/* <!-- Open Graph / Facebook --> */}
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://www.daengdaengnyang.shop/" />
