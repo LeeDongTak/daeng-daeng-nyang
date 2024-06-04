@@ -11,15 +11,15 @@ const useAddGalleryMutation = () => {
 
   const addGallery = async (values: T_gallerySchema) => {
     try {
-      const formData = new FormData();
-      formData.append('thumbnail', values.images[0] as Blob);
-      formData.append('title', values.title);
-      formData.append('content', values.description);
-      values.tags.forEach((tag, index) => {
-        formData.append(`tags[${index}]`, tag);
-      });
-      values.images.forEach((image, index) => formData.append(`images[${index}]`, image as Blob));
-      const response = await axiosValid_API.post(`post`, formData);
+      const data = {
+        title: values.title,
+        content: values.description,
+        tags: values.tags,
+        images: {
+          file: await Promise.all(values.images.map(async image => await getBase64(image as File))),
+          fileName: values.images.map((image: unknown) => (image as File).name),
+        },
+      };
 
       push('/gallery');
       console.log(response.data);
