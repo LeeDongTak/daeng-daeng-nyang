@@ -1,5 +1,6 @@
 import { axiosAPI } from '@/api/common/axios_instance';
 import axios from 'axios';
+import FormData from 'form-data';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { getToken } from 'next-auth/jwt';
 
