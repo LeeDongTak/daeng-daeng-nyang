@@ -1,5 +1,6 @@
 import { axiosValid_API } from '@/api/common/axios_instance';
 import { T_gallerySchema } from '@/components/gallery/gallery-form/GalleryRegist';
+import { getBase64 } from '@/lib/utils';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
 import { useEffect, useRef } from 'react';
@@ -23,9 +24,8 @@ const useAddGalleryMutation = () => {
 
       await axiosValid_API.post(`post?dataType=formData`, data);
       push('/gallery');
-      console.log(response.data);
     } catch (error) {
-      console.error('갤러리 등록 실패여:', error);
+      console.error(error);
     }
   };
 
