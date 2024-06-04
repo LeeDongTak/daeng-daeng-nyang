@@ -16,6 +16,7 @@ export default async function serverRequest(req: NextApiRequest, res: NextApiRes
   const urlInQueryString = req.url?.replace('/api/server-request/', '') as string;
   const url = urlInQueryString.substring(0, urlInQueryString.indexOf('?', 0));
   const { isNotHeader, dataType } = req.query as { isNotHeader: string; dataType: string };
+
   try {
     // path검사
     if (!urlInQueryString) {
@@ -29,7 +30,7 @@ export default async function serverRequest(req: NextApiRequest, res: NextApiRes
       return;
     }
     // 토큰 검사
-    if (!session) {
+    if (!session?.accessToken || !session?.refreshToken) {
       res.status(200).send('토큰이 없습니다. ');
       return;
     }
