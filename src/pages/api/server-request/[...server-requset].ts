@@ -34,7 +34,23 @@ export default async function serverRequest(req: NextApiRequest, res: NextApiRes
       res.status(200).send('토큰이 없습니다. ');
       return;
     }
+    if (dataType === 'formData') {
+      const formData = new FormData();
+      const config = {
+        method,
         url: `${process.env.NEXT_PUBLIC_SERVER_BASE_URL}${url ? url : urlInQueryString}`,
+        headers: {
+          Authorization: `Bearer ${session.accessToken}`,
+          refreshToken: `${session.refreshToken}`,
+          ...formData.getHeaders(),
+        },
+        data: formData,
+      };
+      const response = await axios(config);
+      res.status(200).send(response.data);
+      return;
+    }
+
     // api 서버 통신
     const config = {
       method,
