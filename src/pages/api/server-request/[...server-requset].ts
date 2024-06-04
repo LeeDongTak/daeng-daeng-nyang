@@ -3,6 +3,11 @@ import axios from 'axios';
 import FormData from 'form-data';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { getToken } from 'next-auth/jwt';
+// export const config = {
+//   api: {
+//     bodyParser: false,
+//   },
+// };
 
 export default async function serverRequest(req: NextApiRequest, res: NextApiResponse) {
   const body = req.body;
