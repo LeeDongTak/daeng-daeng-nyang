@@ -36,6 +36,12 @@ export default async function serverRequest(req: NextApiRequest, res: NextApiRes
     }
     if (dataType === 'formData') {
       const formData = new FormData();
+      for (const key in body) {
+        } else {
+          formData.append(key, body[key]);
+        }
+      }
+
       const config = {
         method,
         url: `${process.env.NEXT_PUBLIC_SERVER_BASE_URL}${url ? url : urlInQueryString}`,
