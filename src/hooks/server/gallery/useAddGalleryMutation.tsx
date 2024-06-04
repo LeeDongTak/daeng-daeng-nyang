@@ -21,6 +21,7 @@ const useAddGalleryMutation = () => {
         },
       };
 
+      await axiosValid_API.post(`post?dataType=formData`, data);
       push('/gallery');
       console.log(response.data);
     } catch (error) {
