@@ -46,11 +46,10 @@ export default async function serverRequest(req: NextApiRequest, res: NextApiRes
       data: body,
     };
     const { data, ...getConfig } = config;
-    const result = !body || method === 'GET' || method === 'DELETE' ? getConfig : config;
+    const result = !data || method === 'GET' || method === 'DELETE' ? getConfig : config;
     const response = await axios(result);
     res.status(200).send(response.data);
   } catch (error) {
-    console.log(JSON.parse(JSON.stringify(body)));
-    res.status(400).send(JSON.parse(JSON.stringify(body)));
+    res.status(400).send(error);
   }
 }
