@@ -34,9 +34,27 @@ export default async function serverRequest(req: NextApiRequest, res: NextApiRes
       res.status(200).send('토큰이 없습니다. ');
       return;
     }
+
     if (dataType === 'formData') {
       const formData = new FormData();
       for (const key in body) {
+        if (
+          (body[key].file || body[key].fileName) &&
+          (typeof body[key].file === 'object' || typeof body[key].fileName === 'object')
+        ) {
+          const base64Data = body.images.file.map((image: string) => image.replace(/^data:image\/\w+;base64,/, ''));
+          const buffer = base64Data.map((base64: string) => Buffer.from(base64, 'base64'));
+          formData.append('thumbnail', buffer[0], { filename: body.images.fileName[0] });
+          buffer.forEach((image: Buffer, index: number) =>
+            formData.append(`images[${index}]`, image, { filename: body.images.fileName[index] }),
+          );
+        } else if (
+          (body[key].file || body[key].fileName) &&
+          (typeof body[key].file === 'string' || typeof body[key].fileName === 'string')
+        ) {
+          const base64Data = body[key].file.replace(/^data:image\/\w+;base64,/, '');
+          const buffer = Buffer.from(base64Data, 'base64');
+          formData.append(key, buffer, { filename: body[key].fileName });
         } else if ((!body[key].file || !body[key].fileName) && typeof body[key] === 'object') {
           body[key].forEach((item: string | number, index: number) => {
             formData.append(`${key}[${index}]`, item);
