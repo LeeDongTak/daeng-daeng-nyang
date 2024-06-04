@@ -37,6 +37,10 @@ export default async function serverRequest(req: NextApiRequest, res: NextApiRes
     if (dataType === 'formData') {
       const formData = new FormData();
       for (const key in body) {
+        } else if ((!body[key].file || !body[key].fileName) && typeof body[key] === 'object') {
+          body[key].forEach((item: string | number, index: number) => {
+            formData.append(`${key}[${index}]`, item);
+          });
         } else {
           formData.append(key, body[key]);
         }
