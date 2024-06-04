@@ -72,6 +72,10 @@ export default async function serverRequest(req: NextApiRequest, res: NextApiRes
     const response = await axios(result);
     res.status(200).send(response.data);
   } catch (error) {
-    res.status(400).send(error);
+    if (axios.isAxiosError(error) && error.response) {
+      res.status(error.response.data.statusCode).send(error.response.data);
+    } else {
+      res.status(500).send('서버 오류가 발생했습니다.');
+    }
   }
 }
