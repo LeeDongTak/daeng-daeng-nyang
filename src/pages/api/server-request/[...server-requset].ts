@@ -40,8 +40,8 @@ export default async function serverRequest(req: NextApiRequest, res: NextApiRes
       method,
       url: `${process.env.NEXT_PUBLIC_SERVER_BASE_URL}${url ? url : urlInQueryString}`,
       headers: {
-        Authorization: `Bearer ${session.accessToken}`,
-        refreshToken: `${session.refreshtoken}`,
+        Authorization: `Bearer ${session?.accessToken}`,
+        refreshToken: `${session?.refreshToken}`,
       },
       data: body,
     };
