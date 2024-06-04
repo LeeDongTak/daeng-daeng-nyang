@@ -13,10 +13,9 @@ export default async function serverRequest(req: NextApiRequest, res: NextApiRes
   const body = req.body;
   const method = req.method;
   const session = await getToken({ req });
-  const { isNotHeader } = req.query as { isNotHeader: string };
-
   const urlInQueryString = req.url?.replace('/api/server-request/', '') as string;
   const url = urlInQueryString.substring(0, urlInQueryString.indexOf('?', 0));
+  const { isNotHeader, dataType } = req.query as { isNotHeader: string; dataType: string };
   try {
     // path검사
     if (!urlInQueryString) {
