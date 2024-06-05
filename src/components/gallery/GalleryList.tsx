@@ -1,6 +1,7 @@
 import useFetchGalleryQuery from '@/hooks/server/gallery/useFetchGalleryQuery';
 import { useInView } from 'react-intersection-observer';
 import GalleryItem from './GalleryItem';
+import GalleryListSkeleton from './skeleton/GalleryListSkeleton';
 import { I_GalleryData } from './type/gallery';
 
 const GalleryList = () => {
@@ -14,7 +15,7 @@ const GalleryList = () => {
     },
   });
 
-  if (isLoading) return <div>로딩중.....</div>;
+  if (isLoading) return <GalleryListSkeleton />;
   if (!galleries) return <div>데이터가 없습니다.</div>;
 
   return (
