@@ -56,14 +56,14 @@ const MenuBox = ({ isMouseHover, isMouseHoverClose, clickStateResetHandler }: I_
    * 로그아웃 이후 toast메시지내보내기 위한 콜백함수
    */
   const logoutCallbackFuc = () => {
+    clickStateResetHandler();
+    push('/');
     toast({
       title: '로그아웃 되었습니다. ',
       variant: 'success',
       position: 'top-center',
       closeTimeOut: 2000,
     });
-    push('/');
-    clickStateResetHandler();
   };
 
   useEffect(() => {
