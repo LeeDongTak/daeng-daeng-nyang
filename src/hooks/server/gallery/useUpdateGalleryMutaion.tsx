@@ -30,7 +30,7 @@ const useUpdateGalleryMutation = () => {
       router.push(`/gallery/detail/${updatedGallery.id}`);
     },
     onError: error => {
-      console.error('갤러리 수정 실패:', error);
+      console.error(error);
     },
   });
 

@@ -24,8 +24,8 @@ const GalleryUploadImage = <T extends FieldValues>({
   defaultImages = [],
 }: I_GalleryUploadImageProps<T>) => {
   const [uploadedImages, setUploadedImages] = useState<File[]>([]);
-  const [previewImages, setPreviewImages] = useState<string[]>([...defaultImages]);
   const { field, fieldState } = useController({ control, name });
+  const [previewImages, setPreviewImages] = useState<string[]>([]);
   const { error } = fieldState;
 
   const handleImageUpload = (e: ChangeEvent<HTMLInputElement>) => {
@@ -53,6 +53,15 @@ const GalleryUploadImage = <T extends FieldValues>({
       processImages();
     }
   }, [uploadedImages, onThumbnailChange]);
+
+  useEffect(() => {
+    (async () => {
+      if (field.value) {
+        console.log(field.value);
+        setPreviewImages([...(await Promise.all(field.value.map(async (file: File) => await getBase64(file))))]);
+      }
+    })();
+  }, [field.value]);
 
   const handleImageDelete = (index: number) => {
     const newPreviewImages = [...previewImages];
