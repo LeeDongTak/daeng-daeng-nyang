@@ -42,3 +42,15 @@ export const RedirectLoginPage = async (isError: Boolean, error: Error | null) =
   }
   return false;
 };
+
+export const galleryUpdatePrevImage = async (imageUrl: string) => {
+  const res = await axios.get(`${window.location.origin}/api/server-request/${imageUrl}?isImage=true`, {
+    responseType: 'blob',
+  });
+  const ext = imageUrl.split('.').pop();
+  const filename = imageUrl.split('/').pop();
+  const metadata = { type: `image/${ext}` };
+  const data = new Blob([res.data], metadata);
+
+  return new File([data], filename!, metadata);
+};
