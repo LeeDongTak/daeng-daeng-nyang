@@ -1,5 +1,6 @@
 import LayoutForm from '@/components/common/form/form-layout/LayoutForm';
 import useUpdatePetInfoMutation from '@/hooks/server/profile/useUpdatePetInfoMutation';
+import { getBase64 } from '@/lib/utils';
 import { I_PetType } from '@/types/profile/profile';
 import { zodResolver } from '@hookform/resolvers/zod';
 import dayjs from 'dayjs';
@@ -35,18 +36,20 @@ const PetUpdateModal = ({ modalId, petInfo }: { modalId?: string; petInfo: I_Pet
     resolver: zodResolver(petInfoSchema),
   });
 
-  const submitHandler = (data: PetInfoValuetype) => {
+  const submitHandler = async (data: PetInfoValuetype) => {
     const updatePetInfo = {
       birth: data.birthDate,
       age: data.age,
       breed: data.breed,
       gender: data.gender,
       name: data.petName,
-      profileImage: data.petFile,
+      profileImage: {
+        file: await getBase64(data.petFile as File),
+        fileName: data.petFile?.name ?? '',
+      },
     };
 
     mutate({ petId: id, updateValue: updatePetInfo });
-    console.log(data);
   };
   return (
     <LayoutForm form={form}>

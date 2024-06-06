@@ -1,5 +1,6 @@
 import { axiosValid_API } from '@/api/common/axios_instance';
 import { T_gallerySchema } from '@/components/gallery/gallery-form/GalleryRegist';
+import { getBase64 } from '@/lib/utils';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
 import { useEffect, useRef } from 'react';
@@ -11,20 +12,20 @@ const useAddGalleryMutation = () => {
 
   const addGallery = async (values: T_gallerySchema) => {
     try {
-      const formData = new FormData();
-      formData.append('thumbnail', values.images[0] as Blob);
-      formData.append('title', values.title);
-      formData.append('content', values.description);
-      values.tags.forEach((tag, index) => {
-        formData.append(`tags[${index}]`, tag);
-      });
-      values.images.forEach((image, index) => formData.append(`images[${index}]`, image as Blob));
-      const response = await axiosValid_API.post(`post`, formData);
+      const data = {
+        title: values.title,
+        content: values.description,
+        tags: values.tags,
+        images: {
+          file: await Promise.all(values.images.map(async image => await getBase64(image as File))),
+          fileName: values.images.map((image: unknown) => (image as File).name),
+        },
+      };
 
+      await axiosValid_API.post(`post?dataType=formData`, data);
       push('/gallery');
-      console.log(response.data);
     } catch (error) {
-      console.error('갤러리 등록 실패여:', error);
+      console.error(error);
     }
   };
 
