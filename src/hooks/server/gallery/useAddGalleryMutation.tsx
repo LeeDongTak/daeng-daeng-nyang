@@ -1,30 +1,33 @@
 import { axiosValid_API } from '@/api/common/axios_instance';
 import { T_gallerySchema } from '@/components/gallery/gallery-form/GalleryRegist';
+import useToast from '@/hooks/client/useToast';
+import { RedirectLoginPage, getBase64 } from '@/lib/utils';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
 import { useEffect, useRef } from 'react';
 
 const useAddGalleryMutation = () => {
-  const { push } = useRouter();
   const client = useQueryClient();
+  const router = useRouter();
+  const { toast } = useToast();
   const didMountRef = useRef(false);
 
   const addGallery = async (values: T_gallerySchema) => {
     try {
-      const formData = new FormData();
-      formData.append('thumbnail', values.images[0] as Blob);
-      formData.append('title', values.title);
-      formData.append('content', values.description);
-      values.tags.forEach((tag, index) => {
-        formData.append(`tags[${index}]`, tag);
-      });
-      values.images.forEach((image, index) => formData.append(`images[${index}]`, image as Blob));
-      const response = await axiosValid_API.post(`post`, formData);
+      const data = {
+        title: values.title,
+        content: values.description,
+        tags: values.tags,
+        images: {
+          file: await Promise.all(values.images.map(async image => await getBase64(image as File))),
+          fileName: values.images.map((image: unknown) => (image as File).name),
+        },
+      };
 
-      push('/gallery');
-      console.log(response.data);
+      await axiosValid_API.post(`post?dataType=formData`, data);
+      router.push('/gallery');
     } catch (error) {
-      console.error('갤러리 등록 실패여:', error);
+      console.error(error);
     }
   };
 
@@ -36,11 +39,19 @@ const useAddGalleryMutation = () => {
   });
 
   useEffect(() => {
-    if (didMountRef.current) {
-      console.log(isPending);
-    }
-    didMountRef.current = true;
-  }, [isPending, isError, Error]);
+    (async () => {
+      if (await RedirectLoginPage(isError, error)) {
+        toast({
+          title: '로그인이 되어있지 않습니다. 로그인을 해주세요',
+          variant: 'danger',
+          position: 'top-center',
+          closeTimeOut: 2000,
+        });
+
+        router.push('/auth/login');
+      }
+    })();
+  }, [isError, error]);
 
   return { isPending, mutate };
 };

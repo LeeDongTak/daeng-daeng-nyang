@@ -53,6 +53,7 @@ const GalleryRegist = () => {
   const tags = form.getValues('tags');
 
   const submitGalleryHandler = async (values: T_gallerySchema) => {
+    console.log(values);
     mutate(values);
   };
   const { errors } = form.formState;
