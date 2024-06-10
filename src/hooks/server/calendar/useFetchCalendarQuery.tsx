@@ -1,6 +1,9 @@
 import { fetchCalendar } from '@/api/calendar/fetch-calendar';
+import { useCalendar } from '@/hooks/client/calendar/useCalendar';
 import useToast from '@/hooks/client/useToast';
 import { RedirectLoginPage } from '@/lib/utils';
+import { setCalendarBindingData } from '@/store/calendar/data-store';
+import { setSchedulePetData } from '@/store/calendar/pet-store';
 import { CalendarDataType } from '@/types/calendar/calendar';
 import { useQuery } from '@tanstack/react-query';
 
@@ -14,9 +17,16 @@ enum MUTATION_QUERY_KEY {
 const useFetchCalendarQuery = () => {
   const router = useRouter();
   const { toast } = useToast();
+  const { updateScheduleModal } = useCalendar();
   const { data, isError, isLoading, error } = useQuery<CalendarDataType[]>({
     queryKey: [MUTATION_QUERY_KEY.SCHEDULE_QUERY],
     queryFn: () => fetchCalendar(),
+    select: data => {
+      setCalendarBindingData(data);
+      setSchedulePetData(data);
+      updateScheduleModal(data);
+      return data;
+    },
   });
 
   useEffect(() => {
