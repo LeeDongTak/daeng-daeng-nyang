@@ -1,10 +1,12 @@
 import { getAuthorizedAxios } from '@/api/common/axios_instance';
 import Calendar from '@/components/calendar/Calendar';
+import useFetchCalendarQuery from '@/hooks/server/calendar/useFetchCalendarQuery';
 import { QueryClient, dehydrate } from '@tanstack/react-query';
 import type { GetServerSideProps, GetServerSidePropsContext } from 'next';
 import Head from 'next/head';
 
 const CalendarPage = () => {
+  const { isLoading, isError } = useFetchCalendarQuery();
   //const queryClient = useQueryClient();
   // const schedule = queryClient.getQueryData<CalendarDataType[]>(['SCHEDULE_QUERY']);
   // console.log('🚀 ~ CalendarPage ~ data:', schedule);
