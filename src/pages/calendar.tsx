@@ -1,27 +1,22 @@
 import { getAuthorizedAxios } from '@/api/common/axios_instance';
 import Calendar from '@/components/calendar/Calendar';
-import { useCalendar } from '@/hooks/client/calendar/useCalendar';
-import { setCalendarBindingData } from '@/store/calendar/data-store';
-import { setSchedulePetData } from '@/store/calendar/pet-store';
-import { CalendarDataType } from '@/types/calendar/calendar';
-import { QueryClient, dehydrate, useQueryClient } from '@tanstack/react-query';
+import { QueryClient, dehydrate } from '@tanstack/react-query';
 import type { GetServerSideProps, GetServerSidePropsContext } from 'next';
 import Head from 'next/head';
-import { useEffect } from 'react';
 
 const CalendarPage = () => {
-  const queryClient = useQueryClient();
-  const schedule = queryClient.getQueryData<CalendarDataType[]>(['SCHEDULE_QUERY']);
-  console.log('🚀 ~ CalendarPage ~ data:', schedule);
-  const { updateScheduleModal } = useCalendar();
+  //const queryClient = useQueryClient();
+  // const schedule = queryClient.getQueryData<CalendarDataType[]>(['SCHEDULE_QUERY']);
+  // console.log('🚀 ~ CalendarPage ~ data:', schedule);
+  // const { updateScheduleModal } = useCalendar();
 
-  useEffect(() => {
-    if (!schedule) return;
+  // useEffect(() => {
+  //   if (!schedule) return;
 
-    setCalendarBindingData(schedule);
-    setSchedulePetData(schedule);
-    updateScheduleModal(schedule);
-  }, [schedule]);
+  //   setCalendarBindingData(schedule);
+  //   setSchedulePetData(schedule);
+  //   updateScheduleModal(schedule);
+  // }, [schedule]);
 
   return (
     <>
