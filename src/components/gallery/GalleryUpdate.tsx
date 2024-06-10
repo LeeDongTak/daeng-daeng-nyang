@@ -5,9 +5,10 @@ import LayoutFormHeader from '@/components/common/form/form-layout/layout-form-h
 import GalleryCategoryMenu from '@/components/gallery/gallery-form/GalleryCategoryMenu';
 import GalleryForm from '@/components/gallery/gallery-form/GalleryForm';
 import GalleryTags from '@/components/gallery/gallery-form/GalleryTags';
+import useToast from '@/hooks/client/useToast';
 import useFetchGalleryDetailQuery from '@/hooks/server/gallery/useFetchGalleryDetailQuery';
 import useUpdateGalleryMutation from '@/hooks/server/gallery/useUpdateGalleryMutaion';
-import { getBase64 } from '@/lib/utils';
+import { galleryUpdatePrevImage, getBase64 } from '@/lib/utils';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { isEqual } from 'lodash';
 import { useRouter } from 'next/router';
@@ -36,11 +37,12 @@ const GalleryUpdate = () => {
 
   const { data: gallery, isLoading } = useFetchGalleryDetailQuery(id);
   const { mutate: updateGallery, data: updatedGalleryData } = useUpdateGalleryMutation();
-
+  const { toast } = useToast();
   const [selectedCategory, setSelectedCategory] = useState<string>('');
   const [selectedThumbnail, setSelectedThumbnail] = useState<File | null>(null);
   const [existingImages, setExistingImages] = useState<{ id: number; postId: number; image: string }[]>([]);
   const [newImages, setNewImages] = useState<File[]>([]);
+  const [defaultImage, setDefaultImage] = useState<string[]>([]);
   const [previewImages, setPreviewImages] = useState<string[]>([]);
   const [deletedImages, setDeletedImages] = useState<number[]>([]);
   const form = useForm<T_gallerySchema>({
@@ -54,17 +56,31 @@ const GalleryUpdate = () => {
   });
 
   useEffect(() => {
-    if (gallery) {
-      form.setValue('title', gallery.title);
-      form.setValue('description', gallery.content);
-      form.setValue(
-        'tags',
-        gallery.postcategory.map(category => category.category),
-      );
-      setPreviewImages(gallery.images.map(image => image.image));
-      setExistingImages(gallery.images);
-    }
-  }, [gallery]);
+    (async () => {
+      if (gallery) {
+        form.setValue('title', gallery.title);
+        form.setValue('description', gallery.content);
+        form.setValue(
+          'tags',
+          gallery.postcategory.map(category => category.category),
+        );
+        form.setValue(
+          'images',
+          await Promise.all(gallery.images.map(async imageData => await galleryUpdatePrevImage(imageData.image))),
+        );
+        setDefaultImage([
+          ...(await Promise.all(
+            gallery.images.map(async imageData => {
+              const file = await galleryUpdatePrevImage(imageData.image);
+              return await getBase64(file);
+            }),
+          )),
+        ]);
+        setPreviewImages(gallery.images.map(image => image.image));
+        setExistingImages(gallery.images);
+      }
+    })();
+  }, [gallery, form]);
 
   const handleCategorySelect = (category: string) => {
     setSelectedCategory(category);
@@ -144,9 +160,7 @@ const GalleryUpdate = () => {
       !isEqual(
         values.tags,
         gallery?.postcategory.map(category => category.category),
-      ) ||
-      newImages.length > 0 ||
-      deleteImages?.length > 0;
+      );
 
     if (!isChanged) {
       const confirmed = window.confirm('변경 내역이 없습니다. 저장하시겠습니까?');
@@ -156,29 +170,56 @@ const GalleryUpdate = () => {
       return;
     }
 
-    const formData = new FormData();
-    formData.append('thumbnail', selectedThumbnail as Blob);
-    formData.append('title', values.title);
-    formData.append('content', values.description);
-    values.tags.forEach((tag, index) => {
-      formData.append(`tags[${index}]`, tag);
-    });
-    existingImages.forEach((image, index) => {
-      formData.append(`existingImages[${index}]`, JSON.stringify(image));
-    });
-    newImages.forEach((image, index) => {
-      formData.append(`newImages[${index}]`, image);
-    });
-    deleteImages.forEach(image => {
-      formData.append('deletedImages[]', image.id.toString());
-    });
+    if (values.title.length < 0) {
+      toast({
+        title: '제목이 없습니다. ',
+        variant: 'danger',
+        position: 'top-center',
+        closeTimeOut: 2000,
+      });
+      return;
+    } else if (values.description.length < 0) {
+      toast({
+        title: '내용이 없습니다. ',
+        variant: 'danger',
+        position: 'top-center',
+        closeTimeOut: 2000,
+      });
+      return;
+    } else if (values.tags.length < 0) {
+      toast({
+        title: '태그가 없습니다. ',
+        variant: 'danger',
+        position: 'top-center',
+        closeTimeOut: 2000,
+      });
+      return;
+    } else if (values.images.length < 0) {
+      toast({
+        title: '이미지가 없습니다. ',
+        variant: 'danger',
+        position: 'top-center',
+        closeTimeOut: 2000,
+      });
+      return;
+    }
 
+    const data = {
+      title: values.title,
+      content: values.description,
+      tags: values.tags,
+      images: {
+        file: await Promise.all(values.images.map(async image => await getBase64(image as File))),
+        fileName: values.images.map((file: unknown) => (file as File).name),
+      },
+    };
+    console.log(values);
     try {
-      await axiosValid_API.patch(`post/${id}`, formData);
-      alert('갤러리가 성공적으로 수정되었습니다.');
-      router.push(`/gallery/detail/${id}`);
+      const res = await axiosValid_API.patch(`post/${id}?dataType=formData`, data);
+      console.log(res);
+
+      // router.push(`/gallery/detail/${id}`);
     } catch (error) {
-      alert('갤러리 수정에 실패했습니다. 다시 시도해주세요.');
       console.error('갤러리 수정 실패:', error);
     }
   };
@@ -210,11 +251,11 @@ const GalleryUpdate = () => {
             <GalleryUploadImage
               name="images"
               className={`w-full ${errors['images'] && 'border-red-500'}`}
-              onThumbnailChange={handleThumbnailChange}
-              onImageDelete={handleImageDelete}
-              onImageUpload={handleImageUpload}
               control={form.control}
-              defaultImages={gallery?.images.map(image => image.image) || []}
+              onThumbnailChange={handleThumbnailChange}
+              // onImageDelete={handleImageDelete}
+              // onImageUpload={handleImageUpload}
+              // defaultImages={gallery?.images.map(image => image.image) || []}
             />
             <div>
               <div className="flex items-center space-x-4">
