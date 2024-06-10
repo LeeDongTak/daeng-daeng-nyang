@@ -1,13 +1,28 @@
 import { getAuthorizedAxios } from '@/api/common/axios_instance';
 import Calendar from '@/components/calendar/Calendar';
+import { useCalendar } from '@/hooks/client/calendar/useCalendar';
+import { setCalendarBindingData } from '@/store/calendar/data-store';
+import { setSchedulePetData } from '@/store/calendar/pet-store';
+import { CalendarDataType } from '@/types/calendar/calendar';
 import { QueryClient, dehydrate, useQueryClient } from '@tanstack/react-query';
 import type { GetServerSideProps, GetServerSidePropsContext } from 'next';
 import Head from 'next/head';
+import { useEffect } from 'react';
 
 const CalendarPage = () => {
-  // 미리 받아온 데이터값이 들어있습니다.
-  const data = useQueryClient().getQueryData(['sample']);
-  console.log('🚀 ~ CalendarPage ~ data:', data); // 확인해보셔요
+  const queryClient = useQueryClient();
+  const schedule = queryClient.getQueryData<CalendarDataType[]>(['SCHEDULE_QUERY']);
+  console.log('🚀 ~ CalendarPage ~ data:', schedule);
+  const { updateScheduleModal } = useCalendar();
+
+  useEffect(() => {
+    if (!schedule) return;
+
+    setCalendarBindingData(schedule);
+    setSchedulePetData(schedule);
+    updateScheduleModal(schedule);
+  }, [schedule]);
+
   return (
     <>
       <Head>
@@ -32,9 +47,9 @@ export const getServerSideProps: GetServerSideProps = async (ctx: GetServerSideP
     try {
       await queryClient.prefetchQuery({
         // 본인이 사용할 페이지에서 SSR로 불러오고 싶은 queryKey를 넣어주세요,
-        queryKey: ['sample'],
+        queryKey: ['SCHEDULE_QUERY'],
         queryFn: async () => {
-          const { data } = await axiosInstance.get('post/all/1');
+          const { data } = await axiosInstance.get('schedule');
           return data;
         },
       });
