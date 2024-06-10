@@ -25,6 +25,7 @@ const useFetchCalendarQuery = () => {
       setCalendarBindingData(data);
       setSchedulePetData(data);
       updateScheduleModal(data);
+      return data;
     },
   });
 
